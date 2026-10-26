@@ -1,0 +1,1760 @@
+[
+  {
+    "track": "dsa_concepts",
+    "topic": "Array & Hash Table Trade-offs",
+    "difficulty": 1,
+    "question_text": "Explain how a Hash Table achieves O(1) average lookup time, and what happens in the worst-case scenario. How do open addressing and separate chaining resolve collisions?",
+    "ideal_points": [
+      "Hash function maps keys to index via modulo",
+      "Separate chaining uses linked lists/BSTs in buckets",
+      "Open addressing probes next slots (linear, quadratic, double hashing)",
+      "Load factor threshold triggers resizing/rehashing",
+      "Worst case O(n) when all keys collide"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Binary Search Invariants",
+    "difficulty": 2,
+    "question_text": "How do you avoid off-by-one errors and integer overflow when implementing Binary Search? Explain the invariant for left <= right vs left < right.",
+    "ideal_points": [
+      "mid = left + (right - left) // 2 prevents integer overflow",
+      "Search space bounds invariant maintained each iteration",
+      "left <= right requires right = mid - 1 and left = mid + 1",
+      "Terminating conditions and pointer convergence"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Two Pointers vs Sliding Window",
+    "difficulty": 2,
+    "question_text": "What is the key structural difference between the Two Pointers technique and the Sliding Window technique? Give an example problem suited for each.",
+    "ideal_points": [
+      "Two pointers often start at opposing ends or move at different speeds (e.g., fast/slow cycle detection)",
+      "Sliding window maintains a contiguous subarray/substring with monotonic expansion and shrink criteria",
+      "Sliding window typically tracks aggregate state like frequency counts or sum"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Stack vs Monotonic Stack",
+    "difficulty": 3,
+    "question_text": "Explain the mechanics of a Monotonic Stack. How does it find the Next Greater Element for all elements in an array in O(n) total time?",
+    "ideal_points": [
+      "Monotonic stack maintains elements in strictly increasing or decreasing order",
+      "Each element is pushed once and popped at most once, guaranteeing amortized O(n)",
+      "When a new element violates monotonicity, popped elements have found their boundary"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Fast & Slow Pointers (Floyd's Cycle Finding)",
+    "difficulty": 2,
+    "question_text": "Explain Floyd's cycle-finding algorithm for linked lists. How mathematically do you find the entrance of the cycle once a collision occurs?",
+    "ideal_points": [
+      "Slow pointer advances 1 step, fast advances 2 steps",
+      "Collision is guaranteed inside the cycle if one exists",
+      "Reset one pointer to head; advance both 1 step until they meet at entrance: 2(F + a) = F + a + nC => F = nC - a"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Recursion vs Iteration in Trees",
+    "difficulty": 2,
+    "question_text": "Compare recursive Depth-First Search with iterative BFS for level-order traversal of a binary tree in terms of call stack and queue memory consumption.",
+    "ideal_points": [
+      "DFS recursive call stack space is proportional to tree height O(h), worst-case O(n) skewed, O(log n) balanced",
+      "BFS queue space is proportional to maximum level width, which is O(n/2) = O(n) for the leaf level of a complete tree"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Balanced BST vs Skip List",
+    "difficulty": 4,
+    "question_text": "Compare AVL Trees, Red-Black Trees, and Skip Lists for maintaining dynamic sorted datasets. Why does the Linux kernel prefer Red-Black Trees while Redis uses Skip Lists for Sorted Sets?",
+    "ideal_points": [
+      "AVL trees are more rigidly balanced, resulting in faster lookups but slower insertions/deletions due to rotations",
+      "Red-Black trees require at most 2 rotations per insertion and 3 per deletion",
+      "Skip lists use probabilistic balancing without tree rotations, simpler lock-free concurrent implementations"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Trie Complexity and Space Optimization",
+    "difficulty": 3,
+    "question_text": "Explain how a Prefix Tree (Trie) works. What are its lookup and insert complexities, and how does a Radix Tree (Compressed Trie) save space?",
+    "ideal_points": [
+      "Lookup and insert are O(k) where k is word length, independent of dictionary size n",
+      "Alphabet size per node creates significant pointer overhead in standard tries",
+      "Radix tree compresses single-child edge sequences into multi-character strings"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Priority Queue & Binary Heap Operations",
+    "difficulty": 2,
+    "question_text": "Explain the sift-up and sift-down operations in a Min-Heap. Why does building a heap from an unsorted array take O(n) time rather than O(n log n)?",
+    "ideal_points": [
+      "Sift-up bubbles a newly added child element up to restore heap invariant (O(log n))",
+      "Sift-down pushes root down after extract-min (O(log n))",
+      "Heapify from bottom-up: sum of h/2^h converges to constant, total work is O(n) mathematically"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Backtracking Pruning Strategies",
+    "difficulty": 3,
+    "question_text": "What distinguishes Backtracking from brute-force exhaustive search? Illustrate using the N-Queens problem how constraint propagation prunes the state space tree.",
+    "ideal_points": [
+      "Backtracking evaluates partial candidate validity before exploring deeper branches",
+      "Dead-end states immediately prune the entire subtree",
+      "In N-Queens, diagonal and column bitmasks check safety in O(1) before recurring"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "BFS vs DFS for Shortest Paths",
+    "difficulty": 2,
+    "question_text": "Why does Breadth-First Search guarantee the shortest path on unweighted graphs, and why does DFS fail to provide this guarantee?",
+    "ideal_points": [
+      "BFS explores nodes in increasing order of distance (layer by layer)",
+      "First time target is visited is guaranteed minimal edge count",
+      "DFS plunges deeply into first branch found, which may reach destination via a longer circuitous route"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Dijkstra's Algorithm Invariant",
+    "difficulty": 3,
+    "question_text": "Explain Dijkstra's shortest path algorithm. Why does it require non-negative edge weights, and how does it fail with negative cycles?",
+    "ideal_points": [
+      "Greedy invariant assumes once a node is finalized from priority queue, its distance cannot be shortened",
+      "Negative edges can decrease distance after finalization, invalidating the settled set",
+      "Complexity O((V + E) log V) with min-heap"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Bellman-Ford & Negative Cycle Detection",
+    "difficulty": 3,
+    "question_text": "How does the Bellman-Ford algorithm detect negative weight cycles in a directed graph, and what is its time complexity?",
+    "ideal_points": [
+      "Relaxes all E edges V-1 times, since a simple path has at most V-1 edges",
+      "A V-th pass that can still relax any edge proves existence of a negative weight cycle",
+      "Time complexity is O(V * E)"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Disjoint Set Union (Union-Find) Optimizations",
+    "difficulty": 3,
+    "question_text": "Explain the Disjoint Set Union (DSU) data structure. How do Path Compression and Union by Rank achieve near O(1) amortized time per operation?",
+    "ideal_points": [
+      "Find identifies canonical representative; path compression flattens tree pointing nodes directly to root",
+      "Union by rank/size attaches shallower tree under root of deeper tree",
+      "Combined optimizations achieve Inverse Ackermann complexity alpha(n) < 5 for all practical n"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Topological Sorting (Kahn's vs DFS)",
+    "difficulty": 3,
+    "question_text": "Describe Kahn's algorithm (indegree-based BFS) and DFS post-order traversal for Topological Sorting of a Directed Acyclic Graph (DAG). How do they detect cycles?",
+    "ideal_points": [
+      "Kahn's tracks in-degrees, enqueues 0 in-degree nodes, decrements neighbors upon removal",
+      "If processed node count < V, graph has a directed cycle",
+      "DFS uses 3-color state (unvisited, visiting, visited); encountering a 'visiting' node detects a back-edge (cycle)"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Memoization vs Tabulation in Dynamic Programming",
+    "difficulty": 2,
+    "question_text": "Contrast top-down dynamic programming (memoization) with bottom-up dynamic programming (tabulation). What are the trade-offs regarding recursion overhead and cache locality?",
+    "ideal_points": [
+      "Top-down is recursive with hash/array cache, computes only reachable states on demand",
+      "Bottom-up is iterative, filling table in topological order, avoiding call stack overhead",
+      "Bottom-up allows space optimization (e.g., rolling array) and better CPU cache locality"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "0/1 Knapsack vs Unbounded Knapsack",
+    "difficulty": 3,
+    "question_text": "Explain the state definition and transition difference between the 0/1 Knapsack problem and the Unbounded Knapsack problem.",
+    "ideal_points": [
+      "0/1 Knapsack: items used at most once; 1D array traversed backwards to prevent reusing same item in current step",
+      "Unbounded Knapsack: items can be reused infinitely; 1D array traversed forwards so updated states can contribute again",
+      "State: dp[w] = max value for capacity w"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Longest Common Subsequence vs Substring",
+    "difficulty": 3,
+    "question_text": "Compare the DP formulation of Longest Common Subsequence (LCS) versus Longest Common Substring. What is the state transition for each?",
+    "ideal_points": [
+      "LCS: if chars match dp[i][j] = 1 + dp[i-1][j-1], else max(dp[i-1][j], dp[i][j-1])",
+      "Substring: if chars match dp[i][j] = 1 + dp[i-1][j-1], else dp[i][j] = 0 (contiguous reset)",
+      "Space optimization from O(m*n) to O(min(m, n))"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Kadane's Algorithm Mechanics",
+    "difficulty": 2,
+    "question_text": "How does Kadane's algorithm find the maximum subarray sum in O(n) time and O(1) space? What is the core decision made at each index?",
+    "ideal_points": [
+      "At index i, either extend current running sum (current_sum + num) or start fresh from num",
+      "current_sum = max(num, current_sum + num)",
+      "global_max tracks the maximum current_sum observed so far",
+      "Handles negative numbers correctly"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Bit Manipulation XOR Tricks",
+    "difficulty": 2,
+    "question_text": "Explain how the XOR operator properties (commutativity, associativity, x ^ x = 0, x ^ 0 = x) solve Single Number and finding two unique numbers in an array.",
+    "ideal_points": [
+      "Pairs cancel out to 0; single remaining number XORed with 0 yields the number itself",
+      "For two unique numbers, XOR all elements gives diff = a ^ b",
+      "Find rightmost set bit in diff to partition array into two distinct groups, solving each group independently"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Process vs Thread",
+    "difficulty": 1,
+    "question_text": "What is the fundamental difference between a Process and a Thread? Detail address space sharing, context switching overhead, and IPC.",
+    "ideal_points": [
+      "Processes have separate virtual address spaces and isolated resources",
+      "Threads within the same process share heap, global variables, and file descriptors but have private stack and registers",
+      "Context switching between processes requires TLB flush and page table switch; thread switch is significantly cheaper",
+      "IPC mechanisms: pipes, sockets, shared memory, message queues"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Virtual Memory & Paging",
+    "difficulty": 2,
+    "question_text": "How does Virtual Memory work? Explain page tables, Page Faults, Translation Lookaside Buffer (TLB), and thrashing.",
+    "ideal_points": [
+      "Virtual addresses translated to physical frame via MMU using multi-level page tables",
+      "TLB is a fast hardware cache of recent translations",
+      "Page fault occurs when page table entry indicates page is on disk swap; OS loads frame via interrupt",
+      "Thrashing happens when system spends more time swapping pages than executing instructions due to working set > RAM"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Deadlock Conditions & Prevention",
+    "difficulty": 2,
+    "question_text": "Name and explain the four Coffman conditions necessary for a Deadlock. How does resource ordering prevent circular wait?",
+    "ideal_points": [
+      "Mutual Exclusion: resources cannot be shared simultaneously",
+      "Hold and Wait: thread holding allocated resources requests new ones",
+      "No Preemption: resources cannot be forcibly confiscated",
+      "Circular Wait: closed chain of threads waiting for next thread's resource",
+      "Global total ordering of resources prevents circular wait by requiring acquisition in ascending order"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "CPU Scheduling Algorithms",
+    "difficulty": 2,
+    "question_text": "Compare Round Robin, Shortest Job First (SJF), and Multi-Level Feedback Queue (MLFQ) scheduling. Which minimizes average turnaround time, and which prevents starvation?",
+    "ideal_points": [
+      "SJF is provably optimal for minimizing average turnaround time but requires future knowledge and causes starvation",
+      "Round Robin uses time quantum for interactive fairness and guarantees starvation freedom",
+      "MLFQ prioritizes short I/O bound tasks and penalizes CPU hogs across priority queues"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Mutex vs Semaphore",
+    "difficulty": 1,
+    "question_text": "Explain the distinction between a Mutex and a Counting Semaphore. Which allows signaling between threads, and what is priority inversion?",
+    "ideal_points": [
+      "Mutex has ownership semantics: only the locking thread may unlock it",
+      "Semaphore is a signaling integer counter (P/wait decrements, V/signal increments), any thread can signal",
+      "Binary semaphore can act as mutual exclusion but lacks ownership check",
+      "Priority inversion occurs when low-priority thread holds resource needed by high-priority thread while medium-priority runs"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "TCP vs UDP",
+    "difficulty": 1,
+    "question_text": "Compare TCP and UDP at the transport layer. Detail connection establishment, reliability mechanisms, flow control, and typical use cases.",
+    "ideal_points": [
+      "TCP is connection-oriented (3-way handshake SYN, SYN-ACK, ACK), reliable, ordered, byte-stream",
+      "TCP uses sequence numbers, ACKs, retransmissions, sliding window flow control, and congestion control (Tahoe/Reno)",
+      "UDP is connectionless, unreliable, datagram-based, low latency (DNS, VoIP, gaming, live video)"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "TCP 3-Way Handshake & 4-Way Teardown",
+    "difficulty": 2,
+    "question_text": "Walk through the TCP 3-way handshake and 4-way termination handshake. Why is the TIME_WAIT state necessary on the client side?",
+    "ideal_points": [
+      "Handshake: Client SYN(seq=x) -> Server SYN(seq=y), ACK(x+1) -> Client ACK(y+1)",
+      "Teardown: FIN -> ACK, FIN -> ACK",
+      "TIME_WAIT (usually 2MSL = 2 minutes) ensures final ACK reached server so lingering duplicates don't corrupt new connections"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "HTTP/1.1 vs HTTP/2 vs HTTP/3",
+    "difficulty": 3,
+    "question_text": "Explain the architectural evolution from HTTP/1.1 to HTTP/2 and HTTP/3. How do multiplexing, head-of-line blocking, and QUIC solve performance bottlenecks?",
+    "ideal_points": [
+      "HTTP/1.1 introduced keep-alive but suffered from HTTP head-of-line blocking (pipelining rarely worked)",
+      "HTTP/2 added binary framing, single connection multiplexing, header compression (HPACK), and server push",
+      "HTTP/2 still suffered from TCP-level head-of-line blocking when a single packet dropped",
+      "HTTP/3 runs over QUIC on UDP, eliminating TCP HoL blocking and providing 0-RTT connection resumption"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "DNS Resolution Workflow",
+    "difficulty": 2,
+    "question_text": "Trace the complete recursive and iterative DNS resolution workflow when a user types 'www.example.com' into their browser.",
+    "ideal_points": [
+      "Browser cache -> OS cache (/etc/hosts) -> Local DNS resolver (ISP/8.8.8.8)",
+      "Root name servers (. root) return TLD name server (.com)",
+      "TLD name servers return Authoritative name servers for example.com",
+      "Authoritative server returns A or AAAA record with IP address and TTL"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "ACID Properties in DBMS",
+    "difficulty": 2,
+    "question_text": "Define the ACID properties of relational databases. How does a database engine ensure Atomicity and Durability in the event of an abrupt power outage?",
+    "ideal_points": [
+      "Atomicity: all-or-nothing transaction execution via Write-Ahead Log (WAL) undo logging",
+      "Consistency: valid state to valid state enforcing schema constraints and invariants",
+      "Isolation: concurrent transactions do not interfere with each other",
+      "Durability: committed transactions survive crashes via WAL flush (fsync) and checkpointing"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Database Isolation Levels & Anomalies",
+    "difficulty": 3,
+    "question_text": "Detail the 4 ANSI SQL transaction isolation levels and the anomalies they permit: Dirty Read, Non-Repeatable Read, and Phantom Read.",
+    "ideal_points": [
+      "Read Uncommitted: permits dirty reads, non-repeatable reads, phantom reads",
+      "Read Committed: prevents dirty reads; uses short read locks or snapshot reading",
+      "Repeatable Read: prevents dirty reads and non-repeatable reads (shared locks held till end or MVCC)",
+      "Serializable: prevents all anomalies including phantom reads via two-phase locking (2PL) or SSI"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Database Indexing: B+ Tree vs Hash Index",
+    "difficulty": 2,
+    "question_text": "Why do relational database engines like MySQL InnoDB and PostgreSQL default to B+ Trees instead of Hash Indexes or Binary Search Trees?",
+    "ideal_points": [
+      "B+ Trees have high fanout, minimizing expensive disk I/O per lookup (height typically 3-4 for millions of rows)",
+      "B+ Trees store all records in leaf nodes linked sequentially, enabling efficient range scans (BETWEEN, >, <)",
+      "Hash indexes do not support range scans or ordering (only exact equality =)",
+      "BSTs can unbalance and have high tree depth leading to excessive disk seeks"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Database Normalization (1NF, 2NF, 3NF, BCNF)",
+    "difficulty": 2,
+    "question_text": "Explain 1st, 2nd, 3rd, and Boyce-Codd Normal Form with functional dependencies. Why do production data warehouses intentionally denormalize?",
+    "ideal_points": [
+      "1NF: atomic values, no repeating groups",
+      "2NF: 1NF + no partial dependency on composite primary key",
+      "3NF: 2NF + no transitive dependencies (non-key attributes depend only on primary key)",
+      "BCNF: for every functional dependency X -> Y, X must be a superkey",
+      "OLAP / Data warehouses denormalize (star/snowflake schemas) to minimize expensive multi-table joins on aggregations"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "OOP Principles & SOLID",
+    "difficulty": 1,
+    "question_text": "Explain the 5 SOLID design principles with concrete architectural examples. How does the Dependency Inversion Principle facilitate testability?",
+    "ideal_points": [
+      "Single Responsibility: a class should have one reason to change",
+      "Open/Closed: open for extension, closed for modification",
+      "Liskov Substitution: subtypes must be substitutable for base types without breaking correctness",
+      "Interface Segregation: many client-specific interfaces over one general interface",
+      "Dependency Inversion: high-level modules depend on abstractions, enabling mock implementations in unit tests"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Garbage Collection Mechanisms",
+    "difficulty": 2,
+    "question_text": "Compare Mark-and-Sweep, Generational Garbage Collection, and Reference Counting. How do cyclical references cause memory leaks in naive reference counting?",
+    "ideal_points": [
+      "Reference counting tracks pointer count; fails on circular graphs A <-> B without weak references",
+      "Mark-and-Sweep traverses from root set (stack, globals) marking live objects, sweeps unmarked memory",
+      "Generational GC exploits weak generational hypothesis (most objects die young); Eden/Survivor spaces in young gen vs Tenured old gen"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Conflict Resolution",
+    "difficulty": 2,
+    "question_text": "Tell me about a time when you had a strong technical disagreement with a teammate or lead. How did you resolve it, and what was the outcome?",
+    "ideal_points": [
+      "Use STAR format (Situation, Task, Action, Result)",
+      "Focus on objective data, benchmarks, or prototypes rather than ego",
+      "Demonstrates active listening and empathy",
+      "Professional alignment and positive delivery outcome"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Handling Technical Failure",
+    "difficulty": 2,
+    "question_text": "Describe a project or technical initiative that failed or did not meet expectations. What was your role, what root cause did you identify, and what did you learn?",
+    "ideal_points": [
+      "Clear ownership without blaming teammates or external circumstances",
+      "Post-mortem / root-cause analysis methodology",
+      "Concrete operational changes implemented to prevent recurrence",
+      "Personal growth and resilience"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Ambiguous Requirements",
+    "difficulty": 3,
+    "question_text": "Give an example of a project where the requirements were vague or rapidly changing. How did you navigate the ambiguity and deliver value?",
+    "ideal_points": [
+      "Proactive stakeholder alignment and clarifying questions",
+      "Breaking scope down into iterative MVPs with fast feedback loops",
+      "Documenting technical trade-offs and assumptions",
+      "Delivering incrementally with measurable impact"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Underperforming Teammate",
+    "difficulty": 3,
+    "question_text": "How did you handle a situation where a team member was falling behind on their deliverables during a critical sprint or deadline?",
+    "ideal_points": [
+      "Approached with curiosity and empathy rather than accusation",
+      "Identified roadblocks (knowledge gaps, tooling, personal challenges)",
+      "Paired on critical blockers and redistributed tasks collaboratively",
+      "Project completed on time while helping teammate improve"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Tight Deadlines & Prioritization",
+    "difficulty": 2,
+    "question_text": "Describe a time when you had multiple competing deadlines and insufficient time to finish everything. How did you prioritize your workload?",
+    "ideal_points": [
+      "Applied Eisenhower Matrix / business impact ranking",
+      "Proactive communication with managers to reset expectations early",
+      "Identified non-essential nice-to-haves that could be deferred",
+      "Delivered critical core features with high reliability"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Mentorship & Knowledge Sharing",
+    "difficulty": 2,
+    "question_text": "Tell me about a time you mentored a junior engineer, peer, or intern. How did you tailor your communication to their learning style?",
+    "ideal_points": [
+      "Assessed baseline understanding and encouraged independent problem solving",
+      "Provided actionable, constructive code reviews and paired debugging",
+      "Created documentation, onboarding guides, or internal tech talks",
+      "Mentee gained autonomy and successfully shipped key features"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Leading Without Authority",
+    "difficulty": 3,
+    "question_text": "Describe a situation where you had to persuade others to adopt a new tool, architecture, or practice without having formal managerial authority.",
+    "ideal_points": [
+      "Built consensus through small-scale proof of concepts and data",
+      "Addressed team concerns regarding learning curve and migration cost",
+      "Facilitated collaborative discussions rather than imposing mandates",
+      "Successful adoption resulting in measurable developer velocity improvements"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Customer / User Empathy",
+    "difficulty": 2,
+    "question_text": "Give an example of a technical decision you made where user feedback or customer empathy drastically changed your initial implementation plan.",
+    "ideal_points": [
+      "Valued real user workflow over purely theoretical engineering elegance",
+      "Conducted user research, error log analysis, or usability testing",
+      "Simplified UI or API design to eliminate confusion",
+      "Resulted in increased user satisfaction and lower support tickets"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "URL Shortener (TinyURL)",
+    "difficulty": 2,
+    "question_text": "Design a scalable URL Shortener service like TinyURL. Detail the API, hash/encoding strategy (Base62 vs counter), database schema, and handling 100M daily writes.",
+    "ideal_points": [
+      "API: POST /api/v1/urls, GET /{shortCode}",
+      "Base62 encoding of distributed unique 64-bit ID (Snowflake/Ticket service)",
+      "Cache frequently accessed URLs in Redis with LRU eviction",
+      "Database schema with short_code indexed, relational vs NoSQL",
+      "301 permanent vs 302 temporary redirect trade-offs"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Rate Limiter",
+    "difficulty": 3,
+    "question_text": "Design an API Rate Limiter that can handle 100,000 requests per second across a distributed microservice cluster. Compare algorithms and explain storage.",
+    "ideal_points": [
+      "Algorithms: Token Bucket, Leaky Bucket, Sliding Window Counter",
+      "Storage: Redis sorted sets or atomic INCR/EXPIRE scripts",
+      "Distributed race conditions solved via Lua scripts or Redis Transactions",
+      "HTTP 429 response headers: X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After",
+      "Client IP vs user ID identification and DDoS protection tiers"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Distributed Key-Value Store",
+    "difficulty": 4,
+    "question_text": "Design a distributed, highly available Key-Value store similar to Amazon Dynamo or Apache Cassandra. Explain data partitioning, replication, quorum consensus, and conflict resolution.",
+    "ideal_points": [
+      "Data partitioning using Consistent Hashing with virtual nodes to avoid hotspots",
+      "Tunable consistency via quorum reads and writes: R + W > N",
+      "Vector clocks or Last-Write-Wins (LWW) for conflict resolution",
+      "Anti-entropy gossip protocol and Merkle trees for replica synchronization",
+      "Sloppy quorum and hinted handoff for temporary node partition tolerance"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Real-time Chat System (WhatsApp / Slack)",
+    "difficulty": 3,
+    "question_text": "Design a scalable 1-on-1 and group chat system. Discuss transport protocols, message delivery guarantees, online presence, and offline storage.",
+    "ideal_points": [
+      "Transport: WebSockets for persistent bi-directional connection; fallback to HTTP long polling",
+      "Gateway servers maintain active socket sessions, routed via Redis Pub/Sub or Kafka",
+      "Message storage in wide-column store (Cassandra/ScyllaDB) partitioned by chat_id",
+      "Presence service with heartbeat pings and TTL in Redis",
+      "Push notification integration (APNs/FCM) for offline users"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Social Media Feed (Twitter / Instagram)",
+    "difficulty": 4,
+    "question_text": "Design the timeline feed for a social network. Compare fan-out-on-write (push) versus fan-out-on-read (pull) models, and explain hybrid architecture for celebrity users.",
+    "ideal_points": [
+      "Push model: write post to all followers' timeline caches; O(1) read, expensive writes for popular accounts",
+      "Pull model: fetch posts of followed users on feed generation; cheap write, slow read join",
+      "Hybrid: Push for standard users, Pull on-the-fly for high-follower accounts (>20k followers)",
+      "Redis list stores timeline post IDs, hydration service fetches metadata",
+      "Ranking algorithm and pagination via cursor-based tokens"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Distributed Web Crawler",
+    "difficulty": 4,
+    "question_text": "Design a distributed Web Crawler capable of indexing 1 billion web pages per month. Cover URL frontier, politeness, duplicate detection, and distributed scheduling.",
+    "ideal_points": [
+      "URL Frontier with priority and politeness queues (delay per hostname)",
+      "Duplicate detection using MinHash/SimHash for near-duplicate documents and Bloom filters for seen URLs",
+      "DNS caching and resolution layer to prevent DNS saturation",
+      "Distributed workers fetching via async I/O with robots.txt compliance",
+      "Storage of raw HTML in S3/HDFS and extracted links enqueued into Kafka"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Notification System",
+    "difficulty": 3,
+    "question_text": "Design a high-volume notification system supporting SMS, Email, and Push Notifications with user preferences, rate limiting, and deduplication.",
+    "ideal_points": [
+      "Decoupled message ingestion via message queue (Kafka/RabbitMQ) with priority topics",
+      "Worker services per channel: Push (APNs/FCM), Email (SendGrid/SES), SMS (Twilio)",
+      "Template engine and user notification preferences database",
+      "Idempotency keys and Redis deduplication to avoid double-sending",
+      "Retry mechanism with exponential backoff and dead-letter queues (DLQ)"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Video Streaming Service (YouTube / Netflix)",
+    "difficulty": 4,
+    "question_text": "Design a video streaming platform. Detail video upload, ingestion, transcoding pipeline, chunked storage, adaptive bitrate streaming (HLS/DASH), and CDN caching.",
+    "ideal_points": [
+      "Upload via pre-signed multipart URLs directly to object storage (S3)",
+      "Distributed transcoding pipeline converting video into multiple resolutions (1080p, 720p, 480p) and chunks",
+      "Manifest generation for HLS (m3u8) / MPEG-DASH (mpd)",
+      "Content Delivery Network (CDN) edge caching closest to viewers",
+      "Adaptive Bitrate Streaming (ABR) dynamically switching chunk quality based on client network bandwidth"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "QuickSort vs MergeSort",
+    "difficulty": 2,
+    "question_text": "Compare QuickSort and MergeSort. Why is QuickSort often faster in practice despite having a worst-case O(n^2) runtime?",
+    "ideal_points": [
+      "In-place partitioning with zero extra memory allocation",
+      "Superior CPU cache locality of sequential array partitions",
+      "Randomized pivot selection avoids O(n^2) sorted inputs",
+      "MergeSort requires O(n) auxiliary space buffer"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "LRU Cache Implementation",
+    "difficulty": 3,
+    "question_text": "How do you implement an LRU (Least Recently Used) cache with O(1) get and O(1) put operations?",
+    "ideal_points": [
+      "Combine a Hash Map with a Doubly Linked List",
+      "Hash Map keys point to Doubly Linked List nodes for O(1) lookup",
+      "List maintains usage order; most recent at head, least recent at tail",
+      "Removal and addition of nodes in list is O(1)"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "B-Tree vs Binary Search Tree",
+    "difficulty": 3,
+    "question_text": "Why are B-Trees preferred over Binary Search Trees for disk-based storage and databases?",
+    "ideal_points": [
+      "B-Trees have high branch fan-out (order M), drastically reducing tree height",
+      "Each node size corresponds to disk block/page size (e.g. 4KB-16KB)",
+      "Minimizes disk seek operations which dominate latency"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Segment Tree vs Fenwick Tree",
+    "difficulty": 4,
+    "question_text": "Compare a Segment Tree and a Fenwick Tree (Binary Indexed Tree) for range sum queries and point updates.",
+    "ideal_points": [
+      "Fenwick tree uses O(n) space and simple bitwise index transitions (i += i & -i)",
+      "Segment tree takes O(4n) space but supports arbitrary associative functions (min, max, gcd) and lazy propagation for range updates",
+      "Both achieve O(log n) update and query"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "String Matching Algorithms",
+    "difficulty": 3,
+    "question_text": "Explain the core intuition of the KMP (Knuth-Morris-Pratt) algorithm and how its LPS (longest proper prefix) array prevents redundant backtracking.",
+    "ideal_points": [
+      "LPS array precomputes length of longest prefix matching proper suffix for every subpattern",
+      "On mismatch, pattern pointer shifts to LPS[mismatch-1] instead of resetting text pointer",
+      "Guarantees O(n + m) linear search time"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Thread Safety & Race Conditions",
+    "difficulty": 2,
+    "question_text": "What constitutes a race condition, and what synchronization primitives ensure thread safety in modern programming languages?",
+    "ideal_points": [
+      "Multiple threads access shared mutable state without proper synchronization and at least one write occurs",
+      "Mutual exclusion locks (Mutex, ReentrantLock)",
+      "Atomic operations using hardware Compare-And-Swap (CAS)",
+      "Immutability and thread-local storage"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "TCP Congestion Control",
+    "difficulty": 3,
+    "question_text": "Describe the phases of TCP congestion control: Slow Start, Congestion Avoidance, Fast Retransmit, and Fast Recovery.",
+    "ideal_points": [
+      "Slow Start exponentially doubles Congestion Window (cwnd) every RTT until ssthresh",
+      "Congestion Avoidance increases cwnd linearly by 1 MSS per RTT (AIMD)",
+      "Triple duplicate ACKs trigger Fast Retransmit without waiting for timeout",
+      "Fast Recovery halves cwnd and resumes linear growth"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "HTTPS / TLS Handshake",
+    "difficulty": 2,
+    "question_text": "Walk through the TLS 1.3 handshake. How does it establish an encrypted session in 1-RTT?",
+    "ideal_points": [
+      "ClientHello with supported ciphers and key share (Diffie-Hellman parameters)",
+      "ServerHello with chosen cipher, server certificate, and server key share",
+      "Both derive shared symmetric master secret immediately",
+      "Subsequent application data encrypted with AES-GCM or ChaCha20-Poly1305"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Database Sharding Strategies",
+    "difficulty": 3,
+    "question_text": "What is database sharding? Compare Range-based, Directory-based, and Hash-based sharding.",
+    "ideal_points": [
+      "Range-based shards by key ranges; simple queries but prone to write hotspots",
+      "Hash-based uses hash(key) % N or consistent hashing for even distribution",
+      "Cross-shard joins and distributed transactions become complex and slow",
+      "Re-sharding operational complexity"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "CAP Theorem & PACELC",
+    "difficulty": 3,
+    "question_text": "Explain the CAP theorem and the PACELC theorem. Give examples of real-world distributed systems representing CP and AP choices.",
+    "ideal_points": [
+      "CAP: Under network Partition (P), choose Consistency (C) or Availability (A)",
+      "PACELC: If Partition (P), choose A or C; Else (E), trade Latency (L) vs Consistency (C)",
+      "CP examples: ZooKeeper, etcd, MongoDB (default config)",
+      "AP examples: Cassandra, DynamoDB (with eventual consistency)"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Handling Constructive Feedback",
+    "difficulty": 1,
+    "question_text": "Tell me about a time you received difficult or critical feedback on your code or behavior. How did you process it and adapt?",
+    "ideal_points": [
+      "Listened without defensiveness and sought clarifying examples",
+      "Recognized validity of reviewer's technical perspective",
+      "Implemented improvements immediately and established personal checklist",
+      "Maintained positive collaborative relationship"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Balancing Speed vs Quality",
+    "difficulty": 2,
+    "question_text": "How do you decide when to ship code quickly with technical debt versus taking extra time to engineer a complete, robust solution?",
+    "ideal_points": [
+      "Assess project risk, blast radius, and business urgency",
+      "Communicate trade-offs clearly with product stakeholders",
+      "Document shortcuts in issue tracker and schedule technical debt cleanup sprints",
+      "Ensure core security and data integrity invariants are never compromised"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Taking Initiative",
+    "difficulty": 2,
+    "question_text": "Describe a time when you noticed a problem or gap in a system or workflow that wasn't your direct responsibility, and took initiative to fix it.",
+    "ideal_points": [
+      "Identified pain point (e.g., slow CI builds, flaky tests, missing docs)",
+      "Investigated root cause on own initiative",
+      "Built small prototype or wrote clear proposal",
+      "Shared with team and drove measurable productivity gains"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Distributed Cache (Memcached/Redis)",
+    "difficulty": 3,
+    "question_text": "Design a distributed caching tier. How do you handle cache invalidation, cache stampede (thundering herd), and hot key issues?",
+    "ideal_points": [
+      "Cache invalidation: write-through, write-behind, or TTL expiration",
+      "Thundering herd prevented via mutex locks, probabilistic early expiration (XFetch), or background refresh",
+      "Hot keys replicated across shards or protected by local in-memory L1 cache",
+      "Consistent hashing with replication"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Metrics and Monitoring System",
+    "difficulty": 4,
+    "question_text": "Design a distributed time-series metrics collection system like Prometheus and Grafana at scale.",
+    "ideal_points": [
+      "Pull vs push ingestion architecture",
+      "Time-series database (TSDB) optimized with delta-of-delta timestamp and XOR floating point compression (Gorilla)",
+      "Tiered rollups and downsampling for historical data retention",
+      "Alertmanager integration with threshold evaluation"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Array & Hash Table Trade-offs (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Explain how a Hash Table achieves O(1) average lookup time, and what happens in the worst-case scenario. How do open addressing and separate chaining resolve collisions?",
+    "ideal_points": [
+      "Hash function maps keys to index via modulo",
+      "Separate chaining uses linked lists/BSTs in buckets",
+      "Open addressing probes next slots (linear, quadratic, double hashing)",
+      "Load factor threshold triggers resizing/rehashing",
+      "Worst case O(n) when all keys collide"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Binary Search Invariants (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] How do you avoid off-by-one errors and integer overflow when implementing Binary Search? Explain the invariant for left <= right vs left < right.",
+    "ideal_points": [
+      "mid = left + (right - left) // 2 prevents integer overflow",
+      "Search space bounds invariant maintained each iteration",
+      "left <= right requires right = mid - 1 and left = mid + 1",
+      "Terminating conditions and pointer convergence"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Two Pointers vs Sliding Window (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] What is the key structural difference between the Two Pointers technique and the Sliding Window technique? Give an example problem suited for each.",
+    "ideal_points": [
+      "Two pointers often start at opposing ends or move at different speeds (e.g., fast/slow cycle detection)",
+      "Sliding window maintains a contiguous subarray/substring with monotonic expansion and shrink criteria",
+      "Sliding window typically tracks aggregate state like frequency counts or sum"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Stack vs Monotonic Stack (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Explain the mechanics of a Monotonic Stack. How does it find the Next Greater Element for all elements in an array in O(n) total time?",
+    "ideal_points": [
+      "Monotonic stack maintains elements in strictly increasing or decreasing order",
+      "Each element is pushed once and popped at most once, guaranteeing amortized O(n)",
+      "When a new element violates monotonicity, popped elements have found their boundary"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Fast & Slow Pointers (Floyd's Cycle Finding) (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Explain Floyd's cycle-finding algorithm for linked lists. How mathematically do you find the entrance of the cycle once a collision occurs?",
+    "ideal_points": [
+      "Slow pointer advances 1 step, fast advances 2 steps",
+      "Collision is guaranteed inside the cycle if one exists",
+      "Reset one pointer to head; advance both 1 step until they meet at entrance: 2(F + a) = F + a + nC => F = nC - a"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Recursion vs Iteration in Trees (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Compare recursive Depth-First Search with iterative BFS for level-order traversal of a binary tree in terms of call stack and queue memory consumption.",
+    "ideal_points": [
+      "DFS recursive call stack space is proportional to tree height O(h), worst-case O(n) skewed, O(log n) balanced",
+      "BFS queue space is proportional to maximum level width, which is O(n/2) = O(n) for the leaf level of a complete tree"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Balanced BST vs Skip List (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Compare AVL Trees, Red-Black Trees, and Skip Lists for maintaining dynamic sorted datasets. Why does the Linux kernel prefer Red-Black Trees while Redis uses Skip Lists for Sorted Sets?",
+    "ideal_points": [
+      "AVL trees are more rigidly balanced, resulting in faster lookups but slower insertions/deletions due to rotations",
+      "Red-Black trees require at most 2 rotations per insertion and 3 per deletion",
+      "Skip lists use probabilistic balancing without tree rotations, simpler lock-free concurrent implementations"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Trie Complexity and Space Optimization (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Explain how a Prefix Tree (Trie) works. What are its lookup and insert complexities, and how does a Radix Tree (Compressed Trie) save space?",
+    "ideal_points": [
+      "Lookup and insert are O(k) where k is word length, independent of dictionary size n",
+      "Alphabet size per node creates significant pointer overhead in standard tries",
+      "Radix tree compresses single-child edge sequences into multi-character strings"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Priority Queue & Binary Heap Operations (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Explain the sift-up and sift-down operations in a Min-Heap. Why does building a heap from an unsorted array take O(n) time rather than O(n log n)?",
+    "ideal_points": [
+      "Sift-up bubbles a newly added child element up to restore heap invariant (O(log n))",
+      "Sift-down pushes root down after extract-min (O(log n))",
+      "Heapify from bottom-up: sum of h/2^h converges to constant, total work is O(n) mathematically"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Backtracking Pruning Strategies (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] What distinguishes Backtracking from brute-force exhaustive search? Illustrate using the N-Queens problem how constraint propagation prunes the state space tree.",
+    "ideal_points": [
+      "Backtracking evaluates partial candidate validity before exploring deeper branches",
+      "Dead-end states immediately prune the entire subtree",
+      "In N-Queens, diagonal and column bitmasks check safety in O(1) before recurring"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "BFS vs DFS for Shortest Paths (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Why does Breadth-First Search guarantee the shortest path on unweighted graphs, and why does DFS fail to provide this guarantee?",
+    "ideal_points": [
+      "BFS explores nodes in increasing order of distance (layer by layer)",
+      "First time target is visited is guaranteed minimal edge count",
+      "DFS plunges deeply into first branch found, which may reach destination via a longer circuitous route"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Dijkstra's Algorithm Invariant (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Explain Dijkstra's shortest path algorithm. Why does it require non-negative edge weights, and how does it fail with negative cycles?",
+    "ideal_points": [
+      "Greedy invariant assumes once a node is finalized from priority queue, its distance cannot be shortened",
+      "Negative edges can decrease distance after finalization, invalidating the settled set",
+      "Complexity O((V + E) log V) with min-heap"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Bellman-Ford & Negative Cycle Detection (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] How does the Bellman-Ford algorithm detect negative weight cycles in a directed graph, and what is its time complexity?",
+    "ideal_points": [
+      "Relaxes all E edges V-1 times, since a simple path has at most V-1 edges",
+      "A V-th pass that can still relax any edge proves existence of a negative weight cycle",
+      "Time complexity is O(V * E)"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Disjoint Set Union (Union-Find) Optimizations (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Explain the Disjoint Set Union (DSU) data structure. How do Path Compression and Union by Rank achieve near O(1) amortized time per operation?",
+    "ideal_points": [
+      "Find identifies canonical representative; path compression flattens tree pointing nodes directly to root",
+      "Union by rank/size attaches shallower tree under root of deeper tree",
+      "Combined optimizations achieve Inverse Ackermann complexity alpha(n) < 5 for all practical n"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Topological Sorting (Kahn's vs DFS) (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Describe Kahn's algorithm (indegree-based BFS) and DFS post-order traversal for Topological Sorting of a Directed Acyclic Graph (DAG). How do they detect cycles?",
+    "ideal_points": [
+      "Kahn's tracks in-degrees, enqueues 0 in-degree nodes, decrements neighbors upon removal",
+      "If processed node count < V, graph has a directed cycle",
+      "DFS uses 3-color state (unvisited, visiting, visited); encountering a 'visiting' node detects a back-edge (cycle)"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Memoization vs Tabulation in Dynamic Programming (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Contrast top-down dynamic programming (memoization) with bottom-up dynamic programming (tabulation). What are the trade-offs regarding recursion overhead and cache locality?",
+    "ideal_points": [
+      "Top-down is recursive with hash/array cache, computes only reachable states on demand",
+      "Bottom-up is iterative, filling table in topological order, avoiding call stack overhead",
+      "Bottom-up allows space optimization (e.g., rolling array) and better CPU cache locality"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "0/1 Knapsack vs Unbounded Knapsack (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Explain the state definition and transition difference between the 0/1 Knapsack problem and the Unbounded Knapsack problem.",
+    "ideal_points": [
+      "0/1 Knapsack: items used at most once; 1D array traversed backwards to prevent reusing same item in current step",
+      "Unbounded Knapsack: items can be reused infinitely; 1D array traversed forwards so updated states can contribute again",
+      "State: dp[w] = max value for capacity w"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Longest Common Subsequence vs Substring (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Compare the DP formulation of Longest Common Subsequence (LCS) versus Longest Common Substring. What is the state transition for each?",
+    "ideal_points": [
+      "LCS: if chars match dp[i][j] = 1 + dp[i-1][j-1], else max(dp[i-1][j], dp[i][j-1])",
+      "Substring: if chars match dp[i][j] = 1 + dp[i-1][j-1], else dp[i][j] = 0 (contiguous reset)",
+      "Space optimization from O(m*n) to O(min(m, n))"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Kadane's Algorithm Mechanics (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] How does Kadane's algorithm find the maximum subarray sum in O(n) time and O(1) space? What is the core decision made at each index?",
+    "ideal_points": [
+      "At index i, either extend current running sum (current_sum + num) or start fresh from num",
+      "current_sum = max(num, current_sum + num)",
+      "global_max tracks the maximum current_sum observed so far",
+      "Handles negative numbers correctly"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Bit Manipulation XOR Tricks (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Explain how the XOR operator properties (commutativity, associativity, x ^ x = 0, x ^ 0 = x) solve Single Number and finding two unique numbers in an array.",
+    "ideal_points": [
+      "Pairs cancel out to 0; single remaining number XORed with 0 yields the number itself",
+      "For two unique numbers, XOR all elements gives diff = a ^ b",
+      "Find rightmost set bit in diff to partition array into two distinct groups, solving each group independently"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Process vs Thread (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] What is the fundamental difference between a Process and a Thread? Detail address space sharing, context switching overhead, and IPC.",
+    "ideal_points": [
+      "Processes have separate virtual address spaces and isolated resources",
+      "Threads within the same process share heap, global variables, and file descriptors but have private stack and registers",
+      "Context switching between processes requires TLB flush and page table switch; thread switch is significantly cheaper",
+      "IPC mechanisms: pipes, sockets, shared memory, message queues"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Virtual Memory & Paging (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] How does Virtual Memory work? Explain page tables, Page Faults, Translation Lookaside Buffer (TLB), and thrashing.",
+    "ideal_points": [
+      "Virtual addresses translated to physical frame via MMU using multi-level page tables",
+      "TLB is a fast hardware cache of recent translations",
+      "Page fault occurs when page table entry indicates page is on disk swap; OS loads frame via interrupt",
+      "Thrashing happens when system spends more time swapping pages than executing instructions due to working set > RAM"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Deadlock Conditions & Prevention (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Name and explain the four Coffman conditions necessary for a Deadlock. How does resource ordering prevent circular wait?",
+    "ideal_points": [
+      "Mutual Exclusion: resources cannot be shared simultaneously",
+      "Hold and Wait: thread holding allocated resources requests new ones",
+      "No Preemption: resources cannot be forcibly confiscated",
+      "Circular Wait: closed chain of threads waiting for next thread's resource",
+      "Global total ordering of resources prevents circular wait by requiring acquisition in ascending order"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "CPU Scheduling Algorithms (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Compare Round Robin, Shortest Job First (SJF), and Multi-Level Feedback Queue (MLFQ) scheduling. Which minimizes average turnaround time, and which prevents starvation?",
+    "ideal_points": [
+      "SJF is provably optimal for minimizing average turnaround time but requires future knowledge and causes starvation",
+      "Round Robin uses time quantum for interactive fairness and guarantees starvation freedom",
+      "MLFQ prioritizes short I/O bound tasks and penalizes CPU hogs across priority queues"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Mutex vs Semaphore (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Explain the distinction between a Mutex and a Counting Semaphore. Which allows signaling between threads, and what is priority inversion?",
+    "ideal_points": [
+      "Mutex has ownership semantics: only the locking thread may unlock it",
+      "Semaphore is a signaling integer counter (P/wait decrements, V/signal increments), any thread can signal",
+      "Binary semaphore can act as mutual exclusion but lacks ownership check",
+      "Priority inversion occurs when low-priority thread holds resource needed by high-priority thread while medium-priority runs"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "TCP vs UDP (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Compare TCP and UDP at the transport layer. Detail connection establishment, reliability mechanisms, flow control, and typical use cases.",
+    "ideal_points": [
+      "TCP is connection-oriented (3-way handshake SYN, SYN-ACK, ACK), reliable, ordered, byte-stream",
+      "TCP uses sequence numbers, ACKs, retransmissions, sliding window flow control, and congestion control (Tahoe/Reno)",
+      "UDP is connectionless, unreliable, datagram-based, low latency (DNS, VoIP, gaming, live video)"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "TCP 3-Way Handshake & 4-Way Teardown (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Walk through the TCP 3-way handshake and 4-way termination handshake. Why is the TIME_WAIT state necessary on the client side?",
+    "ideal_points": [
+      "Handshake: Client SYN(seq=x) -> Server SYN(seq=y), ACK(x+1) -> Client ACK(y+1)",
+      "Teardown: FIN -> ACK, FIN -> ACK",
+      "TIME_WAIT (usually 2MSL = 2 minutes) ensures final ACK reached server so lingering duplicates don't corrupt new connections"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "HTTP/1.1 vs HTTP/2 vs HTTP/3 (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Explain the architectural evolution from HTTP/1.1 to HTTP/2 and HTTP/3. How do multiplexing, head-of-line blocking, and QUIC solve performance bottlenecks?",
+    "ideal_points": [
+      "HTTP/1.1 introduced keep-alive but suffered from HTTP head-of-line blocking (pipelining rarely worked)",
+      "HTTP/2 added binary framing, single connection multiplexing, header compression (HPACK), and server push",
+      "HTTP/2 still suffered from TCP-level head-of-line blocking when a single packet dropped",
+      "HTTP/3 runs over QUIC on UDP, eliminating TCP HoL blocking and providing 0-RTT connection resumption"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "DNS Resolution Workflow (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Trace the complete recursive and iterative DNS resolution workflow when a user types 'www.example.com' into their browser.",
+    "ideal_points": [
+      "Browser cache -> OS cache (/etc/hosts) -> Local DNS resolver (ISP/8.8.8.8)",
+      "Root name servers (. root) return TLD name server (.com)",
+      "TLD name servers return Authoritative name servers for example.com",
+      "Authoritative server returns A or AAAA record with IP address and TTL"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "ACID Properties in DBMS (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Define the ACID properties of relational databases. How does a database engine ensure Atomicity and Durability in the event of an abrupt power outage?",
+    "ideal_points": [
+      "Atomicity: all-or-nothing transaction execution via Write-Ahead Log (WAL) undo logging",
+      "Consistency: valid state to valid state enforcing schema constraints and invariants",
+      "Isolation: concurrent transactions do not interfere with each other",
+      "Durability: committed transactions survive crashes via WAL flush (fsync) and checkpointing"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Database Isolation Levels & Anomalies (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Detail the 4 ANSI SQL transaction isolation levels and the anomalies they permit: Dirty Read, Non-Repeatable Read, and Phantom Read.",
+    "ideal_points": [
+      "Read Uncommitted: permits dirty reads, non-repeatable reads, phantom reads",
+      "Read Committed: prevents dirty reads; uses short read locks or snapshot reading",
+      "Repeatable Read: prevents dirty reads and non-repeatable reads (shared locks held till end or MVCC)",
+      "Serializable: prevents all anomalies including phantom reads via two-phase locking (2PL) or SSI"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Database Indexing: B+ Tree vs Hash Index (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Why do relational database engines like MySQL InnoDB and PostgreSQL default to B+ Trees instead of Hash Indexes or Binary Search Trees?",
+    "ideal_points": [
+      "B+ Trees have high fanout, minimizing expensive disk I/O per lookup (height typically 3-4 for millions of rows)",
+      "B+ Trees store all records in leaf nodes linked sequentially, enabling efficient range scans (BETWEEN, >, <)",
+      "Hash indexes do not support range scans or ordering (only exact equality =)",
+      "BSTs can unbalance and have high tree depth leading to excessive disk seeks"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Database Normalization (1NF, 2NF, 3NF, BCNF) (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Explain 1st, 2nd, 3rd, and Boyce-Codd Normal Form with functional dependencies. Why do production data warehouses intentionally denormalize?",
+    "ideal_points": [
+      "1NF: atomic values, no repeating groups",
+      "2NF: 1NF + no partial dependency on composite primary key",
+      "3NF: 2NF + no transitive dependencies (non-key attributes depend only on primary key)",
+      "BCNF: for every functional dependency X -> Y, X must be a superkey",
+      "OLAP / Data warehouses denormalize (star/snowflake schemas) to minimize expensive multi-table joins on aggregations"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "OOP Principles & SOLID (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Explain the 5 SOLID design principles with concrete architectural examples. How does the Dependency Inversion Principle facilitate testability?",
+    "ideal_points": [
+      "Single Responsibility: a class should have one reason to change",
+      "Open/Closed: open for extension, closed for modification",
+      "Liskov Substitution: subtypes must be substitutable for base types without breaking correctness",
+      "Interface Segregation: many client-specific interfaces over one general interface",
+      "Dependency Inversion: high-level modules depend on abstractions, enabling mock implementations in unit tests"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Garbage Collection Mechanisms (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Compare Mark-and-Sweep, Generational Garbage Collection, and Reference Counting. How do cyclical references cause memory leaks in naive reference counting?",
+    "ideal_points": [
+      "Reference counting tracks pointer count; fails on circular graphs A <-> B without weak references",
+      "Mark-and-Sweep traverses from root set (stack, globals) marking live objects, sweeps unmarked memory",
+      "Generational GC exploits weak generational hypothesis (most objects die young); Eden/Survivor spaces in young gen vs Tenured old gen"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Conflict Resolution (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Tell me about a time when you had a strong technical disagreement with a teammate or lead. How did you resolve it, and what was the outcome?",
+    "ideal_points": [
+      "Use STAR format (Situation, Task, Action, Result)",
+      "Focus on objective data, benchmarks, or prototypes rather than ego",
+      "Demonstrates active listening and empathy",
+      "Professional alignment and positive delivery outcome"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Handling Technical Failure (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Describe a project or technical initiative that failed or did not meet expectations. What was your role, what root cause did you identify, and what did you learn?",
+    "ideal_points": [
+      "Clear ownership without blaming teammates or external circumstances",
+      "Post-mortem / root-cause analysis methodology",
+      "Concrete operational changes implemented to prevent recurrence",
+      "Personal growth and resilience"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Ambiguous Requirements (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Give an example of a project where the requirements were vague or rapidly changing. How did you navigate the ambiguity and deliver value?",
+    "ideal_points": [
+      "Proactive stakeholder alignment and clarifying questions",
+      "Breaking scope down into iterative MVPs with fast feedback loops",
+      "Documenting technical trade-offs and assumptions",
+      "Delivering incrementally with measurable impact"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Underperforming Teammate (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] How did you handle a situation where a team member was falling behind on their deliverables during a critical sprint or deadline?",
+    "ideal_points": [
+      "Approached with curiosity and empathy rather than accusation",
+      "Identified roadblocks (knowledge gaps, tooling, personal challenges)",
+      "Paired on critical blockers and redistributed tasks collaboratively",
+      "Project completed on time while helping teammate improve"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Tight Deadlines & Prioritization (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Describe a time when you had multiple competing deadlines and insufficient time to finish everything. How did you prioritize your workload?",
+    "ideal_points": [
+      "Applied Eisenhower Matrix / business impact ranking",
+      "Proactive communication with managers to reset expectations early",
+      "Identified non-essential nice-to-haves that could be deferred",
+      "Delivered critical core features with high reliability"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Mentorship & Knowledge Sharing (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Tell me about a time you mentored a junior engineer, peer, or intern. How did you tailor your communication to their learning style?",
+    "ideal_points": [
+      "Assessed baseline understanding and encouraged independent problem solving",
+      "Provided actionable, constructive code reviews and paired debugging",
+      "Created documentation, onboarding guides, or internal tech talks",
+      "Mentee gained autonomy and successfully shipped key features"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Leading Without Authority (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Describe a situation where you had to persuade others to adopt a new tool, architecture, or practice without having formal managerial authority.",
+    "ideal_points": [
+      "Built consensus through small-scale proof of concepts and data",
+      "Addressed team concerns regarding learning curve and migration cost",
+      "Facilitated collaborative discussions rather than imposing mandates",
+      "Successful adoption resulting in measurable developer velocity improvements"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Customer / User Empathy (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Give an example of a technical decision you made where user feedback or customer empathy drastically changed your initial implementation plan.",
+    "ideal_points": [
+      "Valued real user workflow over purely theoretical engineering elegance",
+      "Conducted user research, error log analysis, or usability testing",
+      "Simplified UI or API design to eliminate confusion",
+      "Resulted in increased user satisfaction and lower support tickets"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "URL Shortener (TinyURL) (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Design a scalable URL Shortener service like TinyURL. Detail the API, hash/encoding strategy (Base62 vs counter), database schema, and handling 100M daily writes.",
+    "ideal_points": [
+      "API: POST /api/v1/urls, GET /{shortCode}",
+      "Base62 encoding of distributed unique 64-bit ID (Snowflake/Ticket service)",
+      "Cache frequently accessed URLs in Redis with LRU eviction",
+      "Database schema with short_code indexed, relational vs NoSQL",
+      "301 permanent vs 302 temporary redirect trade-offs"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Rate Limiter (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Design an API Rate Limiter that can handle 100,000 requests per second across a distributed microservice cluster. Compare algorithms and explain storage.",
+    "ideal_points": [
+      "Algorithms: Token Bucket, Leaky Bucket, Sliding Window Counter",
+      "Storage: Redis sorted sets or atomic INCR/EXPIRE scripts",
+      "Distributed race conditions solved via Lua scripts or Redis Transactions",
+      "HTTP 429 response headers: X-RateLimit-Limit, X-RateLimit-Remaining, Retry-After",
+      "Client IP vs user ID identification and DDoS protection tiers"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Distributed Key-Value Store (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Design a distributed, highly available Key-Value store similar to Amazon Dynamo or Apache Cassandra. Explain data partitioning, replication, quorum consensus, and conflict resolution.",
+    "ideal_points": [
+      "Data partitioning using Consistent Hashing with virtual nodes to avoid hotspots",
+      "Tunable consistency via quorum reads and writes: R + W > N",
+      "Vector clocks or Last-Write-Wins (LWW) for conflict resolution",
+      "Anti-entropy gossip protocol and Merkle trees for replica synchronization",
+      "Sloppy quorum and hinted handoff for temporary node partition tolerance"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Real-time Chat System (WhatsApp / Slack) (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Design a scalable 1-on-1 and group chat system. Discuss transport protocols, message delivery guarantees, online presence, and offline storage.",
+    "ideal_points": [
+      "Transport: WebSockets for persistent bi-directional connection; fallback to HTTP long polling",
+      "Gateway servers maintain active socket sessions, routed via Redis Pub/Sub or Kafka",
+      "Message storage in wide-column store (Cassandra/ScyllaDB) partitioned by chat_id",
+      "Presence service with heartbeat pings and TTL in Redis",
+      "Push notification integration (APNs/FCM) for offline users"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Social Media Feed (Twitter / Instagram) (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Design the timeline feed for a social network. Compare fan-out-on-write (push) versus fan-out-on-read (pull) models, and explain hybrid architecture for celebrity users.",
+    "ideal_points": [
+      "Push model: write post to all followers' timeline caches; O(1) read, expensive writes for popular accounts",
+      "Pull model: fetch posts of followed users on feed generation; cheap write, slow read join",
+      "Hybrid: Push for standard users, Pull on-the-fly for high-follower accounts (>20k followers)",
+      "Redis list stores timeline post IDs, hydration service fetches metadata",
+      "Ranking algorithm and pagination via cursor-based tokens"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Distributed Web Crawler (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Design a distributed Web Crawler capable of indexing 1 billion web pages per month. Cover URL frontier, politeness, duplicate detection, and distributed scheduling.",
+    "ideal_points": [
+      "URL Frontier with priority and politeness queues (delay per hostname)",
+      "Duplicate detection using MinHash/SimHash for near-duplicate documents and Bloom filters for seen URLs",
+      "DNS caching and resolution layer to prevent DNS saturation",
+      "Distributed workers fetching via async I/O with robots.txt compliance",
+      "Storage of raw HTML in S3/HDFS and extracted links enqueued into Kafka"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Notification System (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Design a high-volume notification system supporting SMS, Email, and Push Notifications with user preferences, rate limiting, and deduplication.",
+    "ideal_points": [
+      "Decoupled message ingestion via message queue (Kafka/RabbitMQ) with priority topics",
+      "Worker services per channel: Push (APNs/FCM), Email (SendGrid/SES), SMS (Twilio)",
+      "Template engine and user notification preferences database",
+      "Idempotency keys and Redis deduplication to avoid double-sending",
+      "Retry mechanism with exponential backoff and dead-letter queues (DLQ)"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Video Streaming Service (YouTube / Netflix) (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Design a video streaming platform. Detail video upload, ingestion, transcoding pipeline, chunked storage, adaptive bitrate streaming (HLS/DASH), and CDN caching.",
+    "ideal_points": [
+      "Upload via pre-signed multipart URLs directly to object storage (S3)",
+      "Distributed transcoding pipeline converting video into multiple resolutions (1080p, 720p, 480p) and chunks",
+      "Manifest generation for HLS (m3u8) / MPEG-DASH (mpd)",
+      "Content Delivery Network (CDN) edge caching closest to viewers",
+      "Adaptive Bitrate Streaming (ABR) dynamically switching chunk quality based on client network bandwidth"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "QuickSort vs MergeSort (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Compare QuickSort and MergeSort. Why is QuickSort often faster in practice despite having a worst-case O(n^2) runtime?",
+    "ideal_points": [
+      "In-place partitioning with zero extra memory allocation",
+      "Superior CPU cache locality of sequential array partitions",
+      "Randomized pivot selection avoids O(n^2) sorted inputs",
+      "MergeSort requires O(n) auxiliary space buffer"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "LRU Cache Implementation (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] How do you implement an LRU (Least Recently Used) cache with O(1) get and O(1) put operations?",
+    "ideal_points": [
+      "Combine a Hash Map with a Doubly Linked List",
+      "Hash Map keys point to Doubly Linked List nodes for O(1) lookup",
+      "List maintains usage order; most recent at head, least recent at tail",
+      "Removal and addition of nodes in list is O(1)"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "B-Tree vs Binary Search Tree (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Why are B-Trees preferred over Binary Search Trees for disk-based storage and databases?",
+    "ideal_points": [
+      "B-Trees have high branch fan-out (order M), drastically reducing tree height",
+      "Each node size corresponds to disk block/page size (e.g. 4KB-16KB)",
+      "Minimizes disk seek operations which dominate latency"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Segment Tree vs Fenwick Tree (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Compare a Segment Tree and a Fenwick Tree (Binary Indexed Tree) for range sum queries and point updates.",
+    "ideal_points": [
+      "Fenwick tree uses O(n) space and simple bitwise index transitions (i += i & -i)",
+      "Segment tree takes O(4n) space but supports arbitrary associative functions (min, max, gcd) and lazy propagation for range updates",
+      "Both achieve O(log n) update and query"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "String Matching Algorithms (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Explain the core intuition of the KMP (Knuth-Morris-Pratt) algorithm and how its LPS (longest proper prefix) array prevents redundant backtracking.",
+    "ideal_points": [
+      "LPS array precomputes length of longest prefix matching proper suffix for every subpattern",
+      "On mismatch, pattern pointer shifts to LPS[mismatch-1] instead of resetting text pointer",
+      "Guarantees O(n + m) linear search time"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Thread Safety & Race Conditions (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] What constitutes a race condition, and what synchronization primitives ensure thread safety in modern programming languages?",
+    "ideal_points": [
+      "Multiple threads access shared mutable state without proper synchronization and at least one write occurs",
+      "Mutual exclusion locks (Mutex, ReentrantLock)",
+      "Atomic operations using hardware Compare-And-Swap (CAS)",
+      "Immutability and thread-local storage"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "TCP Congestion Control (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Describe the phases of TCP congestion control: Slow Start, Congestion Avoidance, Fast Retransmit, and Fast Recovery.",
+    "ideal_points": [
+      "Slow Start exponentially doubles Congestion Window (cwnd) every RTT until ssthresh",
+      "Congestion Avoidance increases cwnd linearly by 1 MSS per RTT (AIMD)",
+      "Triple duplicate ACKs trigger Fast Retransmit without waiting for timeout",
+      "Fast Recovery halves cwnd and resumes linear growth"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "HTTPS / TLS Handshake (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Walk through the TLS 1.3 handshake. How does it establish an encrypted session in 1-RTT?",
+    "ideal_points": [
+      "ClientHello with supported ciphers and key share (Diffie-Hellman parameters)",
+      "ServerHello with chosen cipher, server certificate, and server key share",
+      "Both derive shared symmetric master secret immediately",
+      "Subsequent application data encrypted with AES-GCM or ChaCha20-Poly1305"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "Database Sharding Strategies (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] What is database sharding? Compare Range-based, Directory-based, and Hash-based sharding.",
+    "ideal_points": [
+      "Range-based shards by key ranges; simple queries but prone to write hotspots",
+      "Hash-based uses hash(key) % N or consistent hashing for even distribution",
+      "Cross-shard joins and distributed transactions become complex and slow",
+      "Re-sharding operational complexity"
+    ]
+  },
+  {
+    "track": "cs_fundamentals",
+    "topic": "CAP Theorem & PACELC (Part 1)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Explain the CAP theorem and the PACELC theorem. Give examples of real-world distributed systems representing CP and AP choices.",
+    "ideal_points": [
+      "CAP: Under network Partition (P), choose Consistency (C) or Availability (A)",
+      "PACELC: If Partition (P), choose A or C; Else (E), trade Latency (L) vs Consistency (C)",
+      "CP examples: ZooKeeper, etcd, MongoDB (default config)",
+      "AP examples: Cassandra, DynamoDB (with eventual consistency)"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Handling Constructive Feedback (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Tell me about a time you received difficult or critical feedback on your code or behavior. How did you process it and adapt?",
+    "ideal_points": [
+      "Listened without defensiveness and sought clarifying examples",
+      "Recognized validity of reviewer's technical perspective",
+      "Implemented improvements immediately and established personal checklist",
+      "Maintained positive collaborative relationship"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Balancing Speed vs Quality (Part 1)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] How do you decide when to ship code quickly with technical debt versus taking extra time to engineer a complete, robust solution?",
+    "ideal_points": [
+      "Assess project risk, blast radius, and business urgency",
+      "Communicate trade-offs clearly with product stakeholders",
+      "Document shortcuts in issue tracker and schedule technical debt cleanup sprints",
+      "Ensure core security and data integrity invariants are never compromised"
+    ]
+  },
+  {
+    "track": "behavioral",
+    "topic": "Taking Initiative (Part 1)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Describe a time when you noticed a problem or gap in a system or workflow that wasn't your direct responsibility, and took initiative to fix it.",
+    "ideal_points": [
+      "Identified pain point (e.g., slow CI builds, flaky tests, missing docs)",
+      "Investigated root cause on own initiative",
+      "Built small prototype or wrote clear proposal",
+      "Shared with team and drove measurable productivity gains"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Distributed Cache (Memcached/Redis) (Part 1)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Design a distributed caching tier. How do you handle cache invalidation, cache stampede (thundering herd), and hot key issues?",
+    "ideal_points": [
+      "Cache invalidation: write-through, write-behind, or TTL expiration",
+      "Thundering herd prevented via mutex locks, probabilistic early expiration (XFetch), or background refresh",
+      "Hot keys replicated across shards or protected by local in-memory L1 cache",
+      "Consistent hashing with replication"
+    ]
+  },
+  {
+    "track": "system_design",
+    "topic": "Metrics and Monitoring System (Part 2)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Design a distributed time-series metrics collection system like Prometheus and Grafana at scale.",
+    "ideal_points": [
+      "Pull vs push ingestion architecture",
+      "Time-series database (TSDB) optimized with delta-of-delta timestamp and XOR floating point compression (Gorilla)",
+      "Tiered rollups and downsampling for historical data retention",
+      "Alertmanager integration with threshold evaluation"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Array & Hash Table Trade-offs (Part 2)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Explain how a Hash Table achieves O(1) average lookup time, and what happens in the worst-case scenario. How do open addressing and separate chaining resolve collisions?",
+    "ideal_points": [
+      "Hash function maps keys to index via modulo",
+      "Separate chaining uses linked lists/BSTs in buckets",
+      "Open addressing probes next slots (linear, quadratic, double hashing)",
+      "Load factor threshold triggers resizing/rehashing",
+      "Worst case O(n) when all keys collide"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Binary Search Invariants (Part 2)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] How do you avoid off-by-one errors and integer overflow when implementing Binary Search? Explain the invariant for left <= right vs left < right.",
+    "ideal_points": [
+      "mid = left + (right - left) // 2 prevents integer overflow",
+      "Search space bounds invariant maintained each iteration",
+      "left <= right requires right = mid - 1 and left = mid + 1",
+      "Terminating conditions and pointer convergence"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Two Pointers vs Sliding Window (Part 2)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] What is the key structural difference between the Two Pointers technique and the Sliding Window technique? Give an example problem suited for each.",
+    "ideal_points": [
+      "Two pointers often start at opposing ends or move at different speeds (e.g., fast/slow cycle detection)",
+      "Sliding window maintains a contiguous subarray/substring with monotonic expansion and shrink criteria",
+      "Sliding window typically tracks aggregate state like frequency counts or sum"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Stack vs Monotonic Stack (Part 2)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Explain the mechanics of a Monotonic Stack. How does it find the Next Greater Element for all elements in an array in O(n) total time?",
+    "ideal_points": [
+      "Monotonic stack maintains elements in strictly increasing or decreasing order",
+      "Each element is pushed once and popped at most once, guaranteeing amortized O(n)",
+      "When a new element violates monotonicity, popped elements have found their boundary"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Fast & Slow Pointers (Floyd's Cycle Finding) (Part 2)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Explain Floyd's cycle-finding algorithm for linked lists. How mathematically do you find the entrance of the cycle once a collision occurs?",
+    "ideal_points": [
+      "Slow pointer advances 1 step, fast advances 2 steps",
+      "Collision is guaranteed inside the cycle if one exists",
+      "Reset one pointer to head; advance both 1 step until they meet at entrance: 2(F + a) = F + a + nC => F = nC - a"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Recursion vs Iteration in Trees (Part 2)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Compare recursive Depth-First Search with iterative BFS for level-order traversal of a binary tree in terms of call stack and queue memory consumption.",
+    "ideal_points": [
+      "DFS recursive call stack space is proportional to tree height O(h), worst-case O(n) skewed, O(log n) balanced",
+      "BFS queue space is proportional to maximum level width, which is O(n/2) = O(n) for the leaf level of a complete tree"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Balanced BST vs Skip List (Part 2)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Compare AVL Trees, Red-Black Trees, and Skip Lists for maintaining dynamic sorted datasets. Why does the Linux kernel prefer Red-Black Trees while Redis uses Skip Lists for Sorted Sets?",
+    "ideal_points": [
+      "AVL trees are more rigidly balanced, resulting in faster lookups but slower insertions/deletions due to rotations",
+      "Red-Black trees require at most 2 rotations per insertion and 3 per deletion",
+      "Skip lists use probabilistic balancing without tree rotations, simpler lock-free concurrent implementations"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Trie Complexity and Space Optimization (Part 2)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Explain how a Prefix Tree (Trie) works. What are its lookup and insert complexities, and how does a Radix Tree (Compressed Trie) save space?",
+    "ideal_points": [
+      "Lookup and insert are O(k) where k is word length, independent of dictionary size n",
+      "Alphabet size per node creates significant pointer overhead in standard tries",
+      "Radix tree compresses single-child edge sequences into multi-character strings"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Priority Queue & Binary Heap Operations (Part 2)",
+    "difficulty": 1,
+    "question_text": "[Advanced Application] Explain the sift-up and sift-down operations in a Min-Heap. Why does building a heap from an unsorted array take O(n) time rather than O(n log n)?",
+    "ideal_points": [
+      "Sift-up bubbles a newly added child element up to restore heap invariant (O(log n))",
+      "Sift-down pushes root down after extract-min (O(log n))",
+      "Heapify from bottom-up: sum of h/2^h converges to constant, total work is O(n) mathematically"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Backtracking Pruning Strategies (Part 2)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] What distinguishes Backtracking from brute-force exhaustive search? Illustrate using the N-Queens problem how constraint propagation prunes the state space tree.",
+    "ideal_points": [
+      "Backtracking evaluates partial candidate validity before exploring deeper branches",
+      "Dead-end states immediately prune the entire subtree",
+      "In N-Queens, diagonal and column bitmasks check safety in O(1) before recurring"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "BFS vs DFS for Shortest Paths (Part 2)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] Why does Breadth-First Search guarantee the shortest path on unweighted graphs, and why does DFS fail to provide this guarantee?",
+    "ideal_points": [
+      "BFS explores nodes in increasing order of distance (layer by layer)",
+      "First time target is visited is guaranteed minimal edge count",
+      "DFS plunges deeply into first branch found, which may reach destination via a longer circuitous route"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Dijkstra's Algorithm Invariant (Part 2)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Explain Dijkstra's shortest path algorithm. Why does it require non-negative edge weights, and how does it fail with negative cycles?",
+    "ideal_points": [
+      "Greedy invariant assumes once a node is finalized from priority queue, its distance cannot be shortened",
+      "Negative edges can decrease distance after finalization, invalidating the settled set",
+      "Complexity O((V + E) log V) with min-heap"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Bellman-Ford & Negative Cycle Detection (Part 2)",
+    "difficulty": 3,
+    "question_text": "[Advanced Application] How does the Bellman-Ford algorithm detect negative weight cycles in a directed graph, and what is its time complexity?",
+    "ideal_points": [
+      "Relaxes all E edges V-1 times, since a simple path has at most V-1 edges",
+      "A V-th pass that can still relax any edge proves existence of a negative weight cycle",
+      "Time complexity is O(V * E)"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Disjoint Set Union (Union-Find) Optimizations (Part 2)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Explain the Disjoint Set Union (DSU) data structure. How do Path Compression and Union by Rank achieve near O(1) amortized time per operation?",
+    "ideal_points": [
+      "Find identifies canonical representative; path compression flattens tree pointing nodes directly to root",
+      "Union by rank/size attaches shallower tree under root of deeper tree",
+      "Combined optimizations achieve Inverse Ackermann complexity alpha(n) < 5 for all practical n"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Topological Sorting (Kahn's vs DFS) (Part 2)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Describe Kahn's algorithm (indegree-based BFS) and DFS post-order traversal for Topological Sorting of a Directed Acyclic Graph (DAG). How do they detect cycles?",
+    "ideal_points": [
+      "Kahn's tracks in-degrees, enqueues 0 in-degree nodes, decrements neighbors upon removal",
+      "If processed node count < V, graph has a directed cycle",
+      "DFS uses 3-color state (unvisited, visiting, visited); encountering a 'visiting' node detects a back-edge (cycle)"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Memoization vs Tabulation in Dynamic Programming (Part 2)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Contrast top-down dynamic programming (memoization) with bottom-up dynamic programming (tabulation). What are the trade-offs regarding recursion overhead and cache locality?",
+    "ideal_points": [
+      "Top-down is recursive with hash/array cache, computes only reachable states on demand",
+      "Bottom-up is iterative, filling table in topological order, avoiding call stack overhead",
+      "Bottom-up allows space optimization (e.g., rolling array) and better CPU cache locality"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "0/1 Knapsack vs Unbounded Knapsack (Part 2)",
+    "difficulty": 4,
+    "question_text": "[Advanced Application] Explain the state definition and transition difference between the 0/1 Knapsack problem and the Unbounded Knapsack problem.",
+    "ideal_points": [
+      "0/1 Knapsack: items used at most once; 1D array traversed backwards to prevent reusing same item in current step",
+      "Unbounded Knapsack: items can be reused infinitely; 1D array traversed forwards so updated states can contribute again",
+      "State: dp[w] = max value for capacity w"
+    ]
+  },
+  {
+    "track": "dsa_concepts",
+    "topic": "Longest Common Subsequence vs Substring (Part 2)",
+    "difficulty": 2,
+    "question_text": "[Advanced Application] Compare the DP formulation of Longest Common Subsequence (LCS) versus Longest Common Substring. What is the state transition for each?",
+    "ideal_points": [
+      "LCS: if chars match dp[i][j] = 1 + dp[i-1][j-1], else max(dp[i-1][j], dp[i][j-1])",
+      "Substring: if chars match dp[i][j] = 1 + dp[i-1][j-1], else dp[i][j] = 0 (contiguous reset)",
+      "Space optimization from O(m*n) to O(min(m, n))"
+    ]
+  }
+]

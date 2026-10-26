@@ -1,0 +1,142 @@
+[
+  {
+    "slug": "arrays-and-hashing",
+    "name": "Arrays & Hashing",
+    "category": "Core Data Structures",
+    "importance": 1.0,
+    "target_points": 12.0
+  },
+  {
+    "slug": "two-pointers",
+    "name": "Two Pointers",
+    "category": "Algorithms",
+    "importance": 0.9,
+    "target_points": 12.0
+  },
+  {
+    "slug": "sliding-window",
+    "name": "Sliding Window",
+    "category": "Algorithms",
+    "importance": 0.9,
+    "target_points": 12.0
+  },
+  {
+    "slug": "stack",
+    "name": "Stack",
+    "category": "Core Data Structures",
+    "importance": 0.85,
+    "target_points": 12.0
+  },
+  {
+    "slug": "binary-search",
+    "name": "Binary Search",
+    "category": "Algorithms",
+    "importance": 0.95,
+    "target_points": 12.0
+  },
+  {
+    "slug": "linked-list",
+    "name": "Linked List",
+    "category": "Core Data Structures",
+    "importance": 0.8,
+    "target_points": 12.0
+  },
+  {
+    "slug": "trees",
+    "name": "Trees & BST",
+    "category": "Hierarchical Data Structures",
+    "importance": 1.0,
+    "target_points": 14.0
+  },
+  {
+    "slug": "tries",
+    "name": "Tries (Prefix Trees)",
+    "category": "Hierarchical Data Structures",
+    "importance": 0.75,
+    "target_points": 10.0
+  },
+  {
+    "slug": "heap-priority-queue",
+    "name": "Heap / Priority Queue",
+    "category": "Core Data Structures",
+    "importance": 0.85,
+    "target_points": 12.0
+  },
+  {
+    "slug": "backtracking",
+    "name": "Backtracking",
+    "category": "Algorithms",
+    "importance": 0.8,
+    "target_points": 12.0
+  },
+  {
+    "slug": "graphs",
+    "name": "Graphs (BFS / DFS)",
+    "category": "Advanced Data Structures",
+    "importance": 1.0,
+    "target_points": 15.0
+  },
+  {
+    "slug": "advanced-graphs",
+    "name": "Advanced Graphs (Dijkstra / MST)",
+    "category": "Advanced Data Structures",
+    "importance": 0.75,
+    "target_points": 12.0
+  },
+  {
+    "slug": "1d-dynamic-programming",
+    "name": "1-D Dynamic Programming",
+    "category": "Dynamic Programming",
+    "importance": 0.95,
+    "target_points": 15.0
+  },
+  {
+    "slug": "2d-dynamic-programming",
+    "name": "2-D Dynamic Programming",
+    "category": "Dynamic Programming",
+    "importance": 0.9,
+    "target_points": 15.0
+  },
+  {
+    "slug": "greedy",
+    "name": "Greedy Algorithms",
+    "category": "Algorithms",
+    "importance": 0.85,
+    "target_points": 12.0
+  },
+  {
+    "slug": "intervals",
+    "name": "Intervals",
+    "category": "Algorithms",
+    "importance": 0.8,
+    "target_points": 10.0
+  },
+  {
+    "slug": "math-and-geometry",
+    "name": "Math & Geometry",
+    "category": "Applied Algorithms",
+    "importance": 0.65,
+    "target_points": 10.0
+  },
+  {
+    "slug": "bit-manipulation",
+    "name": "Bit Manipulation",
+    "category": "Applied Algorithms",
+    "importance": 0.7,
+    "target_points": 10.0
+  },
+  {
+    "slug": "union-find",
+    "name": "Union Find (Disjoint Sets)",
+    "category": "Advanced Data Structures",
+    "importance": 0.75,
+    "target_points": 10.0
+  },
+  {
+    "slug": "topological-sort",
+    "name": "Topological Sort",
+    "category": "Advanced Data Structures",
+    "importance": 0.8,
+    "target_points": 10.0
+  }
+]

@@ -1,0 +1,3489 @@
+[
+  {
+    "id": "python",
+    "name": "Python",
+    "category": "Programming Languages",
+    "aliases": [
+      "python3",
+      "py",
+      "cpython"
+    ]
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "category": "Programming Languages",
+    "aliases": [
+      "js",
+      "es6",
+      "ecmascript",
+      "es2020"
+    ]
+  },
+  {
+    "id": "typescript",
+    "name": "TypeScript",
+    "category": "Programming Languages",
+    "aliases": [
+      "ts"
+    ]
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "category": "Programming Languages",
+    "aliases": [
+      "java8",
+      "java11",
+      "java17",
+      "java21",
+      "jvm"
+    ]
+  },
+  {
+    "id": "csharp",
+    "name": "C#",
+    "category": "Programming Languages",
+    "aliases": [
+      "c#",
+      "c-sharp",
+      ".net c#"
+    ]
+  },
+  {
+    "id": "cpp",
+    "name": "C++",
+    "category": "Programming Languages",
+    "aliases": [
+      "c++",
+      "cpp",
+      "c plus plus",
+      "c++17",
+      "c++20"
+    ]
+  },
+  {
+    "id": "c",
+    "name": "C",
+    "category": "Programming Languages",
+    "aliases": [
+      "ansi c",
+      "c99",
+      "c11"
+    ]
+  },
+  {
+    "id": "golang",
+    "name": "Go",
+    "category": "Programming Languages",
+    "aliases": [
+      "golang",
+      "go-lang"
+    ]
+  },
+  {
+    "id": "rust",
+    "name": "Rust",
+    "category": "Programming Languages",
+    "aliases": [
+      "rust-lang",
+      "cargo"
+    ]
+  },
+  {
+    "id": "ruby",
+    "name": "Ruby",
+    "category": "Programming Languages",
+    "aliases": [
+      "ruby-lang"
+    ]
+  },
+  {
+    "id": "php",
+    "name": "PHP",
+    "category": "Programming Languages",
+    "aliases": [
+      "php7",
+      "php8",
+      "modern php"
+    ]
+  },
+  {
+    "id": "swift",
+    "name": "Swift",
+    "category": "Programming Languages",
+    "aliases": [
+      "swift5",
+      "apple swift"
+    ]
+  },
+  {
+    "id": "kotlin",
+    "name": "Kotlin",
+    "category": "Programming Languages",
+    "aliases": [
+      "kotlin/jvm",
+      "android kotlin"
+    ]
+  },
+  {
+    "id": "scala",
+    "name": "Scala",
+    "category": "Programming Languages",
+    "aliases": [
+      "scala3",
+      "functional scala"
+    ]
+  },
+  {
+    "id": "sql",
+    "name": "SQL",
+    "category": "Programming Languages",
+    "aliases": [
+      "structured query language",
+      "ansi sql",
+      "t-sql"
+    ]
+  },
+  {
+    "id": "r",
+    "name": "R",
+    "category": "Programming Languages",
+    "aliases": [
+      "r-lang",
+      "r programming"
+    ]
+  },
+  {
+    "id": "dart",
+    "name": "Dart",
+    "category": "Programming Languages",
+    "aliases": [
+      "flutter dart"
+    ]
+  },
+  {
+    "id": "shell_scripting",
+    "name": "Shell Scripting",
+    "category": "Programming Languages",
+    "aliases": [
+      "bash",
+      "zsh",
+      "sh",
+      "linux shell"
+    ]
+  },
+  {
+    "id": "haskell",
+    "name": "Haskell",
+    "category": "Programming Languages",
+    "aliases": [
+      "functional haskell"
+    ]
+  },
+  {
+    "id": "elixir",
+    "name": "Elixir",
+    "category": "Programming Languages",
+    "aliases": [
+      "erlang elixir",
+      "phoenix framework"
+    ]
+  },
+  {
+    "id": "clojure",
+    "name": "Clojure",
+    "category": "Programming Languages",
+    "aliases": [
+      "clojurescript",
+      "lisp"
+    ]
+  },
+  {
+    "id": "lua",
+    "name": "Lua",
+    "category": "Programming Languages",
+    "aliases": [
+      "luajit"
+    ]
+  },
+  {
+    "id": "perl",
+    "name": "Perl",
+    "category": "Programming Languages",
+    "aliases": [
+      "perl5"
+    ]
+  },
+  {
+    "id": "zig",
+    "name": "Zig",
+    "category": "Programming Languages",
+    "aliases": [
+      "zig-lang"
+    ]
+  },
+  {
+    "id": "matlab",
+    "name": "MATLAB",
+    "category": "Programming Languages",
+    "aliases": [
+      "simulink"
+    ]
+  },
+  {
+    "id": "assembly",
+    "name": "Assembly",
+    "category": "Programming Languages",
+    "aliases": [
+      "x86 assembly",
+      "arm assembly",
+      "nasm"
+    ]
+  },
+  {
+    "id": "solidity",
+    "name": "Solidity",
+    "category": "Programming Languages",
+    "aliases": [
+      "smart contracts",
+      "ethereum solidity"
+    ]
+  },
+  {
+    "id": "groovy",
+    "name": "Groovy",
+    "category": "Programming Languages",
+    "aliases": [
+      "apache groovy",
+      "gradle groovy"
+    ]
+  },
+  {
+    "id": "powershell",
+    "name": "PowerShell",
+    "category": "Programming Languages",
+    "aliases": [
+      "pwsh",
+      "windows powershell"
+    ]
+  },
+  {
+    "id": "objective_c",
+    "name": "Objective-C",
+    "category": "Programming Languages",
+    "aliases": [
+      "objc",
+      "apple objective-c"
+    ]
+  },
+  {
+    "id": "html5",
+    "name": "HTML5",
+    "category": "Frontend Development",
+    "aliases": [
+      "html",
+      "semantic html"
+    ]
+  },
+  {
+    "id": "css3",
+    "name": "CSS3",
+    "category": "Frontend Development",
+    "aliases": [
+      "css",
+      "cascading style sheets",
+      "flexbox",
+      "css grid"
+    ]
+  },
+  {
+    "id": "react",
+    "name": "React",
+    "category": "Frontend Development",
+    "aliases": [
+      "reactjs",
+      "react.js",
+      "react 18",
+      "react 19"
+    ]
+  },
+  {
+    "id": "nextjs",
+    "name": "Next.js",
+    "category": "Frontend Development",
+    "aliases": [
+      "nextjs",
+      "next.js",
+      "ssr nextjs"
+    ]
+  },
+  {
+    "id": "vue",
+    "name": "Vue.js",
+    "category": "Frontend Development",
+    "aliases": [
+      "vue",
+      "vuejs",
+      "vue 3",
+      "composition api"
+    ]
+  },
+  {
+    "id": "nuxt",
+    "name": "Nuxt.js",
+    "category": "Frontend Development",
+    "aliases": [
+      "nuxtjs",
+      "nuxt 3"
+    ]
+  },
+  {
+    "id": "angular",
+    "name": "Angular",
+    "category": "Frontend Development",
+    "aliases": [
+      "angularjs",
+      "angular 16",
+      "angular 17",
+      "rxjs"
+    ]
+  },
+  {
+    "id": "svelte",
+    "name": "Svelte",
+    "category": "Frontend Development",
+    "aliases": [
+      "sveltekit",
+      "svelte 4",
+      "svelte 5"
+    ]
+  },
+  {
+    "id": "tailwind_css",
+    "name": "Tailwind CSS",
+    "category": "Frontend Development",
+    "aliases": [
+      "tailwindcss",
+      "tailwind"
+    ]
+  },
+  {
+    "id": "bootstrap",
+    "name": "Bootstrap",
+    "category": "Frontend Development",
+    "aliases": [
+      "bootstrap 5",
+      "twitter bootstrap"
+    ]
+  },
+  {
+    "id": "sass",
+    "name": "Sass / SCSS",
+    "category": "Frontend Development",
+    "aliases": [
+      "sass",
+      "scss",
+      "syntactically awesome style sheets"
+    ]
+  },
+  {
+    "id": "material_ui",
+    "name": "Material-UI (MUI)",
+    "category": "Frontend Development",
+    "aliases": [
+      "mui",
+      "material ui",
+      "material design"
+    ]
+  },
+  {
+    "id": "shadcn_ui",
+    "name": "shadcn/ui",
+    "category": "Frontend Development",
+    "aliases": [
+      "shadcn",
+      "radix ui"
+    ]
+  },
+  {
+    "id": "chakra_ui",
+    "name": "Chakra UI",
+    "category": "Frontend Development",
+    "aliases": [
+      "chakra"
+    ]
+  },
+  {
+    "id": "redux",
+    "name": "Redux",
+    "category": "Frontend Development",
+    "aliases": [
+      "redux toolkit",
+      "rtk",
+      "redux state"
+    ]
+  },
+  {
+    "id": "zustand",
+    "name": "Zustand",
+    "category": "Frontend Development",
+    "aliases": [
+      "zustand store"
+    ]
+  },
+  {
+    "id": "tanstack_query",
+    "name": "TanStack Query",
+    "category": "Frontend Development",
+    "aliases": [
+      "react query",
+      "react-query",
+      "tanstack"
+    ]
+  },
+  {
+    "id": "mobx",
+    "name": "MobX",
+    "category": "Frontend Development",
+    "aliases": [
+      "mobx state tree"
+    ]
+  },
+  {
+    "id": "recoil",
+    "name": "Recoil",
+    "category": "Frontend Development",
+    "aliases": [
+      "recoil state"
+    ]
+  },
+  {
+    "id": "vite",
+    "name": "Vite",
+    "category": "Frontend Development",
+    "aliases": [
+      "vitejs",
+      "vite bundler"
+    ]
+  },
+  {
+    "id": "webpack",
+    "name": "Webpack",
+    "category": "Frontend Development",
+    "aliases": [
+      "webpack 5",
+      "webpack bundler"
+    ]
+  },
+  {
+    "id": "turbopack",
+    "name": "Turbopack",
+    "category": "Frontend Development",
+    "aliases": [
+      "turbo repo",
+      "turborepo"
+    ]
+  },
+  {
+    "id": "rollup",
+    "name": "Rollup",
+    "category": "Frontend Development",
+    "aliases": [
+      "rollup.js"
+    ]
+  },
+  {
+    "id": "babel",
+    "name": "Babel",
+    "category": "Frontend Development",
+    "aliases": [
+      "babel transpiler"
+    ]
+  },
+  {
+    "id": "storybook",
+    "name": "Storybook",
+    "category": "Frontend Development",
+    "aliases": [
+      "storybookjs",
+      "component library"
+    ]
+  },
+  {
+    "id": "jest",
+    "name": "Jest",
+    "category": "Frontend Development",
+    "aliases": [
+      "jest testing framework"
+    ]
+  },
+  {
+    "id": "vitest",
+    "name": "Vitest",
+    "category": "Frontend Development",
+    "aliases": [
+      "vitest test runner"
+    ]
+  },
+  {
+    "id": "playwright",
+    "name": "Playwright",
+    "category": "Frontend Development",
+    "aliases": [
+      "playwright e2e",
+      "browser automation"
+    ]
+  },
+  {
+    "id": "cypress",
+    "name": "Cypress",
+    "category": "Frontend Development",
+    "aliases": [
+      "cypress.io",
+      "cypress e2e"
+    ]
+  },
+  {
+    "id": "webrtc",
+    "name": "WebRTC",
+    "category": "Frontend Development",
+    "aliases": [
+      "real-time communications",
+      "rtc data channels"
+    ]
+  },
+  {
+    "id": "webassembly",
+    "name": "WebAssembly",
+    "category": "Frontend Development",
+    "aliases": [
+      "wasm",
+      "web assembly"
+    ]
+  },
+  {
+    "id": "pwa",
+    "name": "Progressive Web Apps (PWA)",
+    "category": "Frontend Development",
+    "aliases": [
+      "service workers",
+      "offline-first web"
+    ]
+  },
+  {
+    "id": "electron",
+    "name": "Electron",
+    "category": "Frontend Development",
+    "aliases": [
+      "electronjs",
+      "desktop apps with web tech"
+    ]
+  },
+  {
+    "id": "react_native",
+    "name": "React Native",
+    "category": "Mobile Development",
+    "aliases": [
+      "react-native",
+      "expo",
+      "rn"
+    ]
+  },
+  {
+    "id": "flutter",
+    "name": "Flutter",
+    "category": "Mobile Development",
+    "aliases": [
+      "flutter sdk",
+      "flutter mobile"
+    ]
+  },
+  {
+    "id": "ios_development",
+    "name": "iOS Development",
+    "category": "Mobile Development",
+    "aliases": [
+      "ios",
+      "uikit",
+      "swiftui",
+      "xcode"
+    ]
+  },
+  {
+    "id": "android_development",
+    "name": "Android Development",
+    "category": "Mobile Development",
+    "aliases": [
+      "android sdk",
+      "jetpack compose"
+    ]
+  },
+  {
+    "id": "nodejs",
+    "name": "Node.js",
+    "category": "Backend Development",
+    "aliases": [
+      "node",
+      "nodejs",
+      "v8 engine"
+    ]
+  },
+  {
+    "id": "expressjs",
+    "name": "Express.js",
+    "category": "Backend Development",
+    "aliases": [
+      "express",
+      "expressjs"
+    ]
+  },
+  {
+    "id": "nestjs",
+    "name": "NestJS",
+    "category": "Backend Development",
+    "aliases": [
+      "nest.js",
+      "nest backend"
+    ]
+  },
+  {
+    "id": "fastapi",
+    "name": "FastAPI",
+    "category": "Backend Development",
+    "aliases": [
+      "fast-api",
+      "pydantic fastapi"
+    ]
+  },
+  {
+    "id": "flask",
+    "name": "Flask",
+    "category": "Backend Development",
+    "aliases": [
+      "flask microframework",
+      "werkzeug"
+    ]
+  },
+  {
+    "id": "django",
+    "name": "Django",
+    "category": "Backend Development",
+    "aliases": [
+      "django rest framework",
+      "drf",
+      "django orm"
+    ]
+  },
+  {
+    "id": "spring_boot",
+    "name": "Spring Boot",
+    "category": "Backend Development",
+    "aliases": [
+      "springboot",
+      "spring framework",
+      "spring security"
+    ]
+  },
+  {
+    "id": "spring_cloud",
+    "name": "Spring Cloud",
+    "category": "Backend Development",
+    "aliases": [
+      "spring microservices"
+    ]
+  },
+  {
+    "id": "aspnet_core",
+    "name": "ASP.NET Core",
+    "category": "Backend Development",
+    "aliases": [
+      ".net core",
+      "asp.net",
+      "entity framework"
+    ]
+  },
+  {
+    "id": "ruby_on_rails",
+    "name": "Ruby on Rails",
+    "category": "Backend Development",
+    "aliases": [
+      "rails",
+      "ror"
+    ]
+  },
+  {
+    "id": "laravel",
+    "name": "Laravel",
+    "category": "Backend Development",
+    "aliases": [
+      "laravel php",
+      "eloquent orm"
+    ]
+  },
+  {
+    "id": "gin",
+    "name": "Gin Web Framework",
+    "category": "Backend Development",
+    "aliases": [
+      "gin-gonic",
+      "go gin"
+    ]
+  },
+  {
+    "id": "fiber",
+    "name": "Fiber",
+    "category": "Backend Development",
+    "aliases": [
+      "gofiber",
+      "go fiber framework"
+    ]
+  },
+  {
+    "id": "actix_web",
+    "name": "Actix Web",
+    "category": "Backend Development",
+    "aliases": [
+      "actix",
+      "rust web framework"
+    ]
+  },
+  {
+    "id": "axum",
+    "name": "Axum",
+    "category": "Backend Development",
+    "aliases": [
+      "rust axum",
+      "tokio axum"
+    ]
+  },
+  {
+    "id": "graphql",
+    "name": "GraphQL",
+    "category": "Backend Development",
+    "aliases": [
+      "apollo server",
+      "graphql schema",
+      "strawberry graphql"
+    ]
+  },
+  {
+    "id": "rest_api",
+    "name": "RESTful APIs",
+    "category": "Backend Development",
+    "aliases": [
+      "rest api",
+      "restful web services",
+      "openapi",
+      "swagger"
+    ]
+  },
+  {
+    "id": "grpc",
+    "name": "gRPC",
+    "category": "Backend Development",
+    "aliases": [
+      "protobuf",
+      "protocol buffers",
+      "rpc services"
+    ]
+  },
+  {
+    "id": "websocket",
+    "name": "WebSockets",
+    "category": "Backend Development",
+    "aliases": [
+      "socket.io",
+      "ws",
+      "full-duplex communication"
+    ]
+  },
+  {
+    "id": "celery",
+    "name": "Celery",
+    "category": "Backend Development",
+    "aliases": [
+      "celery task queue",
+      "distributed task queue"
+    ]
+  },
+  {
+    "id": "jwt",
+    "name": "JSON Web Tokens (JWT)",
+    "category": "Backend Development",
+    "aliases": [
+      "jwt auth",
+      "token authentication"
+    ]
+  },
+  {
+    "id": "oauth2",
+    "name": "OAuth 2.0",
+    "category": "Backend Development",
+    "aliases": [
+      "oauth",
+      "oidc",
+      "openid connect",
+      "auth0"
+    ]
+  },
+  {
+    "id": "microservices",
+    "name": "Microservices Architecture",
+    "category": "Backend Development",
+    "aliases": [
+      "microservices",
+      "service mesh"
+    ]
+  },
+  {
+    "id": "event_driven_architecture",
+    "name": "Event-Driven Architecture",
+    "category": "Backend Development",
+    "aliases": [
+      "event sourcing",
+      "eda"
+    ]
+  },
+  {
+    "id": "message_queues",
+    "name": "Message Queuing",
+    "category": "Backend Development",
+    "aliases": [
+      "pub/sub",
+      "message broker"
+    ]
+  },
+  {
+    "id": "cors",
+    "name": "CORS Configuration",
+    "category": "Backend Development",
+    "aliases": [
+      "cross-origin resource sharing"
+    ]
+  },
+  {
+    "id": "rate_limiting",
+    "name": "Rate Limiting & Throttling",
+    "category": "Backend Development",
+    "aliases": [
+      "leaky bucket",
+      "token bucket",
+      "slowapi"
+    ]
+  },
+  {
+    "id": "postgresql",
+    "name": "PostgreSQL",
+    "category": "Databases",
+    "aliases": [
+      "postgres",
+      "pgsql",
+      "neon postgres",
+      "timescaledb"
+    ]
+  },
+  {
+    "id": "mysql",
+    "name": "MySQL",
+    "category": "Databases",
+    "aliases": [
+      "mariadb",
+      "innodb"
+    ]
+  },
+  {
+    "id": "mongodb",
+    "name": "MongoDB",
+    "category": "Databases",
+    "aliases": [
+      "mongo",
+      "nosql mongodb",
+      "mongoose"
+    ]
+  },
+  {
+    "id": "redis",
+    "name": "Redis",
+    "category": "Databases",
+    "aliases": [
+      "redis cache",
+      "valkey",
+      "in-memory data store"
+    ]
+  },
+  {
+    "id": "sqlite",
+    "name": "SQLite",
+    "category": "Databases",
+    "aliases": [
+      "sqlite3",
+      "embedded sql"
+    ]
+  },
+  {
+    "id": "elasticsearch",
+    "name": "Elasticsearch",
+    "category": "Databases",
+    "aliases": [
+      "elastic search",
+      "opensearch",
+      "elk stack"
+    ]
+  },
+  {
+    "id": "cassandra",
+    "name": "Apache Cassandra",
+    "category": "Databases",
+    "aliases": [
+      "cassandra",
+      "cql",
+      "wide-column store"
+    ]
+  },
+  {
+    "id": "dynamodb",
+    "name": "Amazon DynamoDB",
+    "category": "Databases",
+    "aliases": [
+      "dynamodb",
+      "aws nosql"
+    ]
+  },
+  {
+    "id": "neo4j",
+    "name": "Neo4j",
+    "category": "Databases",
+    "aliases": [
+      "graph database",
+      "cypher query language"
+    ]
+  },
+  {
+    "id": "couchbase",
+    "name": "Couchbase",
+    "category": "Databases",
+    "aliases": [
+      "couchdb",
+      "document store"
+    ]
+  },
+  {
+    "id": "clickhouse",
+    "name": "ClickHouse",
+    "category": "Databases",
+    "aliases": [
+      "columnar database",
+      "olap clickhouse"
+    ]
+  },
+  {
+    "id": "snowflake",
+    "name": "Snowflake",
+    "category": "Databases",
+    "aliases": [
+      "snowflake data cloud",
+      "cloud data warehouse"
+    ]
+  },
+  {
+    "id": "bigquery",
+    "name": "Google BigQuery",
+    "category": "Databases",
+    "aliases": [
+      "bigquery",
+      "gcp bigquery"
+    ]
+  },
+  {
+    "id": "redshift",
+    "name": "Amazon Redshift",
+    "category": "Databases",
+    "aliases": [
+      "aws redshift",
+      "data warehouse"
+    ]
+  },
+  {
+    "id": "cockroachdb",
+    "name": "CockroachDB",
+    "category": "Databases",
+    "aliases": [
+      "distributed sql",
+      "spanner model"
+    ]
+  },
+  {
+    "id": "scylladb",
+    "name": "ScyllaDB",
+    "category": "Databases",
+    "aliases": [
+      "c++ cassandra alternative"
+    ]
+  },
+  {
+    "id": "supabase",
+    "name": "Supabase",
+    "category": "Databases",
+    "aliases": [
+      "supabase postgres",
+      "backend-as-a-service"
+    ]
+  },
+  {
+    "id": "firebase",
+    "name": "Firebase Realtime DB / Firestore",
+    "category": "Databases",
+    "aliases": [
+      "firestore",
+      "firebase"
+    ]
+  },
+  {
+    "id": "vector_databases",
+    "name": "Vector Databases",
+    "category": "Databases",
+    "aliases": [
+      "pinecone",
+      "chroma",
+      "weaviate",
+      "milvus",
+      "qdrant",
+      "faiss"
+    ]
+  },
+  {
+    "id": "sqlalchemy",
+    "name": "SQLAlchemy",
+    "category": "Databases",
+    "aliases": [
+      "sqlalchemy 2.0",
+      "python orm"
+    ]
+  },
+  {
+    "id": "prisma",
+    "name": "Prisma ORM",
+    "category": "Databases",
+    "aliases": [
+      "prisma",
+      "prisma client"
+    ]
+  },
+  {
+    "id": "hibernate",
+    "name": "Hibernate ORM",
+    "category": "Databases",
+    "aliases": [
+      "jpa",
+      "java persistence api"
+    ]
+  },
+  {
+    "id": "database_indexing",
+    "name": "Database Indexing & Optimization",
+    "category": "Databases",
+    "aliases": [
+      "b-tree",
+      "hash index",
+      "query execution plans",
+      "explain analyze"
+    ]
+  },
+  {
+    "id": "acid_transactions",
+    "name": "ACID Transactions",
+    "category": "Databases",
+    "aliases": [
+      "database atomicity",
+      "isolation levels",
+      "concurrency control"
+    ]
+  },
+  {
+    "id": "database_sharding",
+    "name": "Database Sharding & Replication",
+    "category": "Databases",
+    "aliases": [
+      "sharding",
+      "read replicas",
+      "data partitioning"
+    ]
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "docker containers",
+      "dockerfile",
+      "docker compose"
+    ]
+  },
+  {
+    "id": "kubernetes",
+    "name": "Kubernetes",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "k8s",
+      "kubectl",
+      "helm charts",
+      "kubelet"
+    ]
+  },
+  {
+    "id": "aws",
+    "name": "Amazon Web Services (AWS)",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "aws cloud",
+      "ec2",
+      "s3",
+      "lambda",
+      "ecs",
+      "eks",
+      "rds"
+    ]
+  },
+  {
+    "id": "gcp",
+    "name": "Google Cloud Platform (GCP)",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "google cloud",
+      "gcp",
+      "cloud run",
+      "gke",
+      "cloud functions"
+    ]
+  },
+  {
+    "id": "azure",
+    "name": "Microsoft Azure",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "azure cloud",
+      "azure devops",
+      "azure vm",
+      "aks"
+    ]
+  },
+  {
+    "id": "terraform",
+    "name": "Terraform",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "hcl",
+      "infrastructure as code",
+      "iac"
+    ]
+  },
+  {
+    "id": "ansible",
+    "name": "Ansible",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "ansible playbooks",
+      "configuration management"
+    ]
+  },
+  {
+    "id": "pulumi",
+    "name": "Pulumi",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "iac with typescript/python"
+    ]
+  },
+  {
+    "id": "ci_cd",
+    "name": "CI/CD Pipelines",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "continuous integration",
+      "continuous deployment"
+    ]
+  },
+  {
+    "id": "github_actions",
+    "name": "GitHub Actions",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "gh actions",
+      "workflow files"
+    ]
+  },
+  {
+    "id": "gitlab_ci",
+    "name": "GitLab CI/CD",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "gitlab pipeline"
+    ]
+  },
+  {
+    "id": "jenkins",
+    "name": "Jenkins",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "jenkinsfile",
+      "ci automation"
+    ]
+  },
+  {
+    "id": "circleci",
+    "name": "CircleCI",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "circle ci"
+    ]
+  },
+  {
+    "id": "argocd",
+    "name": "Argo CD",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "gitops",
+      "argo"
+    ]
+  },
+  {
+    "id": "linux",
+    "name": "Linux Administration",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "ubuntu",
+      "debian",
+      "redhat",
+      "centos",
+      "unix"
+    ]
+  },
+  {
+    "id": "nginx",
+    "name": "Nginx",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "nginx reverse proxy",
+      "load balancing nginx"
+    ]
+  },
+  {
+    "id": "caddy",
+    "name": "Caddy Server",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "caddyfile",
+      "automatic https"
+    ]
+  },
+  {
+    "id": "haproxy",
+    "name": "HAProxy",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "high availability proxy"
+    ]
+  },
+  {
+    "id": "prometheus",
+    "name": "Prometheus",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "promql",
+      "metrics collection"
+    ]
+  },
+  {
+    "id": "grafana",
+    "name": "Grafana",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "dashboards",
+      "metrics visualization"
+    ]
+  },
+  {
+    "id": "datadog",
+    "name": "Datadog",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "apm",
+      "infrastructure monitoring"
+    ]
+  },
+  {
+    "id": "opentelemetry",
+    "name": "OpenTelemetry",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "otel",
+      "distributed tracing"
+    ]
+  },
+  {
+    "id": "serverless",
+    "name": "Serverless Architecture",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "aws lambda",
+      "cloud functions",
+      "faas"
+    ]
+  },
+  {
+    "id": "cloudflare",
+    "name": "Cloudflare",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "cloudflare workers",
+      "cdn",
+      "ddos protection"
+    ]
+  },
+  {
+    "id": "machine_learning",
+    "name": "Machine Learning",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "ml",
+      "supervised learning",
+      "unsupervised learning",
+      "reinforcement learning"
+    ]
+  },
+  {
+    "id": "deep_learning",
+    "name": "Deep Learning",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "neural networks",
+      "deep neural nets",
+      "backpropagation"
+    ]
+  },
+  {
+    "id": "pytorch",
+    "name": "PyTorch",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "torch",
+      "torchvision",
+      "torchaudio"
+    ]
+  },
+  {
+    "id": "tensorflow",
+    "name": "TensorFlow",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "tf",
+      "keras",
+      "tf.keras"
+    ]
+  },
+  {
+    "id": "scikit_learn",
+    "name": "Scikit-Learn",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "sklearn",
+      "scikit learn",
+      "classification",
+      "regression"
+    ]
+  },
+  {
+    "id": "pandas",
+    "name": "Pandas",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "pandas dataframe",
+      "data wrangling"
+    ]
+  },
+  {
+    "id": "numpy",
+    "name": "NumPy",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "numpy array",
+      "scientific computing"
+    ]
+  },
+  {
+    "id": "scipy",
+    "name": "SciPy",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "scipy optimization"
+    ]
+  },
+  {
+    "id": "matplotlib",
+    "name": "Matplotlib",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "data visualization",
+      "pyplot"
+    ]
+  },
+  {
+    "id": "seaborn",
+    "name": "Seaborn",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "statistical visualization"
+    ]
+  },
+  {
+    "id": "nlp",
+    "name": "Natural Language Processing (NLP)",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "text processing",
+      "tokenization",
+      "sentiment analysis",
+      "spacy",
+      "nltk"
+    ]
+  },
+  {
+    "id": "computer_vision",
+    "name": "Computer Vision",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "cv",
+      "image processing",
+      "opencv",
+      "yolo",
+      "object detection"
+    ]
+  },
+  {
+    "id": "large_language_models",
+    "name": "Large Language Models (LLMs)",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "llm",
+      "generative ai",
+      "genai",
+      "gpt",
+      "gemini",
+      "claude"
+    ]
+  },
+  {
+    "id": "prompt_engineering",
+    "name": "Prompt Engineering",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "system prompts",
+      "few-shot learning",
+      "chain of thought"
+    ]
+  },
+  {
+    "id": "retrieval_augmented_generation",
+    "name": "Retrieval-Augmented Generation (RAG)",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "rag",
+      "semantic search",
+      "hybrid search"
+    ]
+  },
+  {
+    "id": "langchain",
+    "name": "LangChain",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "langchain framework",
+      "langsmith"
+    ]
+  },
+  {
+    "id": "llamaindex",
+    "name": "LlamaIndex",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "llama-index",
+      "data indexing for llms"
+    ]
+  },
+  {
+    "id": "huggingface",
+    "name": "Hugging Face",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "transformers",
+      "huggingface datasets",
+      "model hub"
+    ]
+  },
+  {
+    "id": "fine_tuning",
+    "name": "Model Fine-Tuning",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "peft",
+      "lora",
+      "qlora",
+      "instruction tuning"
+    ]
+  },
+  {
+    "id": "vector_embeddings",
+    "name": "Vector Embeddings",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "sentence transformers",
+      "text embeddings",
+      "cosine similarity"
+    ]
+  },
+  {
+    "id": "mlops",
+    "name": "MLOps",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "model deployment",
+      "mlflow",
+      "kubeflow",
+      "wandb"
+    ]
+  },
+  {
+    "id": "xgboost",
+    "name": "XGBoost",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "gradient boosting",
+      "lightgbm",
+      "catboost"
+    ]
+  },
+  {
+    "id": "data_pipeline",
+    "name": "Data Engineering & Pipelines",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "apache spark",
+      "airflow",
+      "dbt",
+      "etl pipelines"
+    ]
+  },
+  {
+    "id": "data_structures",
+    "name": "Data Structures",
+    "category": "Core CS",
+    "aliases": [
+      "arrays",
+      "linked lists",
+      "trees",
+      "graphs",
+      "heaps",
+      "hash tables"
+    ]
+  },
+  {
+    "id": "algorithms",
+    "name": "Algorithms & Complexity",
+    "category": "Core CS",
+    "aliases": [
+      "big o notation",
+      "time complexity",
+      "space complexity",
+      "asymptotic analysis"
+    ]
+  },
+  {
+    "id": "dynamic_programming",
+    "name": "Dynamic Programming (DP)",
+    "category": "Core CS",
+    "aliases": [
+      "memoization",
+      "tabulation",
+      "optimal substructure"
+    ]
+  },
+  {
+    "id": "graph_algorithms",
+    "name": "Graph Algorithms",
+    "category": "Core CS",
+    "aliases": [
+      "bfs",
+      "dfs",
+      "dijkstra",
+      "topological sort",
+      "kruskal",
+      "prim"
+    ]
+  },
+  {
+    "id": "object_oriented_design",
+    "name": "Object-Oriented Design (OOD)",
+    "category": "Core CS",
+    "aliases": [
+      "oop",
+      "solid principles",
+      "design patterns",
+      "inheritance",
+      "polymorphism"
+    ]
+  },
+  {
+    "id": "operating_systems",
+    "name": "Operating Systems",
+    "category": "Core CS",
+    "aliases": [
+      "process scheduling",
+      "virtual memory",
+      "paging",
+      "threads",
+      "deadlock"
+    ]
+  },
+  {
+    "id": "concurrency",
+    "name": "Concurrency & Multithreading",
+    "category": "Core CS",
+    "aliases": [
+      "synchronization",
+      "mutex",
+      "semaphore",
+      "race conditions",
+      "asyncio"
+    ]
+  },
+  {
+    "id": "computer_networks",
+    "name": "Computer Networks",
+    "category": "Core CS",
+    "aliases": [
+      "osi 7 layers",
+      "tcp/ip",
+      "udp",
+      "http/2",
+      "http/3",
+      "dns",
+      "tls"
+    ]
+  },
+  {
+    "id": "system_design",
+    "name": "System Design & Architecture",
+    "category": "Core CS",
+    "aliases": [
+      "high level design",
+      "hld",
+      "low level design",
+      "lld",
+      "scalability"
+    ]
+  },
+  {
+    "id": "distributed_systems",
+    "name": "Distributed Systems",
+    "category": "Core CS",
+    "aliases": [
+      "cap theorem",
+      "eventual consistency",
+      "consensus",
+      "raft",
+      "paxos"
+    ]
+  },
+  {
+    "id": "caching_architecture",
+    "name": "Distributed Caching",
+    "category": "Core CS",
+    "aliases": [
+      "cache-aside",
+      "write-through",
+      "eviction policies",
+      "lru"
+    ]
+  },
+  {
+    "id": "load_balancing_strategies",
+    "name": "Load Balancing",
+    "category": "Core CS",
+    "aliases": [
+      "consistent hashing",
+      "round robin",
+      "least connections"
+    ]
+  },
+  {
+    "id": "security_principles",
+    "name": "Software Security & Cryptography",
+    "category": "Core CS",
+    "aliases": [
+      "public key encryption",
+      "rsa",
+      "aes",
+      "hashing",
+      "salt"
+    ]
+  },
+  {
+    "id": "clean_code",
+    "name": "Clean Code & Refactoring",
+    "category": "Software Engineering",
+    "aliases": [
+      "code quality",
+      "code review",
+      "refactoring techniques"
+    ]
+  },
+  {
+    "id": "test_driven_development",
+    "name": "Test-Driven Development (TDD)",
+    "category": "Software Engineering",
+    "aliases": [
+      "tdd",
+      "unit tests",
+      "integration tests",
+      "mocking"
+    ]
+  },
+  {
+    "id": "agile_scrum",
+    "name": "Agile & Scrum Methodologies",
+    "category": "Software Engineering",
+    "aliases": [
+      "sprint planning",
+      "retrospectives",
+      "user stories",
+      "kanban",
+      "jira"
+    ]
+  },
+  {
+    "id": "kafka_streaming",
+    "name": "Kafka Streaming",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "ksql",
+      "kafka streams"
+    ]
+  },
+  {
+    "id": "rabbitmq_amqp",
+    "name": "RabbitMQ Message Broker",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "rabbitmq clusters"
+    ]
+  },
+  {
+    "id": "aws_ec2",
+    "name": "AWS EC2",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "elastic compute cloud",
+      "virtual machines"
+    ]
+  },
+  {
+    "id": "aws_s3",
+    "name": "AWS S3",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "simple storage service",
+      "object storage"
+    ]
+  },
+  {
+    "id": "aws_lambda",
+    "name": "AWS Lambda",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "serverless compute",
+      "lambda functions"
+    ]
+  },
+  {
+    "id": "aws_ecs",
+    "name": "AWS ECS",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "elastic container service",
+      "fargate"
+    ]
+  },
+  {
+    "id": "aws_eks",
+    "name": "AWS EKS",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "elastic kubernetes service"
+    ]
+  },
+  {
+    "id": "aws_rds",
+    "name": "AWS RDS",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "relational database service",
+      "aurora postgres"
+    ]
+  },
+  {
+    "id": "aws_sqs",
+    "name": "AWS SQS",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "simple queue service"
+    ]
+  },
+  {
+    "id": "aws_sns",
+    "name": "AWS SNS",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "simple notification service"
+    ]
+  },
+  {
+    "id": "aws_cloudfront",
+    "name": "AWS CloudFront",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "aws cdn"
+    ]
+  },
+  {
+    "id": "aws_iam",
+    "name": "AWS IAM",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "identity and access management"
+    ]
+  },
+  {
+    "id": "gcp_gke",
+    "name": "Google Kubernetes Engine (GKE)",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "gke"
+    ]
+  },
+  {
+    "id": "gcp_cloud_run",
+    "name": "Google Cloud Run",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "cloud run containers"
+    ]
+  },
+  {
+    "id": "azure_aks",
+    "name": "Azure Kubernetes Service (AKS)",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "aks"
+    ]
+  },
+  {
+    "id": "azure_functions",
+    "name": "Azure Functions",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "serverless azure"
+    ]
+  },
+  {
+    "id": "helm_kubernetes",
+    "name": "Helm Package Manager",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "helm charts"
+    ]
+  },
+  {
+    "id": "envoy_proxy",
+    "name": "Envoy Proxy",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "service mesh proxy",
+      "istio envoy"
+    ]
+  },
+  {
+    "id": "istio_service_mesh",
+    "name": "Istio Service Mesh",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "istio",
+      "mTLS"
+    ]
+  },
+  {
+    "id": "sonarqube",
+    "name": "SonarQube",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "static code analysis",
+      "code smell detection"
+    ]
+  },
+  {
+    "id": "snyk",
+    "name": "Snyk Security",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "vulnerability scanning"
+    ]
+  },
+  {
+    "id": "jwt_authentication",
+    "name": "JWT Authentication",
+    "category": "Backend Development",
+    "aliases": [
+      "jwt bearer"
+    ]
+  },
+  {
+    "id": "oauth_authorisation",
+    "name": "OAuth Authorization",
+    "category": "Backend Development",
+    "aliases": [
+      "authorization code grant"
+    ]
+  },
+  {
+    "id": "web_security_owasp",
+    "name": "OWASP Top 10 Security",
+    "category": "Software Engineering",
+    "aliases": [
+      "xss",
+      "sql injection",
+      "csrf",
+      "ssrf"
+    ]
+  },
+  {
+    "id": "semantic_versioning",
+    "name": "Semantic Versioning",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "semver"
+    ]
+  },
+  {
+    "id": "monorepos",
+    "name": "Monorepo Tooling",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "turborepo",
+      "nx",
+      "lerna"
+    ]
+  },
+  {
+    "id": "git_rebase",
+    "name": "Advanced Git",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "git rebase",
+      "git cherry-pick",
+      "git bisect"
+    ]
+  },
+  {
+    "id": "swagger_openapi",
+    "name": "Swagger & OpenAPI Spec",
+    "category": "Backend Development",
+    "aliases": [
+      "openapi 3.0",
+      "swagger ui"
+    ]
+  },
+  {
+    "id": "postman",
+    "name": "Postman API Platform",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "api testing",
+      "postman collections"
+    ]
+  },
+  {
+    "id": "k6_load_testing",
+    "name": "k6 Load Testing",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "grafana k6",
+      "performance testing"
+    ]
+  },
+  {
+    "id": "jmeter",
+    "name": "Apache JMeter",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "load testing"
+    ]
+  },
+  {
+    "id": "locust",
+    "name": "Locust Python",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "load testing python"
+    ]
+  },
+  {
+    "id": "pydantic_v2",
+    "name": "Pydantic v2",
+    "category": "Backend Development",
+    "aliases": [
+      "pydantic schemas",
+      "data validation"
+    ]
+  },
+  {
+    "id": "marshmallow",
+    "name": "Marshmallow Serialization",
+    "category": "Backend Development",
+    "aliases": [
+      "python marshmallow"
+    ]
+  },
+  {
+    "id": "alembic_migrations",
+    "name": "Alembic Database Migrations",
+    "category": "Databases",
+    "aliases": [
+      "database schema migrations"
+    ]
+  },
+  {
+    "id": "flyway",
+    "name": "Flyway Database Migrations",
+    "category": "Databases",
+    "aliases": [
+      "flywaydb"
+    ]
+  },
+  {
+    "id": "liquibase",
+    "name": "Liquibase Migrations",
+    "category": "Databases",
+    "aliases": [
+      "liquibase"
+    ]
+  },
+  {
+    "id": "redis_caching",
+    "name": "Redis Caching Patterns",
+    "category": "Databases",
+    "aliases": [
+      "cache invalidation",
+      "redis sentinel"
+    ]
+  },
+  {
+    "id": "memcached",
+    "name": "Memcached",
+    "category": "Databases",
+    "aliases": [
+      "in memory key value store"
+    ]
+  },
+  {
+    "id": "pgvector",
+    "name": "pgvector",
+    "category": "Databases",
+    "aliases": [
+      "postgres vector search",
+      "vector embeddings in postgres"
+    ]
+  },
+  {
+    "id": "pinecone_vector_db",
+    "name": "Pinecone",
+    "category": "Databases",
+    "aliases": [
+      "vector database pinecone"
+    ]
+  },
+  {
+    "id": "chroma_db",
+    "name": "ChromaDB",
+    "category": "Databases",
+    "aliases": [
+      "embedded vector database"
+    ]
+  },
+  {
+    "id": "weaviate_vector_db",
+    "name": "Weaviate",
+    "category": "Databases",
+    "aliases": [
+      "graphql vector search"
+    ]
+  },
+  {
+    "id": "qdrant_vector_db",
+    "name": "Qdrant",
+    "category": "Databases",
+    "aliases": [
+      "rust vector search"
+    ]
+  },
+  {
+    "id": "milvus_vector_db",
+    "name": "Milvus",
+    "category": "Databases",
+    "aliases": [
+      "distributed vector db"
+    ]
+  },
+  {
+    "id": "apache_spark",
+    "name": "Apache Spark",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "pyspark",
+      "spark streaming",
+      "rdd"
+    ]
+  },
+  {
+    "id": "apache_flink",
+    "name": "Apache Flink",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "stream processing flink"
+    ]
+  },
+  {
+    "id": "apache_airflow",
+    "name": "Apache Airflow",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "airflow dags",
+      "workflow orchestration"
+    ]
+  },
+  {
+    "id": "dbt",
+    "name": "dbt (Data Build Tool)",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "dbt core",
+      "sql data transforms"
+    ]
+  },
+  {
+    "id": "hadoop_hdfs",
+    "name": "Apache Hadoop",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "hdfs",
+      "mapreduce"
+    ]
+  },
+  {
+    "id": "hive",
+    "name": "Apache Hive",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "hive sql"
+    ]
+  },
+  {
+    "id": "kafka_connect",
+    "name": "Kafka Connect",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "cdc",
+      "change data capture",
+      "debezium"
+    ]
+  },
+  {
+    "id": "debezium_cdc",
+    "name": "Debezium",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "change data capture"
+    ]
+  },
+  {
+    "id": "polars",
+    "name": "Polars",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "rust dataframes",
+      "polars python"
+    ]
+  },
+  {
+    "id": "dask",
+    "name": "Dask",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "distributed python computing"
+    ]
+  },
+  {
+    "id": "ray",
+    "name": "Ray Distributed AI",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "ray tune",
+      "ray train",
+      "ray serve"
+    ]
+  },
+  {
+    "id": "vllm",
+    "name": "vLLM Inference",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "pagedattention",
+      "llm serving"
+    ]
+  },
+  {
+    "id": "ollama",
+    "name": "Ollama",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "local llm running"
+    ]
+  },
+  {
+    "id": "triton_inference_server",
+    "name": "Triton Inference Server",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "nvidia triton"
+    ]
+  },
+  {
+    "id": "tensorrt",
+    "name": "NVIDIA TensorRT",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "model acceleration"
+    ]
+  },
+  {
+    "id": "onnx",
+    "name": "ONNX Runtime",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "open neural network exchange"
+    ]
+  },
+  {
+    "id": "whisper_ai",
+    "name": "OpenAI Whisper",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "speech to text"
+    ]
+  },
+  {
+    "id": "stable_diffusion",
+    "name": "Stable Diffusion",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "diffusion models",
+      "image generation"
+    ]
+  },
+  {
+    "id": "gemini_api",
+    "name": "Google Gemini API",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "google genai sdk",
+      "gemini-flash"
+    ]
+  },
+  {
+    "id": "claude_api",
+    "name": "Anthropic Claude API",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "anthropic sdk"
+    ]
+  },
+  {
+    "id": "openai_api",
+    "name": "OpenAI API",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "gpt-4o",
+      "chat completions"
+    ]
+  },
+  {
+    "id": "semantic_kernel",
+    "name": "Semantic Kernel",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "microsoft semantic kernel"
+    ]
+  },
+  {
+    "id": "autogen",
+    "name": "AutoGen Multi-Agent",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "agentic ai",
+      "multi-agent systems"
+    ]
+  },
+  {
+    "id": "crewai",
+    "name": "CrewAI",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "role playing ai agents"
+    ]
+  },
+  {
+    "id": "langgraph",
+    "name": "LangGraph",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "cyclical ai workflows",
+      "agentic state graphs"
+    ]
+  },
+  {
+    "id": "react_router",
+    "name": "React Router",
+    "category": "Frontend Development",
+    "aliases": [
+      "react-router-dom v6",
+      "react router v7"
+    ]
+  },
+  {
+    "id": "tanstack_router",
+    "name": "TanStack Router",
+    "category": "Frontend Development",
+    "aliases": [
+      "typesafe router"
+    ]
+  },
+  {
+    "id": "framer_motion",
+    "name": "Framer Motion",
+    "category": "Frontend Development",
+    "aliases": [
+      "react animations",
+      "motion/react"
+    ]
+  },
+  {
+    "id": "lucide_react",
+    "name": "Lucide Icons",
+    "category": "Frontend Development",
+    "aliases": [
+      "lucide react icons"
+    ]
+  },
+  {
+    "id": "tailwindcss_v4",
+    "name": "Tailwind CSS v4",
+    "category": "Frontend Development",
+    "aliases": [
+      "@theme css first",
+      "modern tailwind"
+    ]
+  },
+  {
+    "id": "css_modules",
+    "name": "CSS Modules",
+    "category": "Frontend Development",
+    "aliases": [
+      "scoped css"
+    ]
+  },
+  {
+    "id": "styled_components",
+    "name": "Styled Components",
+    "category": "Frontend Development",
+    "aliases": [
+      "css-in-js"
+    ]
+  },
+  {
+    "id": "emotion",
+    "name": "Emotion CSS",
+    "category": "Frontend Development",
+    "aliases": [
+      "emotion js"
+    ]
+  },
+  {
+    "id": "graphql_codegen",
+    "name": "GraphQL Code Generator",
+    "category": "Frontend Development",
+    "aliases": [
+      "typesafe graphql"
+    ]
+  },
+  {
+    "id": "openapi_typescript",
+    "name": "openapi-typescript",
+    "category": "Frontend Development",
+    "aliases": [
+      "typesafe api client"
+    ]
+  },
+  {
+    "id": "zod_validation",
+    "name": "Zod",
+    "category": "Frontend Development",
+    "aliases": [
+      "typescript schema validation",
+      "zod"
+    ]
+  },
+  {
+    "id": "react_hook_form",
+    "name": "React Hook Form",
+    "category": "Frontend Development",
+    "aliases": [
+      "useform hook",
+      "form validation"
+    ]
+  },
+  {
+    "id": "formik",
+    "name": "Formik",
+    "category": "Frontend Development",
+    "aliases": [
+      "formik forms"
+    ]
+  },
+  {
+    "id": "yup",
+    "name": "Yup Validation",
+    "category": "Frontend Development",
+    "aliases": [
+      "yup schema"
+    ]
+  },
+  {
+    "id": "recharts",
+    "name": "Recharts",
+    "category": "Frontend Development",
+    "aliases": [
+      "react charting library",
+      "d3 charts"
+    ]
+  },
+  {
+    "id": "chartjs",
+    "name": "Chart.js",
+    "category": "Frontend Development",
+    "aliases": [
+      "chartjs react"
+    ]
+  },
+  {
+    "id": "d3js",
+    "name": "D3.js",
+    "category": "Frontend Development",
+    "aliases": [
+      "data driven documents",
+      "custom d3 visualizations"
+    ]
+  },
+  {
+    "id": "threejs",
+    "name": "Three.js",
+    "category": "Frontend Development",
+    "aliases": [
+      "webgl 3d rendering",
+      "react three fiber"
+    ]
+  },
+  {
+    "id": "canvas_api",
+    "name": "HTML5 Canvas",
+    "category": "Frontend Development",
+    "aliases": [
+      "2d canvas rendering"
+    ]
+  },
+  {
+    "id": "indexeddb",
+    "name": "IndexedDB",
+    "category": "Frontend Development",
+    "aliases": [
+      "browser client database",
+      "idb"
+    ]
+  },
+  {
+    "id": "localstorage_sessionstorage",
+    "name": "Web Storage API",
+    "category": "Frontend Development",
+    "aliases": [
+      "localstorage",
+      "sessionstorage"
+    ]
+  },
+  {
+    "id": "service_workers",
+    "name": "Service Workers",
+    "category": "Frontend Development",
+    "aliases": [
+      "offline caching",
+      "push notifications"
+    ]
+  },
+  {
+    "id": "web_workers",
+    "name": "Web Workers",
+    "category": "Frontend Development",
+    "aliases": [
+      "background javascript threads"
+    ]
+  },
+  {
+    "id": "wasm_rust",
+    "name": "Rust to WebAssembly",
+    "category": "Frontend Development",
+    "aliases": [
+      "wasm-pack",
+      "rust in browser"
+    ]
+  },
+  {
+    "id": "grpc_web",
+    "name": "gRPC-Web",
+    "category": "Frontend Development",
+    "aliases": [
+      "browser grpc calls"
+    ]
+  },
+  {
+    "id": "axum_web",
+    "name": "Axum Rust Framework",
+    "category": "Backend Development",
+    "aliases": [
+      "tokio async web"
+    ]
+  },
+  {
+    "id": "rocket_rs",
+    "name": "Rocket Rust",
+    "category": "Backend Development",
+    "aliases": [
+      "rust web rocket"
+    ]
+  },
+  {
+    "id": "warp_rs",
+    "name": "Warp Rust",
+    "category": "Backend Development",
+    "aliases": [
+      "rust filter based web"
+    ]
+  },
+  {
+    "id": "ktor",
+    "name": "Ktor Kotlin",
+    "category": "Backend Development",
+    "aliases": [
+      "kotlin backend framework"
+    ]
+  },
+  {
+    "id": "micronaut",
+    "name": "Micronaut",
+    "category": "Backend Development",
+    "aliases": [
+      "jvm microservices"
+    ]
+  },
+  {
+    "id": "quarkus",
+    "name": "Quarkus",
+    "category": "Backend Development",
+    "aliases": [
+      "supersonic subatomic java",
+      "graalvm native"
+    ]
+  },
+  {
+    "id": "dropwizard",
+    "name": "Dropwizard Java",
+    "category": "Backend Development",
+    "aliases": [
+      "java rest services"
+    ]
+  },
+  {
+    "id": "sanic",
+    "name": "Sanic Python",
+    "category": "Backend Development",
+    "aliases": [
+      "async python web framework"
+    ]
+  },
+  {
+    "id": "tornado",
+    "name": "Tornado Python",
+    "category": "Backend Development",
+    "aliases": [
+      "python web sockets"
+    ]
+  },
+  {
+    "id": "aiohttp",
+    "name": "aiohttp",
+    "category": "Backend Development",
+    "aliases": [
+      "python async http client/server"
+    ]
+  },
+  {
+    "id": "falcon",
+    "name": "Falcon Python",
+    "category": "Backend Development",
+    "aliases": [
+      "unladen fast rest framework"
+    ]
+  },
+  {
+    "id": "masonite",
+    "name": "Masonite Python",
+    "category": "Backend Development",
+    "aliases": [
+      "batteries included python"
+    ]
+  },
+  {
+    "id": "phoenix_elixir",
+    "name": "Phoenix Framework",
+    "category": "Backend Development",
+    "aliases": [
+      "elixir liveview"
+    ]
+  },
+  {
+    "id": "rails_api",
+    "name": "Rails API Mode",
+    "category": "Backend Development",
+    "aliases": [
+      "ruby api server"
+    ]
+  },
+  {
+    "id": "sinatra",
+    "name": "Sinatra Ruby",
+    "category": "Backend Development",
+    "aliases": [
+      "ruby microframework"
+    ]
+  },
+  {
+    "id": "hanami",
+    "name": "Hanami Ruby",
+    "category": "Backend Development",
+    "aliases": [
+      "modular ruby web"
+    ]
+  },
+  {
+    "id": "lumen",
+    "name": "Lumen PHP",
+    "category": "Backend Development",
+    "aliases": [
+      "microframework php"
+    ]
+  },
+  {
+    "id": "symfony",
+    "name": "Symfony PHP",
+    "category": "Backend Development",
+    "aliases": [
+      "php enterprise components"
+    ]
+  },
+  {
+    "id": "codeigniter",
+    "name": "CodeIgniter",
+    "category": "Backend Development",
+    "aliases": [
+      "mvc php framework"
+    ]
+  },
+  {
+    "id": "cakephp",
+    "name": "CakePHP",
+    "category": "Backend Development",
+    "aliases": [
+      "rapid php development"
+    ]
+  },
+  {
+    "id": "blazor",
+    "name": "Blazor",
+    "category": "Frontend Development",
+    "aliases": [
+      "c# in the browser",
+      "webassembly blazor"
+    ]
+  },
+  {
+    "id": "wpf",
+    "name": "WPF / XAML",
+    "category": "Desktop Development",
+    "aliases": [
+      "windows presentation foundation"
+    ]
+  },
+  {
+    "id": "winforms",
+    "name": "Windows Forms",
+    "category": "Desktop Development",
+    "aliases": [
+      ".net desktop"
+    ]
+  },
+  {
+    "id": "qt",
+    "name": "Qt C++",
+    "category": "Desktop Development",
+    "aliases": [
+      "qt6",
+      "qml",
+      "cross-platform desktop"
+    ]
+  },
+  {
+    "id": "gtk",
+    "name": "GTK C/C++",
+    "category": "Desktop Development",
+    "aliases": [
+      "gnome desktop toolkit"
+    ]
+  },
+  {
+    "id": "swiftui",
+    "name": "SwiftUI",
+    "category": "Mobile Development",
+    "aliases": [
+      "declarative ios ui"
+    ]
+  },
+  {
+    "id": "uikit",
+    "name": "UIKit",
+    "category": "Mobile Development",
+    "aliases": [
+      "classic ios development"
+    ]
+  },
+  {
+    "id": "core_data",
+    "name": "Core Data",
+    "category": "Mobile Development",
+    "aliases": [
+      "apple persistence framework"
+    ]
+  },
+  {
+    "id": "swift_concurrency",
+    "name": "Swift Concurrency",
+    "category": "Programming Languages",
+    "aliases": [
+      "async/await swift",
+      "actors"
+    ]
+  },
+  {
+    "id": "jetpack_compose",
+    "name": "Jetpack Compose",
+    "category": "Mobile Development",
+    "aliases": [
+      "modern android declarative ui"
+    ]
+  },
+  {
+    "id": "room_db",
+    "name": "Room Database Android",
+    "category": "Mobile Development",
+    "aliases": [
+      "sqlite android orm"
+    ]
+  },
+  {
+    "id": "retrofit",
+    "name": "Retrofit Android",
+    "category": "Mobile Development",
+    "aliases": [
+      "android rest client"
+    ]
+  },
+  {
+    "id": "dagger_hilt",
+    "name": "Dagger Hilt",
+    "category": "Mobile Development",
+    "aliases": [
+      "android dependency injection"
+    ]
+  },
+  {
+    "id": "koin",
+    "name": "Koin Kotlin",
+    "category": "Mobile Development",
+    "aliases": [
+      "pragmatic kotlin di"
+    ]
+  },
+  {
+    "id": "rxjava",
+    "name": "RxJava / RxKotlin",
+    "category": "Mobile Development",
+    "aliases": [
+      "reactive programming android"
+    ]
+  },
+  {
+    "id": "combine_framework",
+    "name": "Apple Combine",
+    "category": "Mobile Development",
+    "aliases": [
+      "reactive programming ios"
+    ]
+  },
+  {
+    "id": "flutter_bloc",
+    "name": "Flutter BLoC",
+    "category": "Mobile Development",
+    "aliases": [
+      "state management flutter"
+    ]
+  },
+  {
+    "id": "riverpod",
+    "name": "Riverpod Flutter",
+    "category": "Mobile Development",
+    "aliases": [
+      "compile-safe state management"
+    ]
+  },
+  {
+    "id": "provider_flutter",
+    "name": "Flutter Provider",
+    "category": "Mobile Development",
+    "aliases": [
+      "inherited widget wrapper"
+    ]
+  },
+  {
+    "id": "unity3d",
+    "name": "Unity 3D",
+    "category": "Game Development",
+    "aliases": [
+      "unity game engine",
+      "c# game development"
+    ]
+  },
+  {
+    "id": "unreal_engine",
+    "name": "Unreal Engine",
+    "category": "Game Development",
+    "aliases": [
+      "ue5",
+      "c++ game dev",
+      "blueprints"
+    ]
+  },
+  {
+    "id": "godot",
+    "name": "Godot Engine",
+    "category": "Game Development",
+    "aliases": [
+      "gdscript",
+      "c# godot"
+    ]
+  },
+  {
+    "id": "opengl",
+    "name": "OpenGL",
+    "category": "Graphics & Shaders",
+    "aliases": [
+      "glsl",
+      "computer graphics"
+    ]
+  },
+  {
+    "id": "vulkan",
+    "name": "Vulkan API",
+    "category": "Graphics & Shaders",
+    "aliases": [
+      "low-overhead graphics api"
+    ]
+  },
+  {
+    "id": "directx",
+    "name": "DirectX 12",
+    "category": "Graphics & Shaders",
+    "aliases": [
+      "hlsl",
+      "windows 3d graphics"
+    ]
+  },
+  {
+    "id": "metal_apple",
+    "name": "Metal Apple",
+    "category": "Graphics & Shaders",
+    "aliases": [
+      "apple graphics acceleration"
+    ]
+  },
+  {
+    "id": "cuda",
+    "name": "NVIDIA CUDA",
+    "category": "AI / ML & Data",
+    "aliases": [
+      "gpu programming",
+      "cuda c++"
+    ]
+  },
+  {
+    "id": "opencl",
+    "name": "OpenCL",
+    "category": "Graphics & Shaders",
+    "aliases": [
+      "heterogeneous computing"
+    ]
+  },
+  {
+    "id": "mpi",
+    "name": "MPI (Message Passing Interface)",
+    "category": "Distributed Systems",
+    "aliases": [
+      "parallel computing"
+    ]
+  },
+  {
+    "id": "openmp",
+    "name": "OpenMP",
+    "category": "Core CS",
+    "aliases": [
+      "shared memory multiprocessing"
+    ]
+  },
+  {
+    "id": "pthreads",
+    "name": "POSIX Threads (pthreads)",
+    "category": "Core CS",
+    "aliases": [
+      "c multithreading"
+    ]
+  },
+  {
+    "id": "valgrind",
+    "name": "Valgrind",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "memory leak detection"
+    ]
+  },
+  {
+    "id": "gdb",
+    "name": "GDB / LLDB Debugger",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "cli debugging"
+    ]
+  },
+  {
+    "id": "cmake",
+    "name": "CMake",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "c++ build system"
+    ]
+  },
+  {
+    "id": "ninja_build",
+    "name": "Ninja Build System",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "fast build runner"
+    ]
+  },
+  {
+    "id": "make",
+    "name": "GNU Make",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "makefile automation"
+    ]
+  },
+  {
+    "id": "gcc_clang",
+    "name": "GCC & Clang Compilers",
+    "category": "Tools & Methodologies",
+    "aliases": [
+      "c/c++ compilation",
+      "llvm"
+    ]
+  },
+  {
+    "id": "llvm",
+    "name": "LLVM Compiler Infrastructure",
+    "category": "Core CS",
+    "aliases": [
+      "compiler design",
+      "intermediate representation"
+    ]
+  },
+  {
+    "id": "ast_parsing",
+    "name": "Abstract Syntax Trees (AST)",
+    "category": "Core CS",
+    "aliases": [
+      "code parsing",
+      "lexing"
+    ]
+  },
+  {
+    "id": "regular_expressions",
+    "name": "Regular Expressions (RegEx)",
+    "category": "Programming Languages",
+    "aliases": [
+      "pattern matching",
+      "pcre"
+    ]
+  },
+  {
+    "id": "unicode_utf8",
+    "name": "Unicode & UTF-8 Encoding",
+    "category": "Core CS",
+    "aliases": [
+      "character encodings",
+      "byte representations"
+    ]
+  },
+  {
+    "id": "endianness",
+    "name": "Endianness & Byte Ordering",
+    "category": "Core CS",
+    "aliases": [
+      "big endian",
+      "little endian",
+      "network byte order"
+    ]
+  },
+  {
+    "id": "bit_manipulation_tech",
+    "name": "Bitwise Operations",
+    "category": "Core CS",
+    "aliases": [
+      "bit masking",
+      "xor trick",
+      "bit shifts"
+    ]
+  },
+  {
+    "id": "floating_point_ieee",
+    "name": "IEEE 754 Floating Point",
+    "category": "Core CS",
+    "aliases": [
+      "float precision",
+      "numerical errors"
+    ]
+  },
+  {
+    "id": "cryptographic_hash",
+    "name": "Cryptographic Hashes",
+    "category": "Core CS",
+    "aliases": [
+      "sha256",
+      "sha3",
+      "argon2",
+      "bcrypt",
+      "md5"
+    ]
+  },
+  {
+    "id": "symmetric_encryption",
+    "name": "Symmetric Encryption",
+    "category": "Core CS",
+    "aliases": [
+      "aes-256-gcm",
+      "block ciphers"
+    ]
+  },
+  {
+    "id": "asymmetric_encryption",
+    "name": "Asymmetric Encryption",
+    "category": "Core CS",
+    "aliases": [
+      "rsa",
+      "elliptic curve cryptography",
+      "ecc"
+    ]
+  },
+  {
+    "id": "diffie_hellman",
+    "name": "Diffie-Hellman Key Exchange",
+    "category": "Core CS",
+    "aliases": [
+      "ecdh",
+      "forward secrecy"
+    ]
+  },
+  {
+    "id": "digital_signatures",
+    "name": "Digital Signatures & PKI",
+    "category": "Core CS",
+    "aliases": [
+      "x.509 certificates",
+      "ca authority",
+      "csr"
+    ]
+  },
+  {
+    "id": "cors_csrf_security",
+    "name": "Web Security Countermeasures",
+    "category": "Software Engineering",
+    "aliases": [
+      "same-origin policy",
+      "anti-csrf tokens"
+    ]
+  },
+  {
+    "id": "content_security_policy",
+    "name": "Content Security Policy (CSP)",
+    "category": "Software Engineering",
+    "aliases": [
+      "csp headers",
+      "xss mitigation"
+    ]
+  },
+  {
+    "id": "sql_injection_defense",
+    "name": "SQL Injection Prevention",
+    "category": "Software Engineering",
+    "aliases": [
+      "parameterized queries",
+      "orm security"
+    ]
+  },
+  {
+    "id": "jwt_security",
+    "name": "JWT Security Hardening",
+    "category": "Software Engineering",
+    "aliases": [
+      "jwt secret rotation",
+      "revocation lists"
+    ]
+  },
+  {
+    "id": "rate_limiting_algorithms",
+    "name": "Rate Limiting Algorithms",
+    "category": "System Design",
+    "aliases": [
+      "token bucket",
+      "leaky bucket",
+      "sliding window log"
+    ]
+  },
+  {
+    "id": "circuit_breaker_pattern",
+    "name": "Circuit Breaker Pattern",
+    "category": "System Design",
+    "aliases": [
+      "resilience4j",
+      "netflix hystrix",
+      "fault tolerance"
+    ]
+  },
+  {
+    "id": "bulkhead_pattern",
+    "name": "Bulkhead Pattern",
+    "category": "System Design",
+    "aliases": [
+      "resource isolation in distributed systems"
+    ]
+  },
+  {
+    "id": "retry_backoff",
+    "name": "Exponential Backoff & Jitter",
+    "category": "System Design",
+    "aliases": [
+      "network retry policies"
+    ]
+  },
+  {
+    "id": "distributed_locking",
+    "name": "Distributed Locking",
+    "category": "System Design",
+    "aliases": [
+      "redlock",
+      "etcd lock",
+      "zookeeper election"
+    ]
+  },
+  {
+    "id": "service_discovery",
+    "name": "Service Discovery",
+    "category": "System Design",
+    "aliases": [
+      "consul",
+      "eureka",
+      "k8s service discovery"
+    ]
+  },
+  {
+    "id": "api_gateway",
+    "name": "API Gateway Pattern",
+    "category": "System Design",
+    "aliases": [
+      "kong",
+      "krakend",
+      "aws api gateway",
+      "reverse proxy gateway"
+    ]
+  },
+  {
+    "id": "database_connection_pooling",
+    "name": "Database Connection Pooling",
+    "category": "Databases",
+    "aliases": [
+      "hikari cp",
+      "pgbouncer",
+      "pool pre ping"
+    ]
+  },
+  {
+    "id": "wal_logging",
+    "name": "Write-Ahead Logging (WAL)",
+    "category": "Databases",
+    "aliases": [
+      "database crash recovery",
+      "durability"
+    ]
+  },
+  {
+    "id": "lsm_trees",
+    "name": "LSM-Trees (Log-Structured Merge)",
+    "category": "Databases",
+    "aliases": [
+      "rocksdb",
+      "leveldb",
+      "write-optimized storage"
+    ]
+  },
+  {
+    "id": "b_plus_trees",
+    "name": "B+ Trees",
+    "category": "Databases",
+    "aliases": [
+      "range queries",
+      "database index data structure"
+    ]
+  },
+  {
+    "id": "bloom_filters",
+    "name": "Bloom Filters",
+    "category": "Core CS",
+    "aliases": [
+      "probabilistic data structures",
+      "membership testing"
+    ]
+  },
+  {
+    "id": "hyperloglog",
+    "name": "HyperLogLog",
+    "category": "Core CS",
+    "aliases": [
+      "cardinality estimation",
+      "redis pfadd"
+    ]
+  },
+  {
+    "id": "count_min_sketch",
+    "name": "Count-Min Sketch",
+    "category": "Core CS",
+    "aliases": [
+      "frequency estimation in data streams"
+    ]
+  },
+  {
+    "id": "inverted_index",
+    "name": "Inverted Index",
+    "category": "Databases",
+    "aliases": [
+      "full text search indexing",
+      "lucene indexing"
+    ]
+  },
+  {
+    "id": "two_phase_commit",
+    "name": "Two-Phase Commit (2PC)",
+    "category": "Distributed Systems",
+    "aliases": [
+      "distributed transactions"
+    ]
+  },
+  {
+    "id": "saga_pattern",
+    "name": "Saga Pattern",
+    "category": "Distributed Systems",
+    "aliases": [
+      "choreography saga",
+      "orchestration saga"
+    ]
+  },
+  {
+    "id": "cqrs",
+    "name": "CQRS (Command Query Responsibility Segregation)",
+    "category": "System Design",
+    "aliases": [
+      "read model optimization"
+    ]
+  },
+  {
+    "id": "event_sourcing",
+    "name": "Event Sourcing",
+    "category": "System Design",
+    "aliases": [
+      "immutable event log",
+      "auditability"
+    ]
+  },
+  {
+    "id": "domain_driven_design",
+    "name": "Domain-Driven Design (DDD)",
+    "category": "Software Engineering",
+    "aliases": [
+      "bounded contexts",
+      "aggregates",
+      "entities"
+    ]
+  },
+  {
+    "id": "solid_principles",
+    "name": "SOLID Principles",
+    "category": "Software Engineering",
+    "aliases": [
+      "single responsibility",
+      "liskov substitution",
+      "dependency inversion"
+    ]
+  },
+  {
+    "id": "creational_design_patterns",
+    "name": "Creational Design Patterns",
+    "category": "Software Engineering",
+    "aliases": [
+      "singleton",
+      "factory method",
+      "builder",
+      "prototype"
+    ]
+  },
+  {
+    "id": "structural_design_patterns",
+    "name": "Structural Design Patterns",
+    "category": "Software Engineering",
+    "aliases": [
+      "adapter",
+      "decorator",
+      "facade",
+      "proxy"
+    ]
+  },
+  {
+    "id": "behavioral_design_patterns",
+    "name": "Behavioral Design Patterns",
+    "category": "Software Engineering",
+    "aliases": [
+      "strategy",
+      "observer",
+      "command",
+      "state pattern"
+    ]
+  },
+  {
+    "id": "micro_frontends",
+    "name": "Micro-Frontends",
+    "category": "Frontend Development",
+    "aliases": [
+      "module federation",
+      "single-spa"
+    ]
+  },
+  {
+    "id": "server_side_rendering",
+    "name": "Server-Side Rendering (SSR)",
+    "category": "Frontend Development",
+    "aliases": [
+      "nextjs ssr",
+      "hydration"
+    ]
+  },
+  {
+    "id": "static_site_generation",
+    "name": "Static Site Generation (SSG)",
+    "category": "Frontend Development",
+    "aliases": [
+      "jamstack",
+      "gatsby",
+      "astro"
+    ]
+  },
+  {
+    "id": "incremental_static_regeneration",
+    "name": "Incremental Static Regeneration (ISR)",
+    "category": "Frontend Development",
+    "aliases": [
+      "on-demand revalidation"
+    ]
+  },
+  {
+    "id": "seo_optimization",
+    "name": "Technical SEO",
+    "category": "Frontend Development",
+    "aliases": [
+      "meta tags",
+      "structured data",
+      "sitemaps",
+      "core web vitals"
+    ]
+  },
+  {
+    "id": "accessibility_wcag",
+    "name": "Web Accessibility (a11y / WCAG)",
+    "category": "Frontend Development",
+    "aliases": [
+      "aria roles",
+      "screen reader compatibility",
+      "keyboard navigation"
+    ]
+  },
+  {
+    "id": "performance_optimization",
+    "name": "Web Performance Optimization",
+    "category": "Frontend Development",
+    "aliases": [
+      "lazy loading",
+      "code splitting",
+      "tree shaking",
+      "bundle size"
+    ]
+  }
+]

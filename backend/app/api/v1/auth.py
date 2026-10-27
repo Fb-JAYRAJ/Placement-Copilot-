@@ -23,13 +23,12 @@ from app.schemas.auth import TokenResponse, UserLoginRequest, UserRegisterReques
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 def _set_refresh_cookie(response: Response, raw_token: str):
-    is_prod = settings.APP_ENV == "production"
     response.set_cookie(
         key="refresh_token",
         value=raw_token,
         httponly=True,
-        secure=is_prod,
-        samesite="none" if is_prod else "lax",
+        secure=settings.COOKIE_SECURE,
+        samesite=settings.COOKIE_SAMESITE,
         max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 86400,
         path="/",
     )

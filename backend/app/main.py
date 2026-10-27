@@ -17,7 +17,7 @@ from app.api.v1.interviews import router as interviews_router
 from app.api.v1.job_descriptions import router as job_descriptions_router
 from app.api.v1.resumes import router as resumes_router
 from app.api.v1.users import router as users_router
-from app.core.config import settings
+from app.core.config import settings, validate_production_settings
 from app.core.db import check_db_connection_with_retry
 from app.core.errors import (
     AppError,
@@ -33,17 +33,26 @@ from app.core.ratelimit import limiter
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Initializing Placement Copilot backend...")
-    
+
+    # Validate production configuration guards
+    validate_production_settings(settings)
+
+    # Log warning if SameSite=None is used without an HTTPS origin
+    if settings.COOKIE_SAMESITE == "none":
+        cors_list = settings.CORS_ORIGINS if isinstance(settings.CORS_ORIGINS, list) else [settings.CORS_ORIGINS]
+        has_https = any(origin.startswith("https://") for origin in cors_list)
+        if not has_https:
+            logger.warning(
+                "Cookie SameSite=None is configured without an https origin in CORS_ORIGINS. "
+                "Browsers reject SameSite=None cookies over non-HTTPS connections."
+            )
+
     # Check DB connection with backoff
     try:
         await check_db_connection_with_retry()
         logger.info("Database connection successfully established.")
     except Exception as e:
         logger.error(f"Failed to connect to database: {e}. Starting backend in degraded mode (health checks and documentation available).")
-
-    # Validate LLM provider in production
-    if settings.APP_ENV == "production" and settings.LLM_PROVIDER.lower() == "fake":
-        raise RuntimeError("LLM_PROVIDER cannot be configured to 'fake' in production environment")
 
     # Verify Gemini API configuration if key provided
     if settings.GEMINI_API_KEY:

@@ -108,12 +108,12 @@ test.describe('Placement Copilot End-to-End Test Suite', () => {
     // Switch to paste mode
     await page.locator('button:has-text("Paste Text")').click();
     await page.locator('textarea[placeholder*="Paste your complete resume text"]').fill(
-      'Senior Backend Engineer with strong expertise in Python, FastAPI, PostgreSQL, Docker, Git, REST APIs, and algorithms.'
+      'Full Stack Developer with strong expertise in Python, FastAPI, PostgreSQL, Docker, Git, REST APIs, and algorithms.'
     );
 
     // Provide target job description
     await page.locator('textarea[placeholder*="Paste requirements, tech stack"]').fill(
-      'Senior Backend Engineer with strong expertise in Python, FastAPI, PostgreSQL, Docker, Git, REST APIs, and algorithms.'
+      'Full Stack Developer with strong expertise in Python, FastAPI, PostgreSQL, Docker, Git, REST APIs, and algorithms.'
     );
 
     // Click Analyze

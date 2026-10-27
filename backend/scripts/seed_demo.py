@@ -116,7 +116,7 @@ async def seed_demo():
             password_hash=get_password_hash("DemoCandidate2026!"),
             college="Indian Institute of Technology",
             grad_year=2026,
-            target_role="Senior Backend Engineer",
+            target_role="Full Stack Developer",
             target_companies=["Google", "Stripe", "Uber", "Databricks"],
         )
         db.add(user)

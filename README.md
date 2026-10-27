@@ -4,6 +4,7 @@
 
 **An AI-assisted placement-prep platform: resume ATS scoring, DSA mastery tracking, adaptive mock interviews, and one explainable Readiness Score.**
 
+[![CI](https://github.com/Fb-JAYRAJ/Placement-Copilot-/actions/workflows/ci.yml/badge.svg)](https://github.com/Fb-JAYRAJ/Placement-Copilot-/actions/workflows/ci.yml)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
@@ -14,8 +15,6 @@
 Live demo: _coming soon_ · [API reference](docs/API.md) · [Architecture](docs/ARCHITECTURE.md) · [Design decisions](docs/DECISIONS.md) · [Frontend tour](docs/FRONTEND_TOUR.md)
 
 </div>
-
-![Placement Copilot demo](docs/images/demo.gif)
 
 ## Why I built it
 
@@ -143,8 +142,8 @@ placement-copilot/
 **Prerequisites:** Python 3.12+, Node.js 20+, a free [Neon](https://neon.com) account, and a Gemini API key from [Google AI Studio](https://aistudio.google.com).
 
 ```bash
-git clone https://github.com/Fb-JAYRAJ/placement-copilot.git
-cd placement-copilot
+git clone https://github.com/Fb-JAYRAJ/Placement-Copilot-.git
+cd "Placement Copilot "
 ```
 
 **1. Database.** In Neon, create a project with a `dev` branch and a `test` branch. From each branch's Connect dialog copy the pooled string and the direct string, and change the start of each from `postgresql://` to `postgresql+psycopg://`.
@@ -155,7 +154,7 @@ cd placement-copilot
 cd backend
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -e ".[dev]"
 cp .env.example .env         # then fill in the values below
 alembic upgrade head         # uses DATABASE_URL_DIRECT
 python scripts/seed.py       # skills, topics, problems, question bank

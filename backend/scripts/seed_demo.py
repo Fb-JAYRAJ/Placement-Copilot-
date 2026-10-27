@@ -1,47 +1,40 @@
 import asyncio
 import os
 import sys
-from datetime import datetime, date, timedelta, timezone
+from datetime import UTC, datetime, timedelta
+
 from dotenv import load_dotenv
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 sys.path.insert(0, BASE_DIR)
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from sqlalchemy import select, delete
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.config import settings
 from app.core.security import get_password_hash
 from app.models.models import (
-    User,
-    Resume,
-    JobDescription,
+    ActivityEvent,
     ATSAnalysis,
-    DSATopic,
-    DSAProblem,
     DSAAttempt,
     DSAAttemptStatus,
-    MockInterview,
-    InterviewQuestion,
+    DSAProblem,
+    DSATopic,
     InterviewAnswer,
+    InterviewQuestion,
+    InterviewTrack,
+    JobDescription,
+    MockInterview,
     MockInterviewStatus,
     QuestionSource,
-    InterviewTrack,
     ReadinessSnapshot,
-    ActivityEvent,
+    Resume,
+    User,
 )
-from app.services.dsa.mastery import recompute_and_save_topic_mastery
-from app.services.ats.parser import parse_sections_and_contact, normalize_text
+from app.services.ats.parser import normalize_text, parse_sections_and_contact
 from app.services.ats.scorer import score_resume_against_jd
-from app.services.readiness.calculator import (
-    calculate_ats_component,
-    calculate_dsa_component,
-    calculate_interview_component,
-    calculate_consistency_component,
-    calculate_composite_readiness,
-    simulate_levers,
-)
+from app.services.dsa.mastery import recompute_and_save_topic_mastery
 
 DEMO_RESUME = """
 Jayraj Sawant
@@ -175,7 +168,7 @@ async def seed_demo():
         print(f"✓ Generated ATS Analysis: Overall Score {ats_analysis.overall}%")
 
         # 4. DSA Attempts & Mastery
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         topics = (await db.execute(select(DSATopic))).scalars().all()
         topic_by_slug = {t.slug: t for t in topics}
 
@@ -215,7 +208,7 @@ async def seed_demo():
                 status=DSAAttemptStatus.SOLVED,
                 confidence=conf,
                 time_spent_min=time_spent,
-                notes=f"Solved optimally using canonical patterns. Clean O(1) space where applicable.",
+                notes="Solved optimally using canonical patterns. Clean O(1) space where applicable.",
                 attempted_at=att_time,
                 solved_at=att_time,
                 sm2_ease=2.6,

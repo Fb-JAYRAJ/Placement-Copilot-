@@ -1,15 +1,16 @@
 import asyncio
 import os
-import sys
+
 from dotenv import load_dotenv
 
 # Load backend/.env
 env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
 load_dotenv(env_path)
 
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy import text
 from google import genai
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import create_async_engine
+
 
 async def check_db(name: str, url: str):
     print(f"Checking {name} connection...")

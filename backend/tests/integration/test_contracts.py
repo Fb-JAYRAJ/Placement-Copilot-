@@ -1,6 +1,8 @@
 import uuid
+
 import pytest
 from httpx import AsyncClient
+
 from scripts.seed import run_seed
 
 

@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 import sys
+
 from dotenv import load_dotenv
 
 # Add backend to sys.path and load .env
@@ -9,22 +10,22 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 sys.path.insert(0, BASE_DIR)
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from sqlalchemy import select, and_
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.config import settings
 from app.models.models import (
-    DSATopic,
     DSAProblem,
+    DSATopic,
+    InterviewTrack,
     ProblemTopic,
     QuestionBank,
-    InterviewTrack,
 )
 
 DATA_DIR = os.path.join(BASE_DIR, "app", "data")
 
 async def seed_dsa_topics(db: AsyncSession):
-    with open(os.path.join(DATA_DIR, "dsa_topics.json"), "r", encoding="utf-8") as f:
+    with open(os.path.join(DATA_DIR, "dsa_topics.json"), encoding="utf-8") as f:
         topics_data = json.load(f)
 
     print(f"Seeding {len(topics_data)} DSA topics...")
@@ -60,7 +61,7 @@ async def seed_dsa_topics(db: AsyncSession):
     return topic_map
 
 async def seed_dsa_problems(db: AsyncSession, topic_map: dict):
-    with open(os.path.join(DATA_DIR, "dsa_problems.json"), "r", encoding="utf-8") as f:
+    with open(os.path.join(DATA_DIR, "dsa_problems.json"), encoding="utf-8") as f:
         problems_data = json.load(f)
 
     print(f"Seeding {len(problems_data)} DSA problems in bulk...")
@@ -109,7 +110,7 @@ async def seed_dsa_problems(db: AsyncSession, topic_map: dict):
     print("✓ DSA problems and topic links seeded successfully.")
 
 async def seed_question_bank(db: AsyncSession):
-    with open(os.path.join(DATA_DIR, "question_bank.json"), "r", encoding="utf-8") as f:
+    with open(os.path.join(DATA_DIR, "question_bank.json"), encoding="utf-8") as f:
         questions_data = json.load(f)
 
     print(f"Seeding {len(questions_data)} interview questions in bulk...")

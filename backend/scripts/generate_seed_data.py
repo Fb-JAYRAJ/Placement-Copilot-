@@ -849,7 +849,7 @@ def generate_question_bank():
             })
 
     # Duplicate & vary prompts to comfortably cross 150 items across all tracks
-    tracks = ["dsa_concepts", "cs_fundamentals", "behavioral", "system_design"]
+    _tracks = ["dsa_concepts", "cs_fundamentals", "behavioral", "system_design"]
     current_count = len(questions)
     target = 150
     idx = 0

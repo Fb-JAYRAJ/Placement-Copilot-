@@ -10,8 +10,9 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-async-009688?logo=fastapi&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/Postgres-Neon-4169E1?logo=postgresql&logoColor=white)
 ![Gemini](https://img.shields.io/badge/LLM-Gemini-8E75B2?logo=googlegemini&logoColor=white)
+[![CI](https://github.com/Fb-JAYRAJ/Placement-Copilot-/actions/workflows/ci.yml/badge.svg)](https://github.com/Fb-JAYRAJ/Placement-Copilot-/actions/workflows/ci.yml)
 
-🌐 Live demo: _coming soon_ · 📚 [API reference](docs/API.md) · 🏛️ [Architecture](docs/ARCHITECTURE.md) · 🧭 [Design decisions](docs/DECISIONS.md) · 🗺️ [Frontend tour](docs/FRONTEND_TOUR.md)
+🌐 Live demo: _coming soon_ · 📚 [API reference](docs/API.md) · 🏛️ [Architecture](docs/ARCHITECTURE.md) · 🧭 [Design decisions](docs/DECISIONS.md) · 🗺️ [Frontend tour](docs/FRONTEND_TOUR.md) · 🚢 [Deployment](docs/DEPLOYMENT.md)
 
 </div>
 
@@ -222,7 +223,7 @@ cd backend && source .venv/bin/activate && pytest -q
 cd ../frontend && npm run lint && npm run build
 ```
 
-Integration tests run against the Neon `test` branch, so the first request after a pause can take a second or two while the database wakes up.
+Integration tests run against the Neon `test` branch, so the first request after a pause can take a second or two while the database wakes up. GitHub Actions runs Ruff, the backend unit tests, and the frontend lint and build on every push.
 
 ## 🔌 API
 

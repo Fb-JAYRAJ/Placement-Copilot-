@@ -1,58 +1,34 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-.venv/
-venv/
-ENV/
-
-# Node
-node_modules/
-dist/
-dist-ssr/
-*.local
-
-# Environment variables & secrets
+cat > .gitignore << 'GITIGNORE'
+# Secrets
 .env
 .env.*
 !.env.example
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-.DS_Store
-
-# Testing & coverage
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
 .pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
 .coverage
 htmlcov/
-coverage/
+
+# Node and build output
+node_modules/
+dist/
+.vite/
+
+# Playwright
 test-results/
 playwright-report/
+blob-report/
 
-# Antigravity artifacts/scratch (if in workspace)
-scratch/
-
-# Logs
+# Logs and editor files
 *.log
-backend.log
+.DS_Store
+.idea/
+.vscode/
+GITIGNORE

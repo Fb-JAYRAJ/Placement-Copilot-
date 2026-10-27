@@ -25,11 +25,25 @@ Placement prep is scattered across resume checkers, problem trackers and mock-in
 
 | Dashboard | DSA Tracker |
 |---|---|
-| ![Dashboard](docs/images/dashboard.png) | ![DSA Tracker](docs/images/dsa-tracker.png) |
+| <img width="1512" height="857" alt="DASHBOARD" src="https://github.com/user-attachments/assets/315fa7a5-a5f7-45d5-afb3-1d59040ac83e" />
+
+ | <img width="1512" height="854" alt="DSA" src="https://github.com/user-attachments/assets/537f1a8d-6899-4033-8981-80ff4bd17d86" />
+
+
+ |
 | **Resume ATS Analyzer** | **Adaptive Mock Interview** |
-| ![Resume ATS Analyzer](docs/images/resume-analyzer.png) | ![Adaptive Mock Interview](docs/images/mock-interview.png) |
+| <img width="1512" height="858" alt="ResumeATS" src="https://github.com/user-attachments/assets/42d8e223-fa14-4f68-99f3-e60a985181d1" />
+ |
+
+ | <img width="1512" height="856" alt="MOCK" src="https://github.com/user-attachments/assets/3a09c6a8-938c-4abe-a287-ea0b90dda852" />
+
+ |
 | **Interview report** | **Sign in** |
-| ![Interview report](docs/images/interview-report.png) | ![Sign in](docs/images/login.png) |
+| <img width="1512" height="858" alt="Report" src="https://github.com/user-attachments/assets/578fe1eb-4444-4d18-812a-8b68e4a71024" /> |
+
+ | <img width="1512" height="857" alt="SIGNIN" src="https://github.com/user-attachments/assets/573d7f08-9599-42d7-9084-6a792180e142" />
+
+ |
 
 ## Features
 

@@ -75,12 +75,124 @@ async def delete_me(
     await db.delete(current_user)
     await db.commit()
 
+def _serialize_resumes(resumes: list[Resume]) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": str(r.id),
+            "title": r.title,
+            "file_type": r.file_type,
+            "created_at": r.created_at.isoformat(),
+            "parsed": r.parsed,
+        }
+        for r in resumes
+    ]
+
+def _serialize_jds(jds: list[JobDescription]) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": str(j.id),
+            "company": j.company,
+            "role": j.role,
+            "extracted": j.extracted,
+            "created_at": j.created_at.isoformat(),
+        }
+        for j in jds
+    ]
+
+def _serialize_ats(ats: list[ATSAnalysis]) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": str(a.id),
+            "resume_id": str(a.resume_id),
+            "resume_title": a.resume.title if a.resume else None,
+            "jd_id": str(a.jd_id),
+            "job_company": a.job_description.company if a.job_description else None,
+            "job_role": a.job_description.role if a.job_description else None,
+            "overall": a.overall,
+            "scores": {
+                "keyword": a.keyword_score,
+                "semantic": a.semantic_score,
+                "tfidf": a.tfidf_score,
+                "quality": a.quality_score,
+            },
+            "matched": a.matched,
+            "missing": a.missing,
+            "suggestions": a.suggestions,
+            "created_at": a.created_at.isoformat(),
+        }
+        for a in ats
+    ]
+
+def _serialize_dsa_attempts(attempts: list[DSAAttempt]) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": str(att.id),
+            "problem_id": str(att.problem_id) if att.problem_id else None,
+            "problem_title": att.problem.title if att.problem else None,
+            "topic_id": str(att.topic_id),
+            "topic_name": att.topic.name if att.topic else None,
+            "custom_title": att.custom_title,
+            "difficulty": att.difficulty,
+            "status": att.status.value,
+            "confidence": att.confidence,
+            "attempted_at": att.attempted_at.isoformat(),
+        }
+        for att in attempts
+    ]
+
+def _serialize_mock_interviews(interviews: list[MockInterview]) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": str(i.id),
+            "track": i.track.value,
+            "status": i.status.value,
+            "final_score": i.final_score,
+            "report": i.report,
+            "started_at": i.started_at.isoformat(),
+            "questions": [
+                {
+                    "id": str(q.id),
+                    "seq": q.seq,
+                    "topic": q.topic,
+                    "difficulty": q.difficulty,
+                    "text": q.text,
+                    "answer": q.answer.answer_text if q.answer else None,
+                }
+                for q in i.questions
+            ],
+        }
+        for i in interviews
+    ]
+
+def _serialize_snapshots(snapshots: list[ReadinessSnapshot]) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": str(s.id),
+            "composite": s.composite,
+            "confidence": s.confidence,
+            "components": {"ats": s.ats, "dsa": s.dsa, "interview": s.interview, "consistency": s.consistency},
+            "created_at": s.created_at.isoformat(),
+        }
+        for s in snapshots
+    ]
+
+def _serialize_events(events: list[ActivityEvent]) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": str(e.id),
+            "type": e.type,
+            "title": e.title,
+            "detail": e.detail,
+            "created_at": e.created_at.isoformat(),
+        }
+        for e in events
+    ]
+
 @router.get("/me/export")
 async def export_my_data(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
-    # Collect all user data across all tables with eager loaded relationships
     resumes = (await db.execute(select(Resume).where(Resume.user_id == current_user.id))).scalars().all()
     jds = (await db.execute(select(JobDescription).where(JobDescription.user_id == current_user.id))).scalars().all()
     ats = (
@@ -109,103 +221,11 @@ async def export_my_data(
 
     return {
         "user": UserResponse.model_validate(current_user).model_dump(),
-        "resumes": [
-            {
-                "id": str(r.id),
-                "title": r.title,
-                "file_type": r.file_type,
-                "created_at": r.created_at.isoformat(),
-                "parsed": r.parsed,
-            }
-            for r in resumes
-        ],
-        "job_descriptions": [
-            {
-                "id": str(j.id),
-                "company": j.company,
-                "role": j.role,
-                "extracted": j.extracted,
-                "created_at": j.created_at.isoformat(),
-            }
-            for j in jds
-        ],
-        "ats_analyses": [
-            {
-                "id": str(a.id),
-                "resume_id": str(a.resume_id),
-                "resume_title": a.resume.title if a.resume else None,
-                "jd_id": str(a.jd_id),
-                "job_company": a.job_description.company if a.job_description else None,
-                "job_role": a.job_description.role if a.job_description else None,
-                "overall": a.overall,
-                "scores": {
-                    "keyword": a.keyword_score,
-                    "semantic": a.semantic_score,
-                    "tfidf": a.tfidf_score,
-                    "quality": a.quality_score,
-                },
-                "matched": a.matched,
-                "missing": a.missing,
-                "suggestions": a.suggestions,
-                "created_at": a.created_at.isoformat(),
-            }
-            for a in ats
-        ],
-        "dsa_attempts": [
-            {
-                "id": str(att.id),
-                "problem_id": str(att.problem_id) if att.problem_id else None,
-                "problem_title": att.problem.title if att.problem else None,
-                "topic_id": str(att.topic_id),
-                "topic_name": att.topic.name if att.topic else None,
-                "custom_title": att.custom_title,
-                "difficulty": att.difficulty,
-                "status": att.status.value,
-                "confidence": att.confidence,
-                "attempted_at": att.attempted_at.isoformat(),
-            }
-            for att in attempts
-        ],
-        "mock_interviews": [
-            {
-                "id": str(i.id),
-                "track": i.track.value,
-                "status": i.status.value,
-                "final_score": i.final_score,
-                "report": i.report,
-                "started_at": i.started_at.isoformat(),
-                "questions": [
-                    {
-                        "id": str(q.id),
-                        "seq": q.seq,
-                        "topic": q.topic,
-                        "difficulty": q.difficulty,
-                        "text": q.text,
-                        "answer": q.answer.answer_text if q.answer else None,
-                    }
-                    for q in i.questions
-                ],
-            }
-            for i in interviews
-        ],
-        "readiness_snapshots": [
-            {
-                "id": str(s.id),
-                "composite": s.composite,
-                "confidence": s.confidence,
-                "components": {"ats": s.ats, "dsa": s.dsa, "interview": s.interview, "consistency": s.consistency},
-                "created_at": s.created_at.isoformat(),
-            }
-            for s in snapshots
-        ],
-        "activity_events": [
-            {
-                "id": str(e.id),
-                "type": e.type,
-                "title": e.title,
-                "detail": e.detail,
-                "created_at": e.created_at.isoformat(),
-            }
-            for e in events
-        ],
+        "resumes": _serialize_resumes(resumes),
+        "job_descriptions": _serialize_jds(jds),
+        "ats_analyses": _serialize_ats(ats),
+        "dsa_attempts": _serialize_dsa_attempts(attempts),
+        "mock_interviews": _serialize_mock_interviews(interviews),
+        "readiness_snapshots": _serialize_snapshots(snapshots),
+        "activity_events": _serialize_events(events),
     }

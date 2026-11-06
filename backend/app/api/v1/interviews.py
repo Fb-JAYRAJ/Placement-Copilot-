@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.core.db import get_db
-from app.core.dependencies import get_current_user
+from app.core.dependencies import get_current_user, get_user_entity_or_404
 from app.core.errors import NotFoundError, ValidationError
 from app.core.ratelimit import check_and_increment_llm_quota, limiter
 from app.models.models import (
@@ -37,6 +37,28 @@ from app.services.interview.evaluator import evaluate_interview_answer
 from app.services.interview.report import generate_interview_report
 
 router = APIRouter(prefix="/interviews", tags=["interviews"])
+
+def _build_interview_response(
+    interview: MockInterview,
+    current_question: InterviewQuestion | None = None,
+    answered_count: int | None = None,
+) -> InterviewResponse:
+    if answered_count is None and interview.questions:
+        answered_count = sum(1 for q in interview.questions if getattr(q, "answer", None))
+    return InterviewResponse(
+        id=interview.id,
+        track=interview.track,
+        company=interview.company,
+        role=interview.role,
+        planned_questions=interview.planned_questions,
+        status=interview.status,
+        ability=interview.ability,
+        final_score=interview.final_score,
+        current_question=InterviewQuestionResponse.model_validate(current_question) if current_question else None,
+        questions_answered_count=answered_count or 0,
+        started_at=interview.started_at,
+        ended_at=interview.ended_at,
+    )
 
 @router.post("", response_model=InterviewResponse, status_code=status.HTTP_201_CREATED)
 async def create_interview(
@@ -86,20 +108,7 @@ async def create_interview(
     await db.refresh(interview)
     await db.refresh(q1)
 
-    return InterviewResponse(
-        id=interview.id,
-        track=interview.track,
-        company=interview.company,
-        role=interview.role,
-        planned_questions=interview.planned_questions,
-        status=interview.status,
-        ability=interview.ability,
-        final_score=interview.final_score,
-        current_question=InterviewQuestionResponse.model_validate(q1),
-        questions_answered_count=0,
-        started_at=interview.started_at,
-        ended_at=interview.ended_at,
-    )
+    return _build_interview_response(interview, current_question=q1, answered_count=0)
 
 @router.get("", response_model=PaginatedResponse[InterviewResponse])
 async def list_interviews(
@@ -113,25 +122,7 @@ async def list_interviews(
         .order_by(MockInterview.started_at.desc())
     )
     interviews = (await db.execute(stmt)).scalars().all()
-    results = []
-    for iv in interviews:
-        answered_count = sum(1 for q in iv.questions if q.answer)
-
-        results.append(
-            InterviewResponse(
-                id=iv.id,
-                track=iv.track,
-                company=iv.company,
-                role=iv.role,
-                planned_questions=iv.planned_questions,
-                status=iv.status,
-                ability=iv.ability,
-                final_score=iv.final_score,
-                questions_answered_count=answered_count,
-                started_at=iv.started_at,
-                ended_at=iv.ended_at,
-            )
-        )
+    results = [_build_interview_response(iv) for iv in interviews]
     return PaginatedResponse.from_items(results)
 
 @router.get("/{interview_id}", response_model=InterviewResponse)
@@ -140,14 +131,14 @@ async def get_interview(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    stmt = (
-        select(MockInterview)
-        .options(selectinload(MockInterview.questions).selectinload(InterviewQuestion.answer))
-        .where(and_(MockInterview.id == interview_id, MockInterview.user_id == current_user.id))
+    interview = await get_user_entity_or_404(
+        db,
+        MockInterview,
+        interview_id,
+        current_user.id,
+        error_message="Mock interview not found",
+        options=[selectinload(MockInterview.questions).selectinload(InterviewQuestion.answer)],
     )
-    interview = (await db.execute(stmt)).scalar_one_or_none()
-    if not interview:
-        raise NotFoundError("Mock interview not found")
 
     questions = interview.questions
     current_q = None
@@ -158,20 +149,7 @@ async def get_interview(
         elif current_q is None:
             current_q = q
 
-    return InterviewResponse(
-        id=interview.id,
-        track=interview.track,
-        company=interview.company,
-        role=interview.role,
-        planned_questions=interview.planned_questions,
-        status=interview.status,
-        ability=interview.ability,
-        final_score=interview.final_score,
-        current_question=InterviewQuestionResponse.model_validate(current_q) if current_q else None,
-        questions_answered_count=answered_count,
-        started_at=interview.started_at,
-        ended_at=interview.ended_at,
-    )
+    return _build_interview_response(interview, current_question=current_q, answered_count=answered_count)
 
 @router.post("/{interview_id}/answers", response_model=InterviewSubmitAnswerResult)
 @limiter.limit("20/minute")

@@ -42,7 +42,7 @@ async def get_topics(db: AsyncSession = Depends(get_db)):
     stmt = select(DSATopic).order_by(DSATopic.importance.desc(), DSATopic.name.asc())
     topics = (await db.execute(stmt)).scalars().all()
     items = [DSATopicResponse.model_validate(t) for t in topics]
-    return PaginatedResponse(items=items, total=len(items), limit=len(items), offset=0)
+    return PaginatedResponse.from_items(items)
 
 @router.get("/problems", response_model=PaginatedResponse[DSAProblemResponse])
 async def get_problems(
@@ -107,6 +107,35 @@ async def get_problems(
         )
 
     return PaginatedResponse(items=items, total=total, limit=limit, offset=offset)
+
+def _build_attempt_response(
+    attempt: DSAAttempt,
+    topic_name: str | None = None,
+    problem_title: str | None = None,
+) -> DSAAttemptResponse:
+    resolved_topic = topic_name or (attempt.topic.name if attempt.topic else "Unknown Topic")
+    resolved_problem = (
+        problem_title if problem_title is not None else (attempt.problem.title if attempt.problem else None)
+    )
+    return DSAAttemptResponse(
+        id=attempt.id,
+        problem_id=attempt.problem_id,
+        custom_title=attempt.custom_title,
+        topic_id=attempt.topic_id,
+        topic_name=resolved_topic,
+        problem_title=resolved_problem,
+        difficulty=attempt.difficulty,
+        status=attempt.status,
+        confidence=attempt.confidence,
+        time_spent_min=attempt.time_spent_min,
+        notes=attempt.notes,
+        attempted_at=attempt.attempted_at,
+        solved_at=attempt.solved_at,
+        sm2_ease=attempt.sm2_ease,
+        sm2_interval_days=attempt.sm2_interval_days,
+        sm2_repetitions=attempt.sm2_repetitions,
+        next_review_at=attempt.next_review_at,
+    )
 
 @router.post("/attempts", response_model=DSAAttemptResponse, status_code=status.HTTP_201_CREATED)
 async def create_attempt(
@@ -175,24 +204,10 @@ async def create_attempt(
     await db.commit()
     await db.refresh(attempt)
 
-    return DSAAttemptResponse(
-        id=attempt.id,
-        problem_id=attempt.problem_id,
-        custom_title=attempt.custom_title,
-        topic_id=attempt.topic_id,
+    return _build_attempt_response(
+        attempt,
         topic_name=topic.name,
         problem_title=problem.title if problem else None,
-        difficulty=attempt.difficulty,
-        status=attempt.status,
-        confidence=attempt.confidence,
-        time_spent_min=attempt.time_spent_min,
-        notes=attempt.notes,
-        attempted_at=attempt.attempted_at,
-        solved_at=attempt.solved_at,
-        sm2_ease=attempt.sm2_ease,
-        sm2_interval_days=attempt.sm2_interval_days,
-        sm2_repetitions=attempt.sm2_repetitions,
-        next_review_at=attempt.next_review_at,
     )
 
 @router.get("/attempts", response_model=PaginatedResponse[DSAAttemptResponse])
@@ -223,33 +238,7 @@ async def get_attempts(
         .offset(offset)
     )
     attempts = (await db.execute(stmt)).scalars().all()
-
-    items = []
-    for a in attempts:
-        topic_name = a.topic.name if a.topic else "Unknown Topic"
-        prob_title = a.problem.title if a.problem else None
-        items.append(
-            DSAAttemptResponse(
-                id=a.id,
-                problem_id=a.problem_id,
-                custom_title=a.custom_title,
-                topic_id=a.topic_id,
-                topic_name=topic_name,
-                problem_title=prob_title,
-                difficulty=a.difficulty,
-                status=a.status,
-                confidence=a.confidence,
-                time_spent_min=a.time_spent_min,
-                notes=a.notes,
-                attempted_at=a.attempted_at,
-                solved_at=a.solved_at,
-                sm2_ease=a.sm2_ease,
-                sm2_interval_days=a.sm2_interval_days,
-                sm2_repetitions=a.sm2_repetitions,
-                next_review_at=a.next_review_at,
-            )
-        )
-
+    items = [_build_attempt_response(a) for a in attempts]
     return PaginatedResponse(items=items, total=total, limit=limit, offset=offset)
 
 @router.patch("/attempts/{attempt_id}", response_model=DSAAttemptResponse)
@@ -306,28 +295,7 @@ async def update_attempt(
         current_user.id,
         options=[selectinload(DSAAttempt.topic), selectinload(DSAAttempt.problem)],
     )
-    topic_name = refetched.topic.name if refetched.topic else "Unknown Topic"
-    prob_title = refetched.problem.title if refetched.problem else None
-
-    return DSAAttemptResponse(
-        id=attempt.id,
-        problem_id=attempt.problem_id,
-        custom_title=attempt.custom_title,
-        topic_id=attempt.topic_id,
-        topic_name=topic_name,
-        problem_title=prob_title,
-        difficulty=attempt.difficulty,
-        status=attempt.status,
-        confidence=attempt.confidence,
-        time_spent_min=attempt.time_spent_min,
-        notes=attempt.notes,
-        attempted_at=attempt.attempted_at,
-        solved_at=attempt.solved_at,
-        sm2_ease=attempt.sm2_ease,
-        sm2_interval_days=attempt.sm2_interval_days,
-        sm2_repetitions=attempt.sm2_repetitions,
-        next_review_at=attempt.next_review_at,
-    )
+    return _build_attempt_response(refetched)
 
 @router.delete("/attempts/{attempt_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_attempt(

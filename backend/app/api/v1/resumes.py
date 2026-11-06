@@ -1,13 +1,13 @@
 import uuid
 
 from fastapi import APIRouter, Depends, File, Form, UploadFile, status
-from sqlalchemy import and_, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.core.db import get_db
-from app.core.dependencies import get_current_user
-from app.core.errors import NotFoundError, ValidationError
+from app.core.dependencies import get_current_user, get_user_entity_or_404
+from app.core.errors import ValidationError
 from app.models.models import ActivityEvent, Resume, User
 from app.schemas.ats import ResumeResponse
 from app.schemas.common import PaginatedResponse
@@ -93,14 +93,14 @@ async def get_resume(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    stmt = (
-        select(Resume)
-        .options(selectinload(Resume.ats_analyses))
-        .where(and_(Resume.id == resume_id, Resume.user_id == current_user.id))
+    resume = await get_user_entity_or_404(
+        db,
+        Resume,
+        resume_id,
+        current_user.id,
+        error_message="Resume not found",
+        options=[selectinload(Resume.ats_analyses)],
     )
-    resume = (await db.execute(stmt)).scalar_one_or_none()
-    if not resume:
-        raise NotFoundError("Resume not found")
     return ResumeResponse.model_validate(resume)
 
 @router.delete("/{resume_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -109,9 +109,6 @@ async def delete_resume(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    stmt = select(Resume).where(and_(Resume.id == resume_id, Resume.user_id == current_user.id))
-    resume = (await db.execute(stmt)).scalar_one_or_none()
-    if not resume:
-        raise NotFoundError("Resume not found")
+    resume = await get_user_entity_or_404(db, Resume, resume_id, current_user.id, error_message="Resume not found")
     await db.delete(resume)
     await db.commit()

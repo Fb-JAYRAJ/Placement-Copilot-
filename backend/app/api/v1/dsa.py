@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.core.db import get_db
-from app.core.dependencies import get_current_user
+from app.core.dependencies import get_current_user, get_user_entity_or_404
 from app.core.errors import NotFoundError
 from app.models.models import (
     ActivityEvent,
@@ -259,14 +259,14 @@ async def update_attempt(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    stmt = (
-        select(DSAAttempt)
-        .options(selectinload(DSAAttempt.topic), selectinload(DSAAttempt.problem))
-        .where(and_(DSAAttempt.id == attempt_id, DSAAttempt.user_id == current_user.id))
+    attempt = await get_user_entity_or_404(
+        db,
+        DSAAttempt,
+        attempt_id,
+        current_user.id,
+        error_message="DSA attempt not found",
+        options=[selectinload(DSAAttempt.topic), selectinload(DSAAttempt.problem)],
     )
-    attempt = (await db.execute(stmt)).scalar_one_or_none()
-    if not attempt:
-        raise NotFoundError("DSA attempt not found")
 
     if payload.custom_title is not None:
         attempt.custom_title = payload.custom_title
@@ -299,7 +299,13 @@ async def update_attempt(
     await recompute_and_save_topic_mastery(current_user.id, attempt.topic_id, db)
     await db.commit()
 
-    refetched = (await db.execute(stmt)).scalar_one()
+    refetched = await get_user_entity_or_404(
+        db,
+        DSAAttempt,
+        attempt_id,
+        current_user.id,
+        options=[selectinload(DSAAttempt.topic), selectinload(DSAAttempt.problem)],
+    )
     topic_name = refetched.topic.name if refetched.topic else "Unknown Topic"
     prob_title = refetched.problem.title if refetched.problem else None
 
@@ -329,12 +335,7 @@ async def delete_attempt(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    stmt = select(DSAAttempt).where(
-        and_(DSAAttempt.id == attempt_id, DSAAttempt.user_id == current_user.id)
-    )
-    attempt = (await db.execute(stmt)).scalar_one_or_none()
-    if not attempt:
-        raise NotFoundError("DSA attempt not found")
+    attempt = await get_user_entity_or_404(db, DSAAttempt, attempt_id, current_user.id, error_message="DSA attempt not found")
 
     topic_id = attempt.topic_id
     await db.delete(attempt)

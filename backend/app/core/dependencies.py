@@ -1,16 +1,34 @@
 import uuid
+from typing import Any
 
 from fastapi import Depends, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from sqlalchemy import select
+from sqlalchemy import and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_db
-from app.core.errors import UnauthorizedError
+from app.core.errors import NotFoundError, UnauthorizedError
 from app.core.security import decode_access_token
 from app.models.models import User
 
 security_scheme = HTTPBearer(auto_error=False)
+
+async def get_user_entity_or_404(
+    db: AsyncSession,
+    model: type[Any],
+    entity_id: uuid.UUID,
+    user_id: uuid.UUID,
+    error_message: str | None = None,
+    options: list[Any] | None = None,
+) -> Any:
+    """Fetches an entity owned by user_id or raises NotFoundError (IDOR protection)."""
+    stmt = select(model).where(and_(model.id == entity_id, model.user_id == user_id))
+    if options:
+        stmt = stmt.options(*options)
+    entity = (await db.execute(stmt)).scalar_one_or_none()
+    if not entity:
+        raise NotFoundError(error_message or f"{model.__name__} not found")
+    return entity
 
 async def get_current_user(
     request: Request,

@@ -1,13 +1,13 @@
 import uuid
 
 from fastapi import APIRouter, Depends, Request, status
-from sqlalchemy import and_, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.core.db import get_db
-from app.core.dependencies import get_current_user
-from app.core.errors import NotFoundError, ValidationError
+from app.core.dependencies import get_current_user, get_user_entity_or_404
+from app.core.errors import ValidationError
 from app.core.ratelimit import check_and_increment_llm_quota, limiter
 from app.models.models import ActivityEvent, ATSAnalysis, JobDescription, Resume, User
 from app.schemas.ats import ATSAnalysisResponse, ATSAnalyzeRequest
@@ -27,19 +27,13 @@ async def analyze_resume_ats(
     db: AsyncSession = Depends(get_db),
 ):
     # 1. Fetch resume (IDOR protected)
-    stmt = select(Resume).where(and_(Resume.id == payload.resume_id, Resume.user_id == current_user.id))
-    resume = (await db.execute(stmt)).scalar_one_or_none()
-    if not resume:
-        raise NotFoundError("Resume not found")
+    resume = await get_user_entity_or_404(db, Resume, payload.resume_id, current_user.id, error_message="Resume not found")
 
     # 2. Fetch or create Job Description
     if payload.jd_id:
-        jd_stmt = select(JobDescription).where(
-            and_(JobDescription.id == payload.jd_id, JobDescription.user_id == current_user.id)
+        jd = await get_user_entity_or_404(
+            db, JobDescription, payload.jd_id, current_user.id, error_message="Job description not found"
         )
-        jd = (await db.execute(jd_stmt)).scalar_one_or_none()
-        if not jd:
-            raise NotFoundError("Job description not found")
     elif payload.inline_jd_text:
         clean_jd_text = normalize_text(payload.inline_jd_text)
         if len(clean_jd_text) < 20:
@@ -125,12 +119,12 @@ async def get_analysis(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    stmt = (
-        select(ATSAnalysis)
-        .options(selectinload(ATSAnalysis.resume), selectinload(ATSAnalysis.job_description))
-        .where(and_(ATSAnalysis.id == analysis_id, ATSAnalysis.user_id == current_user.id))
+    analysis = await get_user_entity_or_404(
+        db,
+        ATSAnalysis,
+        analysis_id,
+        current_user.id,
+        error_message="ATS analysis not found",
+        options=[selectinload(ATSAnalysis.resume), selectinload(ATSAnalysis.job_description)],
     )
-    analysis = (await db.execute(stmt)).scalar_one_or_none()
-    if not analysis:
-        raise NotFoundError("ATS analysis not found")
     return ATSAnalysisResponse.model_validate(analysis)

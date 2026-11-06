@@ -1,13 +1,12 @@
 import uuid
 
 from fastapi import APIRouter, Depends, status
-from sqlalchemy import and_, select
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.core.db import get_db
-from app.core.dependencies import get_current_user
-from app.core.errors import NotFoundError
+from app.core.dependencies import get_current_user, get_user_entity_or_404
 from app.models.models import JobDescription, User
 from app.schemas.ats import JobDescriptionCreateRequest, JobDescriptionResponse
 from app.schemas.common import PaginatedResponse
@@ -60,12 +59,12 @@ async def get_job_description(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    stmt = (
-        select(JobDescription)
-        .options(selectinload(JobDescription.ats_analyses))
-        .where(and_(JobDescription.id == jd_id, JobDescription.user_id == current_user.id))
+    jd = await get_user_entity_or_404(
+        db,
+        JobDescription,
+        jd_id,
+        current_user.id,
+        error_message="Job description not found",
+        options=[selectinload(JobDescription.ats_analyses)],
     )
-    jd = (await db.execute(stmt)).scalar_one_or_none()
-    if not jd:
-        raise NotFoundError("Job description not found")
     return JobDescriptionResponse.model_validate(jd)

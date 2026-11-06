@@ -27,7 +27,9 @@ async def analyze_resume_ats(
     db: AsyncSession = Depends(get_db),
 ):
     # 1. Fetch resume (IDOR protected)
-    resume = await get_user_entity_or_404(db, Resume, payload.resume_id, current_user.id, error_message="Resume not found")
+    resume = await get_user_entity_or_404(
+        db, Resume, payload.resume_id, current_user.id, error_message="Resume not found"
+    )
 
     # 2. Fetch or create Job Description
     if payload.jd_id:

@@ -1,5 +1,7 @@
+import uuid
 from collections import defaultdict
 from datetime import UTC, date, datetime, timedelta
+from typing import Any
 
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy import and_, func, select
@@ -40,6 +42,144 @@ from app.services.readiness.calculator import (
 from app.services.readiness.focus_task import determine_daily_focus_task
 
 router = APIRouter(prefix="/dashboard", tags=["dashboard"])
+
+def _calculate_active_streak(all_active_dates: set[date], today: date) -> int:
+    streak = 0
+    if not all_active_dates:
+        return 0
+    chk = today if today in all_active_dates else today - timedelta(days=1)
+    while chk in all_active_dates:
+        streak += 1
+        chk -= timedelta(days=1)
+    return streak
+
+async def _maybe_save_snapshot(
+    db: AsyncSession,
+    user_id: uuid.UUID,
+    ats_comp: float | None,
+    dsa_comp: float | None,
+    iv_comp: float | None,
+    cons_comp: float | None,
+    composite: float | None,
+    confidence: float,
+    weights: dict[str, float],
+    levers_data: list[dict[str, Any]],
+    now: datetime,
+) -> None:
+    if composite is None:
+        return
+    snap_stmt = (
+        select(ReadinessSnapshot)
+        .where(ReadinessSnapshot.user_id == user_id)
+        .order_by(ReadinessSnapshot.created_at.desc())
+        .limit(1)
+    )
+    last_snap = (await db.execute(snap_stmt)).scalar_one_or_none()
+    if not last_snap or (now - last_snap.created_at).total_seconds() > 6 * 3600:
+        new_snap = ReadinessSnapshot(
+            user_id=user_id,
+            ats=ats_comp,
+            dsa=dsa_comp,
+            interview=iv_comp,
+            consistency=cons_comp,
+            composite=composite,
+            confidence=confidence,
+            explanation={"weights": weights, "levers": levers_data},
+        )
+        db.add(new_snap)
+        await db.commit()
+
+async def _calculate_7d_delta(
+    db: AsyncSession,
+    user_id: uuid.UUID,
+    composite: float | None,
+    now: datetime,
+) -> float | None:
+    if composite is None:
+        return None
+    past_7d_stmt = (
+        select(ReadinessSnapshot)
+        .where(
+            and_(
+                ReadinessSnapshot.user_id == user_id,
+                ReadinessSnapshot.created_at <= now - timedelta(days=7),
+            )
+        )
+        .order_by(ReadinessSnapshot.created_at.desc())
+        .limit(1)
+    )
+    past_snap = (await db.execute(past_7d_stmt)).scalar_one_or_none()
+    if past_snap and past_snap.composite is not None:
+        return round(composite - past_snap.composite, 1)
+    return None
+
+def _generate_sparklines(
+    all_ats: list[ATSAnalysis],
+    attempts: list[DSAAttempt],
+    interviews: list[MockInterview],
+    num_days: int,
+    today: date,
+    cutoff_date: date,
+) -> tuple[list[SparklinePoint], list[SparklinePoint], list[SparklinePoint]]:
+    ats_by_date: dict[date, list[float]] = defaultdict(list)
+    for a in all_ats:
+        d = a.created_at.date()
+        if d >= cutoff_date:
+            ats_by_date[d].append(a.overall)
+
+    ats_sparkline = []
+    for i in range(num_days - 1, -1, -1):
+        d_val = today - timedelta(days=i)
+        scores = ats_by_date.get(d_val, [])
+        val = sum(scores) / len(scores) if scores else 0.0
+        ats_sparkline.append(SparklinePoint(date=d_val.isoformat(), value=round(val, 1)))
+
+    dsa_by_date: dict[date, int] = defaultdict(int)
+    for a in attempts:
+        if a.status == DSAAttemptStatus.SOLVED:
+            d = a.attempted_at.date()
+            if d >= cutoff_date:
+                dsa_by_date[d] += 1
+
+    dsa_sparkline = []
+    for i in range(num_days - 1, -1, -1):
+        d_val = today - timedelta(days=i)
+        dsa_sparkline.append(SparklinePoint(date=d_val.isoformat(), value=float(dsa_by_date.get(d_val, 0))))
+
+    mock_by_date: dict[date, list[float]] = defaultdict(list)
+    for iv in interviews:
+        if iv.status == MockInterviewStatus.COMPLETED and iv.final_score is not None:
+            d = iv.started_at.date()
+            if d >= cutoff_date:
+                mock_by_date[d].append(iv.final_score)
+
+    mock_sparkline = []
+    for i in range(num_days - 1, -1, -1):
+        d_val = today - timedelta(days=i)
+        scores = mock_by_date.get(d_val, [])
+        val = sum(scores) / len(scores) if scores else 0.0
+        mock_sparkline.append(SparklinePoint(date=d_val.isoformat(), value=round(val, 1)))
+
+    return ats_sparkline, dsa_sparkline, mock_sparkline
+
+async def _fetch_recent_activity(db: AsyncSession, user_id: uuid.UUID) -> list[dict[str, Any]]:
+    act_stmt = (
+        select(ActivityEvent)
+        .where(ActivityEvent.user_id == user_id)
+        .order_by(ActivityEvent.created_at.desc())
+        .limit(10)
+    )
+    activities = (await db.execute(act_stmt)).scalars().all()
+    return [
+        {
+            "id": str(e.id),
+            "type": e.type,
+            "title": e.title,
+            "detail": e.detail,
+            "created_at": e.created_at.isoformat(),
+        }
+        for e in activities
+    ]
 
 @router.get("/summary", response_model=DashboardSummaryResponse)
 async def get_dashboard_summary(
@@ -84,25 +224,16 @@ async def get_dashboard_summary(
     )
     interviews = (await db.execute(iv_stmt)).scalars().all()
 
-    # Active dates for consistency
+    # Active dates and streak
     all_active_dates = set(a.attempted_at.date() for a in attempts)
     for a in all_ats:
         all_active_dates.add(a.created_at.date())
     for iv in interviews:
         all_active_dates.add(iv.started_at.date())
-
-    # Current streak
+    current_streak = _calculate_active_streak(all_active_dates, today)
     sorted_active = sorted(all_active_dates)
-    current_streak = 0
-    if sorted_active:
-        chk = today
-        if chk not in all_active_dates:
-            chk = today - timedelta(days=1)
-        while chk in all_active_dates:
-            current_streak += 1
-            chk -= timedelta(days=1)
 
-    # 2. Compute individual components
+    # 2. Compute individual components and composite readiness
     ats_comp = calculate_ats_component(all_ats)
     has_attempts = any(a.status == DSAAttemptStatus.SOLVED for a in attempts)
     dsa_comp = calculate_dsa_component(masteries, topics, has_attempts=has_attempts)
@@ -115,7 +246,6 @@ async def get_dashboard_summary(
         interview=iv_comp,
         consistency=cons_comp,
     )
-
     has_enough_data = confidence >= 0.25 and composite is not None
 
     # 3. Simulate Levers
@@ -130,123 +260,30 @@ async def get_dashboard_summary(
     )
     levers = [ReadinessLeverResponse(**lev) for lev in levers_data]
 
-    # 4. Lazy snapshot write if last is > 6h old
-    snap_stmt = (
-        select(ReadinessSnapshot)
-        .where(ReadinessSnapshot.user_id == current_user.id)
-        .order_by(ReadinessSnapshot.created_at.desc())
-        .limit(1)
+    # 4. Snapshot persistence and 7d delta
+    await _maybe_save_snapshot(
+        db, current_user.id, ats_comp, dsa_comp, iv_comp, cons_comp,
+        composite, confidence, weights, levers_data, now
     )
-    last_snap = (await db.execute(snap_stmt)).scalar_one_or_none()
+    delta_7d = await _calculate_7d_delta(db, current_user.id, composite, now)
 
-    if composite is not None:
-        if not last_snap or (now - last_snap.created_at).total_seconds() > 6 * 3600:
-            new_snap = ReadinessSnapshot(
-                user_id=current_user.id,
-                ats=ats_comp,
-                dsa=dsa_comp,
-                interview=iv_comp,
-                consistency=cons_comp,
-                composite=composite,
-                confidence=confidence,
-                explanation={"weights": weights, "levers": levers_data},
-            )
-            db.add(new_snap)
-            await db.commit()
-
-    # 5. Delta vs snapshot from >= 7 days ago
-    past_7d_stmt = (
-        select(ReadinessSnapshot)
-        .where(
-            and_(
-                ReadinessSnapshot.user_id == current_user.id,
-                ReadinessSnapshot.created_at <= now - timedelta(days=7),
-            )
-        )
-        .order_by(ReadinessSnapshot.created_at.desc())
-        .limit(1)
-    )
-    past_snap = (await db.execute(past_7d_stmt)).scalar_one_or_none()
-    delta_7d = None
-    if past_snap and composite is not None:
-        delta_7d = round(composite - past_snap.composite, 1)
-
-    # 6. Sparkline series for the selected range
+    # 5. Sparkline series for selected range
     cutoff_date = today - timedelta(days=num_days - 1)
-    
-    # ATS sparkline
-    ats_by_date = defaultdict(list)
-    for a in all_ats:
-        d = a.created_at.date()
-        if d >= cutoff_date:
-            ats_by_date[d].append(a.overall)
+    ats_sparkline, dsa_sparkline, mock_sparkline = _generate_sparklines(
+        all_ats, attempts, interviews, num_days, today, cutoff_date
+    )
 
-    ats_sparkline = []
-    for i in range(num_days - 1, -1, -1):
-        d_val = today - timedelta(days=i)
-        scores = ats_by_date.get(d_val, [])
-        val = sum(scores) / len(scores) if scores else 0.0
-        ats_sparkline.append(SparklinePoint(date=d_val.isoformat(), value=round(val, 1)))
-
-    # DSA sparkline (solved count per day)
-    dsa_by_date = defaultdict(int)
-    for a in attempts:
-        if a.status == DSAAttemptStatus.SOLVED:
-            d = a.attempted_at.date()
-            if d >= cutoff_date:
-                dsa_by_date[d] += 1
-
-    dsa_sparkline = []
-    for i in range(num_days - 1, -1, -1):
-        d_val = today - timedelta(days=i)
-        dsa_sparkline.append(SparklinePoint(date=d_val.isoformat(), value=float(dsa_by_date.get(d_val, 0))))
-
-    # Mock interview sparkline
-    mock_by_date = defaultdict(list)
-    for iv in interviews:
-        if iv.status == MockInterviewStatus.COMPLETED and iv.final_score is not None:
-            d = iv.started_at.date()
-            if d >= cutoff_date:
-                mock_by_date[d].append(iv.final_score)
-
-    mock_sparkline = []
-    for i in range(num_days - 1, -1, -1):
-        d_val = today - timedelta(days=i)
-        scores = mock_by_date.get(d_val, [])
-        val = sum(scores) / len(scores) if scores else 0.0
-        mock_sparkline.append(SparklinePoint(date=d_val.isoformat(), value=round(val, 1)))
-
-    # Averages
+    # 6. Averages and topics covered
     ats_avg = round(sum(a.overall for a in all_ats) / len(all_ats), 1) if all_ats else None
     completed_ivs = [iv for iv in interviews if iv.status == MockInterviewStatus.COMPLETED and iv.final_score is not None]
     mock_avg = round(sum(iv.final_score for iv in completed_ivs) / len(completed_ivs), 1) if completed_ivs else None
-
-    # Topics covered count
     topics_covered = sum(1 for m in masteries.values() if m >= 0.1)
 
-    # 7. Focus task
+    # 7. Focus task and activity feed
     focus_task = await determine_daily_focus_task(current_user.id, db)
+    recent_activity = await _fetch_recent_activity(db, current_user.id)
 
-    # 8. Recent activity feed
-    act_stmt = (
-        select(ActivityEvent)
-        .where(ActivityEvent.user_id == current_user.id)
-        .order_by(ActivityEvent.created_at.desc())
-        .limit(10)
-    )
-    activities = (await db.execute(act_stmt)).scalars().all()
-    recent_activity = [
-        {
-            "id": str(e.id),
-            "type": e.type,
-            "title": e.title,
-            "detail": e.detail,
-            "created_at": e.created_at.isoformat(),
-        }
-        for e in activities
-    ]
-
-    # 9. Onboarding checklist
+    # 8. Onboarding checklist
     resume_count = (await db.execute(select(func.count(Resume.id)).where(Resume.user_id == current_user.id))).scalar() or 0
     onboarding = {
         "has_uploaded_resume": resume_count > 0,
@@ -296,4 +333,4 @@ async def get_readiness_history(
     )
     snaps = (await db.execute(stmt)).scalars().all()
     items = [ReadinessHistoryResponse.model_validate(s) for s in snaps]
-    return PaginatedResponse(items=items, total=len(items), limit=len(items), offset=0)
+    return PaginatedResponse.from_items(items)

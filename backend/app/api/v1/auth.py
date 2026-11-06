@@ -33,6 +33,30 @@ def _set_refresh_cookie(response: Response, raw_token: str):
         path="/",
     )
 
+async def _issue_token_response(
+    db: AsyncSession,
+    user: User,
+    response: Response,
+) -> TokenResponse:
+    access_token = create_access_token({"sub": str(user.id)})
+    raw_refresh = create_refresh_token()
+    token_record = RefreshToken(
+        user_id=user.id,
+        token_hash=hash_refresh_token(raw_refresh),
+        family_id=uuid.uuid4(),
+        expires_at=datetime.now(UTC) + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS),
+    )
+    db.add(token_record)
+    await db.commit()
+    await db.refresh(user)
+
+    _set_refresh_cookie(response, raw_refresh)
+    return TokenResponse(
+        access_token=access_token,
+        expires_in=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+        user=UserResponse.model_validate(user),
+    )
+
 AUTH_RATE_LIMIT = "10/minute" if settings.APP_ENV == "production" else "60/minute"
 
 @router.post("/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
@@ -73,25 +97,7 @@ async def register(
     )
     db.add(event)
 
-    # Generate tokens
-    access_token = create_access_token({"sub": str(user.id)})
-    raw_refresh = create_refresh_token()
-    token_record = RefreshToken(
-        user_id=user.id,
-        token_hash=hash_refresh_token(raw_refresh),
-        family_id=uuid.uuid4(),
-        expires_at=datetime.now(UTC) + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS),
-    )
-    db.add(token_record)
-    await db.commit()
-    await db.refresh(user)
-
-    _set_refresh_cookie(response, raw_refresh)
-    return TokenResponse(
-        access_token=access_token,
-        expires_in=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
-        user=UserResponse.model_validate(user),
-    )
+    return await _issue_token_response(db, user, response)
 
 @router.post("/login", response_model=TokenResponse)
 @limiter.limit(AUTH_RATE_LIMIT)
@@ -106,23 +112,7 @@ async def login(
     if not user or not verify_password(payload.password, user.password_hash):
         raise UnauthorizedError("Invalid email or password")
 
-    access_token = create_access_token({"sub": str(user.id)})
-    raw_refresh = create_refresh_token()
-    token_record = RefreshToken(
-        user_id=user.id,
-        token_hash=hash_refresh_token(raw_refresh),
-        family_id=uuid.uuid4(),
-        expires_at=datetime.now(UTC) + timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS),
-    )
-    db.add(token_record)
-    await db.commit()
-
-    _set_refresh_cookie(response, raw_refresh)
-    return TokenResponse(
-        access_token=access_token,
-        expires_in=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
-        user=UserResponse.model_validate(user),
-    )
+    return await _issue_token_response(db, user, response)
 
 @router.post("/refresh", response_model=TokenResponse)
 @limiter.limit("20/minute")

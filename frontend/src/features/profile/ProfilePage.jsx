@@ -133,81 +133,81 @@ export const ProfilePage = () => {
   return (
     <div className="space-y-6 max-w-4xl">
       {/* Header */}
-      <div className="border-b border-[#1f1f1f] pb-5">
-        <div className="label-mono text-xs text-[#4be277] mb-1">CANDIDATE ACCOUNT & SECURITY</div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#e2e2e2] tracking-tight">
+      <div className="border-b border-surface-container pb-5">
+        <div className="label-mono text-xs text-primary mb-1">CANDIDATE ACCOUNT & SECURITY</div>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-on-surface tracking-tight">
           Candidate Profile & Settings
         </h1>
-        <p className="text-xs text-[#869585] mt-0.5">
+        <p className="text-xs text-outline mt-0.5">
           Manage your placement targets, academic background, security credentials, and data privacy.
         </p>
       </div>
 
       {/* Profile Card */}
-      <div className="p-6 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a] space-y-5">
-        <div className="flex items-center justify-between pb-3 border-b border-[#2a2a2a]">
+      <div className="p-6 rounded-[8px] bg-surface-container-low border border-surface-container-high space-y-5">
+        <div className="flex items-center justify-between pb-3 border-b border-surface-container-high">
           <div className="flex items-center gap-2">
-            <Icon name="person" className="text-sm text-[#4be277]" />
-            <h3 className="font-bold text-sm text-[#e2e2e2]">Placement Preparation Profile</h3>
+            <Icon name="person" className="text-sm text-primary" />
+            <h3 className="font-bold text-sm text-on-surface">Placement Preparation Profile</h3>
           </div>
-          <span className="label-mono text-[10px] text-[#869585]">AUTHENTICATED IDENTITY</span>
+          <span className="label-mono text-[10px] text-outline">AUTHENTICATED IDENTITY</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block label-mono text-[10px] text-[#869585] mb-1">FULL NAME</label>
+            <label className="block label-mono text-[10px] text-outline mb-1">FULL NAME</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+              className="w-full px-3 py-2 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
             />
           </div>
 
           <div>
-            <label className="block label-mono text-[10px] text-[#869585] mb-1">EMAIL ADDRESS (PRIMARY)</label>
+            <label className="block label-mono text-[10px] text-outline mb-1">EMAIL ADDRESS (PRIMARY)</label>
             <input
               type="email"
               disabled
               value={user?.email || ''}
-              className="w-full px-3 py-2 rounded-[2px] bg-[#131313] border border-[#2a2a2a] text-xs text-[#869585] cursor-not-allowed opacity-75"
+              className="w-full px-3 py-2 rounded-[2px] bg-surface border border-surface-container-high text-xs text-outline cursor-not-allowed opacity-75"
             />
           </div>
 
           <div>
-            <label className="block label-mono text-[10px] text-[#869585] mb-1">COLLEGE / UNIVERSITY</label>
+            <label className="block label-mono text-[10px] text-outline mb-1">COLLEGE / UNIVERSITY</label>
             <input
               type="text"
               value={college}
               onChange={(e) => setCollege(e.target.value)}
               placeholder="e.g. Stanford University / IIT Bombay"
-              className="w-full px-3 py-2 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+              className="w-full px-3 py-2 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
             />
           </div>
 
           <div>
-            <label className="block label-mono text-[10px] text-[#869585] mb-1">GRADUATION YEAR</label>
+            <label className="block label-mono text-[10px] text-outline mb-1">GRADUATION YEAR</label>
             <input
               type="number"
               value={gradYear}
               onChange={(e) => setGradYear(Number(e.target.value))}
-              className="w-full px-3 py-2 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+              className="w-full px-3 py-2 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
             />
           </div>
 
           <div>
-            <label className="block label-mono text-[10px] text-[#869585] mb-1">TARGET ROLE</label>
+            <label className="block label-mono text-[10px] text-outline mb-1">TARGET ROLE</label>
             <input
               type="text"
               value={targetRole}
               onChange={(e) => setTargetRole(e.target.value)}
               placeholder="e.g. Software Engineer / SDE 1"
-              className="w-full px-3 py-2 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+              className="w-full px-3 py-2 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
             />
           </div>
 
           <div>
-            <label className="block label-mono text-[10px] text-[#869585] mb-1">
+            <label className="block label-mono text-[10px] text-outline mb-1">
               TARGET COMPANIES (COMMA SEPARATED)
             </label>
             <input
@@ -215,7 +215,7 @@ export const ProfilePage = () => {
               value={targetCompanies}
               onChange={(e) => setTargetCompanies(e.target.value)}
               placeholder="Google, Microsoft, Amazon, Stripe"
-              className="w-full px-3 py-2 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+              className="w-full px-3 py-2 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
             />
           </div>
         </div>
@@ -224,10 +224,10 @@ export const ProfilePage = () => {
           <button
             onClick={() => updateProfileMutation.mutate()}
             disabled={updateProfileMutation.isPending}
-            className="px-5 py-2 rounded-[4px] bg-[#4be277] text-[#003915] text-xs font-bold uppercase tracking-wider hover:bg-[#22c55e] transition-colors flex items-center gap-2 disabled:opacity-50"
+            className="px-5 py-2 rounded-[4px] bg-primary text-on-primary text-xs font-bold uppercase tracking-wider hover:bg-primary-container transition-colors flex items-center gap-2 disabled:opacity-50"
           >
             {updateProfileMutation.isPending && (
-              <div className="w-3.5 h-3.5 border-2 border-[#003915] border-t-transparent rounded-full animate-spin" />
+              <div className="w-3.5 h-3.5 border-2 border-on-primary border-t-transparent rounded-full animate-spin" />
             )}
             <span>Save Profile Changes</span>
           </button>
@@ -235,47 +235,47 @@ export const ProfilePage = () => {
       </div>
 
       {/* Security & Password Change */}
-      <div className="p-6 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a] space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-[#2a2a2a]">
+      <div className="p-6 rounded-[8px] bg-surface-container-low border border-surface-container-high space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-surface-container-high">
           <div className="flex items-center gap-2">
-            <Icon name="lock" className="text-sm text-[#4be277]" />
-            <h3 className="font-bold text-sm text-[#e2e2e2]">Change Password</h3>
+            <Icon name="lock" className="text-sm text-primary" />
+            <h3 className="font-bold text-sm text-on-surface">Change Password</h3>
           </div>
-          <span className="label-mono text-[10px] text-[#869585]">ARGON2ID HASHED</span>
+          <span className="label-mono text-[10px] text-outline">ARGON2ID HASHED</span>
         </div>
 
         {passwordError && (
-          <div className="p-3 rounded-[4px] bg-[#93000a]/20 border border-[#ffb4ab]/40 text-xs text-[#ffb4ab]">
+          <div className="p-3 rounded-[4px] bg-error-container/20 border border-error/40 text-xs text-error">
             {passwordError}
           </div>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div>
-            <label className="block label-mono text-[10px] text-[#869585] mb-1">CURRENT PASSWORD</label>
+            <label className="block label-mono text-[10px] text-outline mb-1">CURRENT PASSWORD</label>
             <input
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              className="w-full px-3 py-2 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+              className="w-full px-3 py-2 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
             />
           </div>
           <div>
-            <label className="block label-mono text-[10px] text-[#869585] mb-1">NEW PASSWORD (MIN 10)</label>
+            <label className="block label-mono text-[10px] text-outline mb-1">NEW PASSWORD (MIN 10)</label>
             <input
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full px-3 py-2 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+              className="w-full px-3 py-2 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
             />
           </div>
           <div>
-            <label className="block label-mono text-[10px] text-[#869585] mb-1">CONFIRM NEW PASSWORD</label>
+            <label className="block label-mono text-[10px] text-outline mb-1">CONFIRM NEW PASSWORD</label>
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-3 py-2 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+              className="w-full px-3 py-2 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
             />
           </div>
         </div>
@@ -284,7 +284,7 @@ export const ProfilePage = () => {
           <button
             onClick={() => changePasswordMutation.mutate()}
             disabled={changePasswordMutation.isPending || !currentPassword || !newPassword}
-            className="px-4 py-2 rounded-[4px] bg-[#1f1f1f] border border-[#3d4a3d] text-xs text-[#e2e2e2] font-semibold hover:border-[#4be277] transition-colors disabled:opacity-50"
+            className="px-4 py-2 rounded-[4px] bg-surface-container border border-outline-variant text-xs text-on-surface font-semibold hover:border-primary transition-colors disabled:opacity-50"
           >
             Update Password
           </button>
@@ -292,41 +292,41 @@ export const ProfilePage = () => {
       </div>
 
       {/* Data Management & GDPR/Account Privacy */}
-      <div className="p-6 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a] space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-[#2a2a2a]">
+      <div className="p-6 rounded-[8px] bg-surface-container-low border border-surface-container-high space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-surface-container-high">
           <div className="flex items-center gap-2">
-            <Icon name="shield" className="text-sm text-[#4be277]" />
-            <h3 className="font-bold text-sm text-[#e2e2e2]">Data Export & Account Termination</h3>
+            <Icon name="shield" className="text-sm text-primary" />
+            <h3 className="font-bold text-sm text-on-surface">Data Export & Account Termination</h3>
           </div>
-          <span className="label-mono text-[10px] text-[#869585]">DATA INTEGRITY</span>
+          <span className="label-mono text-[10px] text-outline">DATA INTEGRITY</span>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-[4px] bg-[#1f1f1f] border border-[#2a2a2a]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-[4px] bg-surface-container border border-surface-container-high">
           <div>
-            <div className="text-xs font-bold text-[#e2e2e2]">Export Full Account Data (JSON)</div>
-            <div className="text-[11px] text-[#869585] mt-0.5">
+            <div className="text-xs font-bold text-on-surface">Export Full Account Data (JSON)</div>
+            <div className="text-[11px] text-outline mt-0.5">
               Download your complete practice attempts, resume parsed data, mock interviews, and snapshots.
             </div>
           </div>
           <button
             onClick={handleExportData}
-            className="px-4 py-2 rounded-[4px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#4be277] font-semibold hover:bg-[#4be277]/10 flex items-center gap-1.5 self-start sm:self-auto shrink-0"
+            className="px-4 py-2 rounded-[4px] bg-surface border border-outline-variant text-xs text-primary font-semibold hover:bg-primary/10 flex items-center gap-1.5 self-start sm:self-auto shrink-0"
           >
             <Icon name="download" className="text-sm" />
             <span>Export Data</span>
           </button>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-[4px] bg-[#93000a]/10 border border-[#ffb4ab]/30">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-[4px] bg-error-container/10 border border-error/30">
           <div>
-            <div className="text-xs font-bold text-[#ffb4ab]">Permanently Delete Account</div>
-            <div className="text-[11px] text-[#869585] mt-0.5">
+            <div className="text-xs font-bold text-error">Permanently Delete Account</div>
+            <div className="text-[11px] text-outline mt-0.5">
               Permanently purges all user data, attempts, resumes, and interview records with cascading deletion.
             </div>
           </div>
           <button
             onClick={() => setShowDeleteModal(true)}
-            className="px-4 py-2 rounded-[4px] bg-[#93000a] text-[#ffb4ab] text-xs font-bold uppercase tracking-wider hover:bg-[#93000a]/80 self-start sm:self-auto shrink-0"
+            className="px-4 py-2 rounded-[4px] bg-error-container text-error text-xs font-bold uppercase tracking-wider hover:bg-error-container/80 self-start sm:self-auto shrink-0"
           >
             Delete Account
           </button>
@@ -336,24 +336,24 @@ export const ProfilePage = () => {
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
-          <div className="bg-[#1f1f1f] border border-[#ffb4ab]/40 rounded-[8px] max-w-md w-full p-6 space-y-4">
-            <div className="flex items-center gap-2 text-[#ffb4ab]">
+          <div className="bg-surface-container border border-error/40 rounded-[8px] max-w-md w-full p-6 space-y-4">
+            <div className="flex items-center gap-2 text-error">
               <Icon name="warning" className="text-2xl" />
               <h3 className="text-base font-bold">Irreversible Action Warning</h3>
             </div>
-            <p className="text-xs text-[#bccbb9] leading-relaxed">
+            <p className="text-xs text-on-surface-variant leading-relaxed">
               This action will immediately and irreversibly delete your candidate profile, all tracked DSA attempts, resumes, and mock interview transcripts.
             </p>
             <div>
-              <label className="block text-[11px] text-[#869585] mb-1">
-                Type <strong className="text-[#ffb4ab]">DELETE</strong> to confirm:
+              <label className="block text-[11px] text-outline mb-1">
+                Type <strong className="text-error">DELETE</strong> to confirm:
               </label>
               <input
                 type="text"
                 value={deleteConfirmationText}
                 onChange={(e) => setDeleteConfirmationText(e.target.value)}
                 placeholder="DELETE"
-                className="w-full px-3 py-2 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#ffb4ab]"
+                className="w-full px-3 py-2 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-error"
               />
             </div>
             <div className="flex justify-end gap-2 pt-2">
@@ -362,14 +362,14 @@ export const ProfilePage = () => {
                   setShowDeleteModal(false);
                   setDeleteConfirmationText('');
                 }}
-                className="px-4 py-1.5 rounded-[4px] bg-[#131313] text-xs text-[#869585]"
+                className="px-4 py-1.5 rounded-[4px] bg-surface text-xs text-outline"
               >
                 Cancel
               </button>
               <button
                 onClick={() => deleteAccountMutation.mutate()}
                 disabled={deleteConfirmationText !== 'DELETE' || deleteAccountMutation.isPending}
-                className="px-4 py-1.5 rounded-[4px] bg-[#93000a] text-[#ffb4ab] text-xs font-bold uppercase tracking-wider hover:bg-[#93000a]/80 disabled:opacity-40"
+                className="px-4 py-1.5 rounded-[4px] bg-error-container text-error text-xs font-bold uppercase tracking-wider hover:bg-error-container/80 disabled:opacity-40"
               >
                 Permanently Delete
               </button>

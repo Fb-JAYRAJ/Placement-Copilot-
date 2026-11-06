@@ -142,36 +142,36 @@ export const ResumeATSPage = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-[#1f1f1f] pb-5">
-        <div className="label-mono text-xs text-[#4be277] mb-1">RESUME ALIGNMENT INTELLIGENCE</div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#e2e2e2] tracking-tight">
+      <div className="border-b border-surface-container pb-5">
+        <div className="label-mono text-xs text-primary mb-1">RESUME ALIGNMENT INTELLIGENCE</div>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-on-surface tracking-tight">
           Deterministic ATS Analyzer
         </h1>
-        <p className="text-xs text-[#869585] mt-0.5">
+        <p className="text-xs text-outline mt-0.5">
           Taxonomy-based skill extraction, TF-IDF cosine similarity, and semantic embedding alignment.
         </p>
       </div>
 
       {/* Official Disclaimer Banner */}
-      <div className="p-3.5 rounded-[4px] bg-[#1b1b1b] border border-[#3d4a3d] flex items-start gap-3 text-xs text-[#bccbb9]">
-        <Icon name="info" className="text-base text-[#4be277] shrink-0 mt-0.5" />
+      <div className="p-3.5 rounded-[4px] bg-surface-container-low border border-outline-variant flex items-start gap-3 text-xs text-on-surface-variant">
+        <Icon name="info" className="text-base text-primary shrink-0 mt-0.5" />
         <div className="leading-relaxed">
-          <strong className="text-[#e2e2e2]">Estimate Disclaimer:</strong> Placement Copilot scores estimate technical alignment using deterministic natural language processing. Scores are explainable and calibrated, not an endorsement from or replication of any vendor’s proprietary ATS.
+          <strong className="text-on-surface">Estimate Disclaimer:</strong> Placement Copilot scores estimate technical alignment using deterministic natural language processing. Scores are explainable and calibrated, not an endorsement from or replication of any vendor’s proprietary ATS.
         </div>
       </div>
 
       {/* Two Columns Input Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column: Resume Input */}
-        <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a] space-y-4">
+        <div className="p-5 rounded-[8px] bg-surface-container-low border border-surface-container-high space-y-4">
           <div className="flex items-center justify-between">
-            <span className="label-mono text-[10px] text-[#4be277] font-bold">1. CANDIDATE RESUME</span>
-            <div className="p-0.5 rounded-[4px] bg-[#131313] border border-[#2a2a2a] flex">
+            <span className="label-mono text-[10px] text-primary font-bold">1. CANDIDATE RESUME</span>
+            <div className="p-0.5 rounded-[4px] bg-surface border border-surface-container-high flex">
               <button
                 type="button"
                 onClick={() => setResumeMode('upload')}
                 className={`px-2.5 py-1 text-xs font-semibold rounded-[2px] transition-all ${
-                  resumeMode === 'upload' ? 'bg-[#4be277] text-[#003915]' : 'text-[#869585]'
+                  resumeMode === 'upload' ? 'bg-primary text-on-primary' : 'text-outline'
                 }`}
               >
                 Upload File
@@ -180,7 +180,7 @@ export const ResumeATSPage = () => {
                 type="button"
                 onClick={() => setResumeMode('paste')}
                 className={`px-2.5 py-1 text-xs font-semibold rounded-[2px] transition-all ${
-                  resumeMode === 'paste' ? 'bg-[#4be277] text-[#003915]' : 'text-[#869585]'
+                  resumeMode === 'paste' ? 'bg-primary text-on-primary' : 'text-outline'
                 }`}
               >
                 Paste Text
@@ -190,7 +190,7 @@ export const ResumeATSPage = () => {
                   type="button"
                   onClick={() => setResumeMode('saved')}
                   className={`px-2.5 py-1 text-xs font-semibold rounded-[2px] transition-all ${
-                    resumeMode === 'saved' ? 'bg-[#4be277] text-[#003915]' : 'text-[#869585]'
+                    resumeMode === 'saved' ? 'bg-primary text-on-primary' : 'text-outline'
                   }`}
                 >
                   Saved ({savedResumes.length})
@@ -204,7 +204,7 @@ export const ResumeATSPage = () => {
               <div
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={handleFileDrop}
-                className="border-2 border-dashed border-[#3d4a3d] hover:border-[#4be277] rounded-[4px] p-8 text-center transition-all bg-[#131313]/60 cursor-pointer"
+                className="border-2 border-dashed border-outline-variant hover:border-primary rounded-[4px] p-8 text-center transition-all bg-surface/60 cursor-pointer"
                 onClick={() => document.getElementById('resume-file-input')?.click()}
               >
                 <input
@@ -214,23 +214,23 @@ export const ResumeATSPage = () => {
                   onChange={handleFileInput}
                   className="hidden"
                 />
-                <Icon name="upload_file" className="text-3xl text-[#4be277] mb-2" />
-                <div className="text-xs font-semibold text-[#e2e2e2]">
+                <Icon name="upload_file" className="text-3xl text-primary mb-2" />
+                <div className="text-xs font-semibold text-on-surface">
                   {selectedFile ? selectedFile.name : 'Drag & drop PDF / DOCX resume or click to browse'}
                 </div>
-                <div className="text-[11px] text-[#869585] mt-1">
+                <div className="text-[11px] text-outline mt-1">
                   Validated via magic bytes · Maximum 5 MB
                 </div>
               </div>
 
               <div>
-                <label className="block label-mono text-[10px] text-[#869585] mb-1">RESUME TITLE</label>
+                <label className="block label-mono text-[10px] text-outline mb-1">RESUME TITLE</label>
                 <input
                   type="text"
                   value={resumeTitle}
                   onChange={(e) => setResumeTitle(e.target.value)}
                   placeholder="e.g. SDE Resume v2"
-                  className="w-full px-3 py-1.5 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+                  className="w-full px-3 py-1.5 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
                 />
               </div>
             </div>
@@ -239,13 +239,13 @@ export const ResumeATSPage = () => {
           {resumeMode === 'paste' && (
             <div className="space-y-3">
               <div>
-                <label className="block label-mono text-[10px] text-[#869585] mb-1">RESUME TITLE</label>
+                <label className="block label-mono text-[10px] text-outline mb-1">RESUME TITLE</label>
                 <input
                   type="text"
                   value={resumeTitle}
                   onChange={(e) => setResumeTitle(e.target.value)}
                   placeholder="e.g. Pasted Resume"
-                  className="w-full px-3 py-1.5 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+                  className="w-full px-3 py-1.5 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
                 />
               </div>
               <textarea
@@ -253,20 +253,20 @@ export const ResumeATSPage = () => {
                 value={pastedResumeText}
                 onChange={(e) => setPastedResumeText(e.target.value)}
                 placeholder="Paste your complete resume text including education, experience bullets, and skills..."
-                className="w-full p-3 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] placeholder-[#869585] focus:border-[#4be277]"
+                className="w-full p-3 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface placeholder-outline focus:border-primary"
               />
             </div>
           )}
 
           {resumeMode === 'saved' && (
             <div className="space-y-3">
-              <label className="block label-mono text-[10px] text-[#869585]">
+              <label className="block label-mono text-[10px] text-outline">
                 SELECT PREVIOUSLY UPLOADED RESUME
               </label>
               <select
                 value={selectedSavedResumeId}
                 onChange={(e) => setSelectedSavedResumeId(e.target.value)}
-                className="w-full px-3 py-2 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+                className="w-full px-3 py-2 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
               >
                 <option value="">Select a saved resume...</option>
                 {savedResumes.map((r) => (
@@ -280,37 +280,37 @@ export const ResumeATSPage = () => {
         </div>
 
         {/* Right Column: Job Description Input */}
-        <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a] space-y-4">
+        <div className="p-5 rounded-[8px] bg-surface-container-low border border-surface-container-high space-y-4">
           <div className="flex items-center justify-between">
-            <span className="label-mono text-[10px] text-[#4be277] font-bold">2. JOB DESCRIPTION & TARGET</span>
-            <span className="text-[10px] text-[#869585] font-mono">WEIGHTED EXTRACTION</span>
+            <span className="label-mono text-[10px] text-primary font-bold">2. JOB DESCRIPTION & TARGET</span>
+            <span className="text-[10px] text-outline font-mono">WEIGHTED EXTRACTION</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block label-mono text-[10px] text-[#869585] mb-1">COMPANY</label>
+              <label className="block label-mono text-[10px] text-outline mb-1">COMPANY</label>
               <input
                 type="text"
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
                 placeholder="Google / Stripe"
-                className="w-full px-3 py-1.5 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+                className="w-full px-3 py-1.5 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
               />
             </div>
             <div>
-              <label className="block label-mono text-[10px] text-[#869585] mb-1">TARGET ROLE</label>
+              <label className="block label-mono text-[10px] text-outline mb-1">TARGET ROLE</label>
               <input
                 type="text"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 placeholder="Software Engineer"
-                className="w-full px-3 py-1.5 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+                className="w-full px-3 py-1.5 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary"
               />
             </div>
           </div>
 
           <div>
-            <label className="block label-mono text-[10px] text-[#869585] mb-1">
+            <label className="block label-mono text-[10px] text-outline mb-1">
               JOB DESCRIPTION / REQUIREMENTS TEXT
             </label>
             <textarea
@@ -318,18 +318,18 @@ export const ResumeATSPage = () => {
               value={jdText}
               onChange={(e) => setJdText(e.target.value)}
               placeholder="Paste requirements, tech stack, and responsibilities..."
-              className="w-full p-3 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] placeholder-[#869585] focus:border-[#4be277]"
+              className="w-full p-3 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface placeholder-outline focus:border-primary"
             />
           </div>
 
           <button
             onClick={() => analyzeMutation.mutate()}
             disabled={analyzeMutation.isPending}
-            className="w-full py-2.5 px-4 rounded-[4px] bg-[#4be277] text-[#003915] text-xs font-bold uppercase tracking-wider hover:bg-[#22c55e] transition-colors flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm"
+            className="w-full py-2.5 px-4 rounded-[4px] bg-primary text-on-primary text-xs font-bold uppercase tracking-wider hover:bg-primary-container transition-colors flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm"
           >
             {analyzeMutation.isPending ? (
               <>
-                <div className="w-4 h-4 border-2 border-[#003915] border-t-transparent rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-on-primary border-t-transparent rounded-full animate-spin" />
                 <span>Extracting Skills & Computing ATS Cosine...</span>
               </>
             ) : (
@@ -344,11 +344,11 @@ export const ResumeATSPage = () => {
 
       {/* Results Section */}
       {activeAnalysis && (
-        <div className="space-y-6 pt-4 border-t border-[#1f1f1f]">
+        <div className="space-y-6 pt-4 border-t border-surface-container">
           {/* Top Score Banner: Overall Circular Gauge + Subscore Bars */}
-          <div className="p-6 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a] grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+          <div className="p-6 rounded-[8px] bg-surface-container-low border border-surface-container-high grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
             {/* Circular Overall Score */}
-            <div className="flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-[#2a2a2a] pb-4 md:pb-0 pr-0 md:pr-6">
+            <div className="flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-surface-container-high pb-4 md:pb-0 pr-0 md:pr-6">
               <div className="relative w-32 h-32 flex items-center justify-center">
                 <svg className="w-32 h-32 -rotate-90" viewBox="0 0 100 100">
                   <circle cx="50" cy="50" r="42" fill="none" stroke="#2a2a2a" strokeWidth="8" />
@@ -366,18 +366,18 @@ export const ResumeATSPage = () => {
                   />
                 </svg>
                 <div className="absolute text-center flex flex-col items-center">
-                  <span className="text-3xl font-black text-[#e2e2e2]">
+                  <span className="text-3xl font-black text-on-surface">
                     {Math.round(activeAnalysis.overall)}
                   </span>
-                  <span className="text-[10px] text-[#869585] font-mono">/ 100</span>
+                  <span className="text-[10px] text-outline font-mono">/ 100</span>
                 </div>
               </div>
               <div className="mt-2 text-center">
-                <div className="label-mono text-xs text-[#4be277] font-bold">OVERALL ATS MATCH</div>
+                <div className="label-mono text-xs text-primary font-bold">OVERALL ATS MATCH</div>
                 {deltaVsPrevious !== null && (
                   <div
                     className={`text-[11px] font-mono mt-0.5 ${
-                      deltaVsPrevious >= 0 ? 'text-[#4be277]' : 'text-[#ffb4ab]'
+                      deltaVsPrevious >= 0 ? 'text-primary' : 'text-error'
                     }`}
                   >
                     {deltaVsPrevious >= 0 ? '+' : ''}
@@ -385,7 +385,7 @@ export const ResumeATSPage = () => {
                   </div>
                 )}
                 {activeAnalysis.degraded && (
-                  <span className="inline-block mt-1 px-2 py-0.5 rounded-[2px] bg-[#facc15]/10 text-[#facc15] text-[10px] font-mono">
+                  <span className="inline-block mt-1 px-2 py-0.5 rounded-[2px] bg-warning/10 text-warning text-[10px] font-mono">
                     Degraded Mode (TF-IDF Renormalised)
                   </span>
                 )}
@@ -395,19 +395,19 @@ export const ResumeATSPage = () => {
             {/* Sub-Score Bars (2 cols) */}
             <div className="md:col-span-2 space-y-3.5">
               <div className="flex items-center justify-between">
-                <span className="label-mono text-xs text-[#869585]">SUB-SCORE METRIC BREAKDOWN</span>
-                <span className="text-[11px] font-mono text-[#869585]">WEIGHTED FORMULA</span>
+                <span className="label-mono text-xs text-outline">SUB-SCORE METRIC BREAKDOWN</span>
+                <span className="text-[11px] font-mono text-outline">WEIGHTED FORMULA</span>
               </div>
 
               {/* Keyword Score */}
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <span className="text-[#e2e2e2] font-medium">Keyword Coverage (40%)</span>
-                  <span className="font-mono text-[#4be277]">{Math.round(activeAnalysis.keyword_score)}%</span>
+                  <span className="text-on-surface font-medium">Keyword Coverage (40%)</span>
+                  <span className="font-mono text-primary">{Math.round(activeAnalysis.keyword_score)}%</span>
                 </div>
-                <div className="w-full h-2 bg-[#131313] rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-surface rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-[#4be277] transition-all"
+                    className="h-full bg-primary transition-all"
                     style={{ width: `${Math.round(activeAnalysis.keyword_score)}%` }}
                   />
                 </div>
@@ -416,18 +416,18 @@ export const ResumeATSPage = () => {
               {/* Semantic Score */}
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <span className="text-[#e2e2e2] font-medium">
+                  <span className="text-on-surface font-medium">
                     Semantic Requirement Alignment (25%){activeAnalysis.semantic_score === null && ' [Fallback]'}
                   </span>
-                  <span className="font-mono text-[#4be277]">
+                  <span className="font-mono text-primary">
                     {activeAnalysis.semantic_score !== null
                       ? `${Math.round(activeAnalysis.semantic_score)}%`
                       : '—'}
                   </span>
                 </div>
-                <div className="w-full h-2 bg-[#131313] rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-surface rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-[#4be277] transition-all"
+                    className="h-full bg-primary transition-all"
                     style={{
                       width: `${activeAnalysis.semantic_score ? Math.round(activeAnalysis.semantic_score) : 0}%`,
                     }}
@@ -438,12 +438,12 @@ export const ResumeATSPage = () => {
               {/* TF-IDF Score */}
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <span className="text-[#e2e2e2] font-medium">TF-IDF Vector Cosine (15%)</span>
-                  <span className="font-mono text-[#4be277]">{Math.round(activeAnalysis.tfidf_score)}%</span>
+                  <span className="text-on-surface font-medium">TF-IDF Vector Cosine (15%)</span>
+                  <span className="font-mono text-primary">{Math.round(activeAnalysis.tfidf_score)}%</span>
                 </div>
-                <div className="w-full h-2 bg-[#131313] rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-surface rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-[#4be277] transition-all"
+                    className="h-full bg-primary transition-all"
                     style={{ width: `${Math.round(activeAnalysis.tfidf_score)}%` }}
                   />
                 </div>
@@ -452,12 +452,12 @@ export const ResumeATSPage = () => {
               {/* Content Quality Score */}
               <div className="space-y-1">
                 <div className="flex justify-between text-xs">
-                  <span className="text-[#e2e2e2] font-medium">Content Quality & Metrics (20%)</span>
-                  <span className="font-mono text-[#4be277]">{Math.round(activeAnalysis.quality_score)}%</span>
+                  <span className="text-on-surface font-medium">Content Quality & Metrics (20%)</span>
+                  <span className="font-mono text-primary">{Math.round(activeAnalysis.quality_score)}%</span>
                 </div>
-                <div className="w-full h-2 bg-[#131313] rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-surface rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-[#4be277] transition-all"
+                    className="h-full bg-primary transition-all"
                     style={{ width: `${Math.round(activeAnalysis.quality_score)}%` }}
                   />
                 </div>
@@ -468,15 +468,15 @@ export const ResumeATSPage = () => {
           {/* Matched Skills vs Missing Skills */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Matched Skills with Evidence Hover */}
-            <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a] space-y-3">
+            <div className="p-5 rounded-[8px] bg-surface-container-low border border-surface-container-high space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Icon name="check_circle" className="text-sm text-[#4be277]" />
-                  <span className="label-mono text-xs text-[#e2e2e2] font-bold">
+                  <Icon name="check_circle" className="text-sm text-primary" />
+                  <span className="label-mono text-xs text-on-surface font-bold">
                     MATCHED SKILLS ({activeAnalysis.matched?.length || 0})
                   </span>
                 </div>
-                <span className="text-[10px] text-[#869585]">Hover skill for evidence</span>
+                <span className="text-[10px] text-outline">Hover skill for evidence</span>
               </div>
 
               <div className="flex flex-wrap gap-2">
@@ -486,23 +486,23 @@ export const ResumeATSPage = () => {
                       key={idx}
                       onMouseEnter={() => setHoveredMatchedSkill(skill)}
                       onMouseLeave={() => setHoveredMatchedSkill(null)}
-                      className="group relative cursor-pointer px-2.5 py-1 rounded-[2px] bg-[#4be277]/10 border border-[#4be277]/40 text-xs font-medium text-[#4be277] hover:bg-[#4be277]/20 transition-colors"
+                      className="group relative cursor-pointer px-2.5 py-1 rounded-[2px] bg-primary/10 border border-primary/40 text-xs font-medium text-primary hover:bg-primary/20 transition-colors"
                     >
                       <span>{skill.name}</span>
                     </div>
                   ))
                 ) : (
-                  <div className="text-xs text-[#869585]">No taxonomy skills matched.</div>
+                  <div className="text-xs text-outline">No taxonomy skills matched.</div>
                 )}
               </div>
 
               {/* Active Hover Evidence Box */}
               {hoveredMatchedSkill && (
-                <div className="p-3 rounded-[4px] bg-[#131313] border border-[#4be277]/50 text-xs animate-in fade-in duration-100">
-                  <div className="label-mono text-[10px] text-[#4be277] mb-1">
+                <div className="p-3 rounded-[4px] bg-surface border border-primary/50 text-xs animate-in fade-in duration-100">
+                  <div className="label-mono text-[10px] text-primary mb-1">
                     RESUME EVIDENCE SNIPPET ({hoveredMatchedSkill.name})
                   </div>
-                  <p className="text-[#bccbb9] italic font-mono text-[11px] leading-relaxed">
+                  <p className="text-on-surface-variant italic font-mono text-[11px] leading-relaxed">
                     &ldquo;{hoveredMatchedSkill.evidence}&rdquo;
                   </p>
                 </div>
@@ -510,15 +510,15 @@ export const ResumeATSPage = () => {
             </div>
 
             {/* Missing Skills Ranked by Importance */}
-            <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a] space-y-3">
+            <div className="p-5 rounded-[8px] bg-surface-container-low border border-surface-container-high space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Icon name="error" className="text-sm text-[#ffb4ab]" />
-                  <span className="label-mono text-xs text-[#e2e2e2] font-bold">
+                  <Icon name="error" className="text-sm text-error" />
+                  <span className="label-mono text-xs text-on-surface font-bold">
                     MISSING SKILLS ({activeAnalysis.missing?.length || 0})
                   </span>
                 </div>
-                <span className="text-[10px] text-[#869585]">Ranked by JD Weight</span>
+                <span className="text-[10px] text-outline">Ranked by JD Weight</span>
               </div>
 
               <div className="flex flex-wrap gap-2">
@@ -526,7 +526,7 @@ export const ResumeATSPage = () => {
                   activeAnalysis.missing.map((skill, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center gap-1.5 px-2.5 py-1 rounded-[2px] bg-[#ffb4ab]/10 border border-[#ffb4ab]/30 text-xs font-medium text-[#ffb4ab]"
+                      className="flex items-center gap-1.5 px-2.5 py-1 rounded-[2px] bg-error/10 border border-error/30 text-xs font-medium text-error"
                     >
                       <span>{skill.name}</span>
                       <span className="text-[10px] font-mono opacity-70">
@@ -535,7 +535,7 @@ export const ResumeATSPage = () => {
                     </div>
                   ))
                 ) : (
-                  <div className="text-xs text-[#4be277]">Outstanding! All job skills matched.</div>
+                  <div className="text-xs text-primary">Outstanding! All job skills matched.</div>
                 )}
               </div>
             </div>
@@ -543,31 +543,31 @@ export const ResumeATSPage = () => {
 
           {/* Actionable Grounded Suggestion Cards */}
           {activeAnalysis.suggestions && activeAnalysis.suggestions.length > 0 && (
-            <div className="p-6 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a] space-y-4">
+            <div className="p-6 rounded-[8px] bg-surface-container-low border border-surface-container-high space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Icon name="auto_fix_high" className="text-base text-[#4be277]" />
-                  <h3 className="text-base font-bold text-[#e2e2e2]">
+                  <Icon name="auto_fix_high" className="text-base text-primary" />
+                  <h3 className="text-base font-bold text-on-surface">
                     Grounded Resume Bullet Rewrite Suggestions
                   </h3>
                 </div>
-                <span className="label-mono text-xs text-[#869585]">NO HALLUCINATED EXPERIENCE</span>
+                <span className="label-mono text-xs text-outline">NO HALLUCINATED EXPERIENCE</span>
               </div>
 
               <div className="space-y-3">
                 {activeAnalysis.suggestions.map((sug, idx) => (
                   <div
                     key={idx}
-                    className="p-4 rounded-[4px] bg-[#1f1f1f] border border-[#2a2a2a] space-y-2.5"
+                    className="p-4 rounded-[4px] bg-surface-container border border-surface-container-high space-y-2.5"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-[#ffb4ab] flex items-center gap-1">
+                      <span className="text-xs font-semibold text-error flex items-center gap-1">
                         <Icon name="priority_high" className="text-xs" />
                         {sug.issue}
                       </span>
                       <button
                         onClick={() => handleCopyRewrite(sug.rewrite, idx)}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-[2px] bg-[#131313] border border-[#3d4a3d] hover:border-[#4be277] text-xs text-[#bccbb9] hover:text-[#4be277] transition-all"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-[2px] bg-surface border border-outline-variant hover:border-primary text-xs text-on-surface-variant hover:text-primary transition-all"
                       >
                         <Icon name={copiedIndex === idx ? 'check' : 'content_copy'} className="text-xs" />
                         <span>{copiedIndex === idx ? 'Copied' : 'Copy Rewrite'}</span>
@@ -575,13 +575,13 @@ export const ResumeATSPage = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                      <div className="p-2.5 rounded-[2px] bg-[#131313] border border-[#2a2a2a]">
-                        <div className="label-mono text-[10px] text-[#869585] mb-1">ORIGINAL BULLET</div>
-                        <div className="text-[#bccbb9] line-through opacity-75">{sug.target_bullet}</div>
+                      <div className="p-2.5 rounded-[2px] bg-surface border border-surface-container-high">
+                        <div className="label-mono text-[10px] text-outline mb-1">ORIGINAL BULLET</div>
+                        <div className="text-on-surface-variant line-through opacity-75">{sug.target_bullet}</div>
                       </div>
-                      <div className="p-2.5 rounded-[2px] bg-[#131313] border border-[#4be277]/40">
-                        <div className="label-mono text-[10px] text-[#4be277] mb-1">PROPOSED REWRITE</div>
-                        <div className="text-[#e2e2e2] font-medium">{sug.rewrite}</div>
+                      <div className="p-2.5 rounded-[2px] bg-surface border border-primary/40">
+                        <div className="label-mono text-[10px] text-primary mb-1">PROPOSED REWRITE</div>
+                        <div className="text-on-surface font-medium">{sug.rewrite}</div>
                       </div>
                     </div>
                   </div>
@@ -592,10 +592,10 @@ export const ResumeATSPage = () => {
 
           {/* Historical Trend */}
           {history.length > 1 && (
-            <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a]">
+            <div className="p-5 rounded-[8px] bg-surface-container-low border border-surface-container-high">
               <div className="flex items-center justify-between mb-3">
-                <span className="label-mono text-xs text-[#869585]">ATS MATCH TRAJECTORY ACROSS ITERATIONS</span>
-                <span className="text-xs font-mono text-[#4be277]">{history.length} Runs Logged</span>
+                <span className="label-mono text-xs text-outline">ATS MATCH TRAJECTORY ACROSS ITERATIONS</span>
+                <span className="text-xs font-mono text-primary">{history.length} Runs Logged</span>
               </div>
               <div className="h-32">
                 <ResponsiveContainer width="100%" height="100%">

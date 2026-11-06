@@ -31,16 +31,16 @@ export const Shell = () => {
   };
 
   const sidebarContent = (
-    <div className="flex flex-col h-full bg-[#131313] border-r border-[#3d4a3d]">
+    <div className="flex flex-col h-full bg-surface border-r border-outline-variant">
       {/* Brand Header */}
-      <div className="p-6 border-b border-[#1f1f1f]">
+      <div className="p-6 border-b border-surface-container">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-[4px] bg-[#4be277]/10 border border-[#4be277]/40 flex items-center justify-center text-[#4be277]">
+          <div className="w-8 h-8 rounded-[4px] bg-primary/10 border border-primary/40 flex items-center justify-center text-primary">
             <Icon name="terminal" className="text-xl" />
           </div>
           <div>
-            <div className="text-base font-bold text-[#e2e2e2] tracking-tight">Placement Copilot</div>
-            <div className="label-mono text-[10px] text-[#4be277] font-semibold">TECHNICAL MASTERY</div>
+            <div className="text-base font-bold text-on-surface tracking-tight">Placement Copilot</div>
+            <div className="label-mono text-[10px] text-primary font-semibold">TECHNICAL MASTERY</div>
           </div>
         </div>
       </div>
@@ -56,8 +56,8 @@ export const Shell = () => {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3.5 py-2.5 rounded-[2px] text-sm font-medium transition-all ${
                 isActive
-                  ? 'text-[#4be277] bg-[#4be277]/5 border-l-2 border-[#4be277] pl-[12px]'
-                  : 'text-[#bccbb9] hover:text-[#e2e2e2] hover:bg-[#1b1b1b]'
+                  ? 'text-primary bg-primary/5 border-l-2 border-primary pl-[12px]'
+                  : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low'
               }`
             }
           >
@@ -68,38 +68,38 @@ export const Shell = () => {
       </nav>
 
       {/* User Info & Bottom Actions */}
-      <div className="p-4 border-t border-[#1f1f1f] space-y-3">
+      <div className="p-4 border-t border-surface-container space-y-3">
         {user && (
-          <div className="px-2 py-1.5 flex items-center gap-2.5 bg-[#1b1b1b] rounded-[4px] border border-[#2a2a2a]">
-            <div className="w-7 h-7 rounded-full bg-[#2a2a2a] text-[#4be277] flex items-center justify-center text-xs font-bold">
+          <div className="px-2 py-1.5 flex items-center gap-2.5 bg-surface-container-low rounded-[4px] border border-surface-container-high">
+            <div className="w-7 h-7 rounded-full bg-surface-container-high text-primary flex items-center justify-center text-xs font-bold">
               {user.name.charAt(0).toUpperCase()}
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-xs font-medium text-[#e2e2e2] truncate">{user.name}</div>
-              <div className="text-[10px] text-[#869585] truncate">{user.target_role || 'Candidate'}</div>
+              <div className="text-xs font-medium text-on-surface truncate">{user.name}</div>
+              <div className="text-[10px] text-outline truncate">{user.target_role || 'Candidate'}</div>
             </div>
           </div>
         )}
 
         <button
           onClick={handleStartPractice}
-          className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-[4px] bg-[#4be277] text-[#003915] text-xs font-bold uppercase tracking-wider hover:bg-[#22c55e] transition-colors shadow-sm"
+          className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-[4px] bg-primary text-on-primary text-xs font-bold uppercase tracking-wider hover:bg-primary-container transition-colors shadow-sm"
         >
           <Icon name="bolt" className="text-base" />
           <span>Start Practice</span>
         </button>
 
-        <div className="pt-2 border-t border-[#1f1f1f] flex items-center justify-between text-xs text-[#869585]">
+        <div className="pt-2 border-t border-surface-container flex items-center justify-between text-xs text-outline">
           <button
             onClick={() => navigate('/profile')}
-            className="flex items-center gap-1 hover:text-[#e2e2e2] transition-colors py-1"
+            className="flex items-center gap-1 hover:text-on-surface transition-colors py-1"
           >
             <Icon name="settings" className="text-sm" />
             <span>Settings</span>
           </button>
           <button
             onClick={() => setShowHelpModal(true)}
-            className="flex items-center gap-1 hover:text-[#e2e2e2] transition-colors py-1"
+            className="flex items-center gap-1 hover:text-on-surface transition-colors py-1"
           >
             <Icon name="help_outline" className="text-sm" />
             <span>Help</span>
@@ -108,7 +108,7 @@ export const Shell = () => {
             id="logout-button"
             data-testid="logout-button"
             onClick={handleLogout}
-            className="flex items-center gap-1 text-[#ffb4ab] hover:text-[#ffb4ab]/80 transition-colors py-1"
+            className="flex items-center gap-1 text-error hover:text-error/80 transition-colors py-1"
           >
             <Icon name="logout" className="text-sm" />
             <span>Exit</span>
@@ -119,19 +119,19 @@ export const Shell = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#131313] text-[#e2e2e2] flex flex-col lg:flex-row">
+    <div className="min-h-screen bg-surface text-on-surface flex flex-col lg:flex-row">
       {/* Mobile Top Bar */}
-      <header className="lg:hidden flex items-center justify-between px-4 py-3 bg-[#131313] border-b border-[#3d4a3d] sticky top-0 z-30">
+      <header className="lg:hidden flex items-center justify-between px-4 py-3 bg-surface border-b border-outline-variant sticky top-0 z-30">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-[4px] bg-[#4be277]/10 border border-[#4be277]/40 flex items-center justify-center text-[#4be277]">
+          <div className="w-7 h-7 rounded-[4px] bg-primary/10 border border-primary/40 flex items-center justify-center text-primary">
             <Icon name="terminal" className="text-lg" />
           </div>
-          <span className="font-bold text-sm text-[#e2e2e2]">Placement Copilot</span>
+          <span className="font-bold text-sm text-on-surface">Placement Copilot</span>
         </div>
         <button
           onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
           aria-label="Toggle Navigation Drawer"
-          className="p-1.5 rounded-[4px] bg-[#1f1f1f] border border-[#3d4a3d] text-[#e2e2e2]"
+          className="p-1.5 rounded-[4px] bg-surface-container border border-outline-variant text-on-surface"
         >
           <Icon name={mobileDrawerOpen ? 'close' : 'menu'} className="text-xl" />
         </button>
@@ -156,7 +156,7 @@ export const Shell = () => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 lg:ml-[280px] min-h-screen bg-[#131313] overflow-x-hidden">
+      <main className="flex-1 lg:ml-[280px] min-h-screen bg-surface overflow-x-hidden">
         <div className="max-w-[1440px] mx-auto p-4 sm:p-6 lg:p-8">
           <Outlet />
         </div>
@@ -165,37 +165,37 @@ export const Shell = () => {
       {/* Help Modal */}
       {showHelpModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs">
-          <div className="bg-[#1f1f1f] border border-[#3d4a3d] rounded-[8px] max-w-lg w-full p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-[#2a2a2a] pb-3">
+          <div className="bg-surface-container border border-outline-variant rounded-[8px] max-w-lg w-full p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-surface-container-high pb-3">
               <div className="flex items-center gap-2">
-                <Icon name="help" className="text-[#4be277]" />
-                <h3 className="font-bold text-lg text-[#e2e2e2]">Placement Copilot Guide</h3>
+                <Icon name="help" className="text-primary" />
+                <h3 className="font-bold text-lg text-on-surface">Placement Copilot Guide</h3>
               </div>
               <button
                 onClick={() => setShowHelpModal(false)}
-                className="text-[#869585] hover:text-[#e2e2e2]"
+                className="text-outline hover:text-on-surface"
               >
                 <Icon name="close" className="text-xl" />
               </button>
             </div>
-            <div className="space-y-3 text-sm text-[#bccbb9]">
+            <div className="space-y-3 text-sm text-on-surface-variant">
               <p>
-                <strong className="text-[#e2e2e2]">Placement Readiness Score:</strong> A deterministic 0–100 composite score synthesized from ATS alignment (25%), DSA mastery (35%), adaptive mock interview performance (30%), and study consistency (10%).
+                <strong className="text-on-surface">Placement Readiness Score:</strong> A deterministic 0–100 composite score synthesized from ATS alignment (25%), DSA mastery (35%), adaptive mock interview performance (30%), and study consistency (10%).
               </p>
               <p>
-                <strong className="text-[#e2e2e2]">Deterministic ATS:</strong> Extracts skills via 1–4-grams and fuzzy taxonomy matching. Scores are based on keyword coverage, TF-IDF cosine, and semantic embeddings.
+                <strong className="text-on-surface">Deterministic ATS:</strong> Extracts skills via 1–4-grams and fuzzy taxonomy matching. Scores are based on keyword coverage, TF-IDF cosine, and semantic embeddings.
               </p>
               <p>
-                <strong className="text-[#e2e2e2]">DSA Mastery & SM-2:</strong> Uses mathematical exponential decay (τ = 45 days) and spaced repetition review schedules to optimize retention.
+                <strong className="text-on-surface">DSA Mastery & SM-2:</strong> Uses mathematical exponential decay (τ = 45 days) and spaced repetition review schedules to optimize retention.
               </p>
               <p>
-                <strong className="text-[#e2e2e2]">Adaptive Interview:</strong> Powered by Item Response Theory (IRT) where questions adapt dynamically to your live capability θ.
+                <strong className="text-on-surface">Adaptive Interview:</strong> Powered by Item Response Theory (IRT) where questions adapt dynamically to your live capability θ.
               </p>
             </div>
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setShowHelpModal(false)}
-                className="px-4 py-2 rounded-[4px] bg-[#4be277] text-[#003915] font-semibold text-xs uppercase tracking-wider"
+                className="px-4 py-2 rounded-[4px] bg-primary text-on-primary font-semibold text-xs uppercase tracking-wider"
               >
                 Got It
               </button>

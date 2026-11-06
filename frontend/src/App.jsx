@@ -17,8 +17,8 @@ const ProfilePage = lazy(() => import('@/features/profile/ProfilePage'));
 
 const PageLoader = () => (
   <div className="min-h-[400px] flex flex-col items-center justify-center gap-3">
-    <div className="w-8 h-8 border-2 border-[#4be277] border-t-transparent rounded-full animate-spin" />
-    <div className="label-mono text-xs text-[#869585]">LOADING VIEW...</div>
+    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+    <div className="label-mono text-xs text-outline">LOADING VIEW...</div>
   </div>
 );
 

@@ -33,26 +33,26 @@ const AuthField = ({
   onTogglePassword,
 }) => (
   <div>
-    <label className="block label-mono text-[11px] text-[#bccbb9] mb-1.5">{label}</label>
+    <label className="block label-mono text-[11px] text-on-surface-variant mb-1.5">{label}</label>
     <div className={showToggle ? 'relative' : undefined}>
       <input
         type={showToggle ? (isPasswordVisible ? 'text' : 'password') : type}
         autoComplete={autoComplete}
         placeholder={placeholder}
         {...registration}
-        className={`w-full px-3 py-2 ${showToggle ? 'pr-10' : ''} rounded-[2px] bg-[#1b1b1b] border border-[#3d4a3d] text-sm text-[#e2e2e2] placeholder-[#869585] focus:outline-hidden focus:border-[#4be277] focus:ring-1 focus:ring-[#4be277] transition-all`}
+        className={`w-full px-3 py-2 ${showToggle ? 'pr-10' : ''} rounded-[2px] bg-surface-container-low border border-outline-variant text-sm text-on-surface placeholder-outline focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all`}
       />
       {showToggle && (
         <button
           type="button"
           onClick={onTogglePassword}
-          className="absolute right-3 top-2.5 text-[#869585] hover:text-[#e2e2e2] transition-colors"
+          className="absolute right-3 top-2.5 text-outline hover:text-on-surface transition-colors"
         >
           <Icon name={isPasswordVisible ? 'visibility_off' : 'visibility'} className="text-lg" />
         </button>
       )}
     </div>
-    {error && <p className="text-[11px] text-[#ffb4ab] mt-1">{error.message}</p>}
+    {error && <p className="text-[11px] text-error mt-1">{error.message}</p>}
   </div>
 );
 
@@ -60,11 +60,11 @@ const SubmitButton = ({ isSubmitting, loadingText, text, className = '' }) => (
   <button
     type="submit"
     disabled={isSubmitting}
-    className={`w-full py-2.5 px-4 rounded-[4px] bg-[#4be277] text-[#003915] text-xs font-bold uppercase tracking-wider hover:bg-[#22c55e] transition-colors flex items-center justify-center gap-2 disabled:opacity-50 ${className}`}
+    className={`w-full py-2.5 px-4 rounded-[4px] bg-primary text-on-primary text-xs font-bold uppercase tracking-wider hover:bg-primary-container transition-colors flex items-center justify-center gap-2 disabled:opacity-50 ${className}`}
   >
     {isSubmitting ? (
       <>
-        <div className="w-4 h-4 border-2 border-[#003915] border-t-transparent rounded-full animate-spin" />
+        <div className="w-4 h-4 border-2 border-on-primary border-t-transparent rounded-full animate-spin" />
         <span>{loadingText}</span>
       </>
     ) : (
@@ -182,35 +182,35 @@ export const AuthPage = () => {
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden flex flex-col md:flex-row bg-[#131313] text-[#e2e2e2]">
+    <div className="h-screen w-screen overflow-hidden flex flex-col md:flex-row bg-surface text-on-surface">
       {/* Left Branding Panel (Fixed, Never Shifts) */}
-      <div className="hidden md:flex flex-1 flex-col justify-between p-10 lg:p-14 bg-[#0e0e0e] border-r border-[#1f1f1f] relative overflow-hidden">
+      <div className="hidden md:flex flex-1 flex-col justify-between p-10 lg:p-14 bg-surface-container-lowest border-r border-surface-container relative overflow-hidden">
         {/* Soft Green Glow Backdrop */}
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#4be277]/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 -right-32 w-80 h-80 bg-[#4be277]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 -right-32 w-80 h-80 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
         {/* Top Logo */}
         <div className="relative z-10 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-[4px] bg-[#4be277]/10 border border-[#4be277]/50 flex items-center justify-center text-[#4be277] shadow-[0_0_15px_rgba(75,226,119,0.2)]">
+          <div className="w-10 h-10 rounded-[4px] bg-primary/10 border border-primary/50 flex items-center justify-center text-primary shadow-[0_0_15px_rgba(75,226,119,0.2)]">
             <Icon name="terminal" className="text-2xl" />
           </div>
           <div>
-            <span className="text-lg font-bold tracking-tight text-[#e2e2e2]">Placement Copilot</span>
-            <div className="label-mono text-[10px] text-[#4be277]">PORTFOLIO-GRADE PREPARATION</div>
+            <span className="text-lg font-bold tracking-tight text-on-surface">Placement Copilot</span>
+            <div className="label-mono text-[10px] text-primary">PORTFOLIO-GRADE PREPARATION</div>
           </div>
         </div>
 
         {/* Headline & Value Bullets */}
         <div className="relative z-10 space-y-8 my-auto">
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-[12px] bg-[#1f1f1f] border border-[#3d4a3d] text-xs text-[#4be277] font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#4be277] animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-[12px] bg-surface-container border border-outline-variant text-xs text-primary font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
               <span>Version 2026.1 Active</span>
             </div>
-            <h1 className="text-4xl lg:text-5xl font-black text-[#e2e2e2] tracking-tight leading-tight">
+            <h1 className="text-4xl lg:text-5xl font-black text-on-surface tracking-tight leading-tight">
               Master Your Technical Journey
             </h1>
-            <p className="text-sm text-[#bccbb9] max-w-md leading-relaxed">
+            <p className="text-sm text-on-surface-variant max-w-md leading-relaxed">
               Every score is mathematically derived and explainable. No fake percentiles. Grounded AI explanations for high-stakes campus and off-campus placements.
             </p>
           </div>
@@ -235,12 +235,12 @@ export const AuthPage = () => {
               },
             ].map((bullet, idx) => (
               <div key={idx} className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-[2px] bg-[#4be277]/15 border border-[#4be277]/40 flex items-center justify-center text-[#4be277] shrink-0 mt-0.5">
+                <div className="w-5 h-5 rounded-[2px] bg-primary/15 border border-primary/40 flex items-center justify-center text-primary shrink-0 mt-0.5">
                   <Icon name="check" className="text-sm" />
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-[#e2e2e2]">{bullet.title}</div>
-                  <div className="text-xs text-[#869585]">{bullet.desc}</div>
+                  <div className="text-sm font-semibold text-on-surface">{bullet.title}</div>
+                  <div className="text-xs text-outline">{bullet.desc}</div>
                 </div>
               </div>
             ))}
@@ -248,8 +248,8 @@ export const AuthPage = () => {
         </div>
 
         {/* Footer info & Demo Quick-Login */}
-        <div className="relative z-10 pt-6 border-t border-[#1f1f1f] flex items-center justify-between">
-          <div className="text-xs text-[#869585]">
+        <div className="relative z-10 pt-6 border-t border-surface-container flex items-center justify-between">
+          <div className="text-xs text-outline">
             Built with React 19, FastAPI & Neon Serverless
           </div>
           {isDemoEnabled && (
@@ -259,7 +259,7 @@ export const AuthPage = () => {
               onClick={handleDemoLogin}
               disabled={isSubmitting}
               type="button"
-              className="text-xs text-[#4be277] hover:underline font-mono disabled:opacity-50"
+              className="text-xs text-primary hover:underline font-mono disabled:opacity-50"
             >
               {isSubmitting ? 'Signing in...' : 'Demo Account →'}
             </button>
@@ -273,10 +273,10 @@ export const AuthPage = () => {
           {/* Mobile Logo & Demo Login */}
           <div className="md:hidden flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-[4px] bg-[#4be277]/10 border border-[#4be277]/50 flex items-center justify-center text-[#4be277]">
+              <div className="w-8 h-8 rounded-[4px] bg-primary/10 border border-primary/50 flex items-center justify-center text-primary">
                 <Icon name="terminal" className="text-xl" />
               </div>
-              <span className="text-base font-bold text-[#e2e2e2]">Placement Copilot</span>
+              <span className="text-base font-bold text-on-surface">Placement Copilot</span>
             </div>
             {isDemoEnabled && (
               <button
@@ -285,7 +285,7 @@ export const AuthPage = () => {
                 onClick={handleDemoLogin}
                 disabled={isSubmitting}
                 type="button"
-                className="text-xs text-[#4be277] hover:underline font-mono disabled:opacity-50"
+                className="text-xs text-primary hover:underline font-mono disabled:opacity-50"
               >
                 Demo Account →
               </button>
@@ -293,14 +293,14 @@ export const AuthPage = () => {
           </div>
 
           {/* Pill Toggle for Sign In / Create Account */}
-          <div className="p-1 rounded-[12px] bg-[#1f1f1f] border border-[#3d4a3d] flex items-center">
+          <div className="p-1 rounded-[12px] bg-surface-container border border-outline-variant flex items-center">
             <button
               type="button"
               onClick={() => handleToggleMode(false)}
               className={`flex-1 py-1.5 text-xs font-semibold rounded-[12px] transition-all ${
                 !isSignup
-                  ? 'bg-[#4be277] text-[#003915] shadow-sm'
-                  : 'text-[#bccbb9] hover:text-[#e2e2e2]'
+                  ? 'bg-primary text-on-primary shadow-sm'
+                  : 'text-on-surface-variant hover:text-on-surface'
               }`}
             >
               Sign In
@@ -310,8 +310,8 @@ export const AuthPage = () => {
               onClick={() => handleToggleMode(true)}
               className={`flex-1 py-1.5 text-xs font-semibold rounded-[12px] transition-all ${
                 isSignup
-                  ? 'bg-[#4be277] text-[#003915] shadow-sm'
-                  : 'text-[#bccbb9] hover:text-[#e2e2e2]'
+                  ? 'bg-primary text-on-primary shadow-sm'
+                  : 'text-on-surface-variant hover:text-on-surface'
               }`}
             >
               Create Account
@@ -320,10 +320,10 @@ export const AuthPage = () => {
 
           {/* Title Header */}
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-[#e2e2e2]">
+            <h2 className="text-2xl font-bold tracking-tight text-on-surface">
               {isSignup ? 'Start Your Preparation' : 'Welcome Back'}
             </h2>
-            <p className="text-xs text-[#869585] mt-1">
+            <p className="text-xs text-outline mt-1">
               {isSignup
                 ? 'Create your candidate profile to track problems and mock interviews.'
                 : 'Sign in to access your readiness analytics and scheduled reviews.'}
@@ -334,7 +334,7 @@ export const AuthPage = () => {
           {serverError && (
             <div
               role="alert"
-              className="p-3 rounded-[4px] bg-[#93000a]/20 border border-[#ffb4ab]/40 text-xs text-[#ffb4ab] flex items-start gap-2"
+              className="p-3 rounded-[4px] bg-error-container/20 border border-error/40 text-xs text-error flex items-start gap-2"
             >
               <Icon name="error" className="text-base shrink-0 mt-0.5" />
               <div className="flex-1">{serverError}</div>
@@ -415,8 +415,8 @@ export const AuthPage = () => {
           {/* Social Buttons (Disabled with Tooltip) */}
           <div className="space-y-3 pt-2">
             <div className="relative flex items-center justify-center">
-              <div className="border-t border-[#1f1f1f] w-full" />
-              <span className="bg-[#131313] px-3 label-mono text-[10px] text-[#869585] absolute">
+              <div className="border-t border-surface-container w-full" />
+              <span className="bg-surface px-3 label-mono text-[10px] text-outline absolute">
                 OR CONTINUE WITH
               </span>
             </div>
@@ -426,7 +426,7 @@ export const AuthPage = () => {
                 <button
                   type="button"
                   disabled
-                  className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-[4px] bg-[#1b1b1b] border border-[#2a2a2a] text-xs text-[#869585] opacity-60 cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-[4px] bg-surface-container-low border border-surface-container-high text-xs text-outline opacity-60 cursor-not-allowed"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24">
                     <path
@@ -448,7 +448,7 @@ export const AuthPage = () => {
                   </svg>
                   <span>Google</span>
                 </button>
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 hidden group-hover:block bg-[#2a2a2a] text-[#e2e2e2] text-[10px] px-2 py-0.5 rounded-[2px] whitespace-nowrap shadow-md pointer-events-none">
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 hidden group-hover:block bg-surface-container-high text-on-surface text-[10px] px-2 py-0.5 rounded-[2px] whitespace-nowrap shadow-md pointer-events-none">
                   Coming soon
                 </div>
               </div>
@@ -457,7 +457,7 @@ export const AuthPage = () => {
                 <button
                   type="button"
                   disabled
-                  className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-[4px] bg-[#1b1b1b] border border-[#2a2a2a] text-xs text-[#869585] opacity-60 cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-[4px] bg-surface-container-low border border-surface-container-high text-xs text-outline opacity-60 cursor-not-allowed"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                     <path
@@ -468,7 +468,7 @@ export const AuthPage = () => {
                   </svg>
                   <span>GitHub</span>
                 </button>
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 hidden group-hover:block bg-[#2a2a2a] text-[#e2e2e2] text-[10px] px-2 py-0.5 rounded-[2px] whitespace-nowrap shadow-md pointer-events-none">
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 hidden group-hover:block bg-surface-container-high text-on-surface text-[10px] px-2 py-0.5 rounded-[2px] whitespace-nowrap shadow-md pointer-events-none">
                   Coming soon
                 </div>
               </div>

@@ -216,20 +216,20 @@ export const DSATrackerPage = () => {
     switch (diff) {
       case 'easy':
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-mono text-[#4be277]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#4be277]" /> Easy
+          <span className="inline-flex items-center gap-1 text-[11px] font-mono text-primary">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary" /> Easy
           </span>
         );
       case 'hard':
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-mono text-[#ffb4ab]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ffb4ab]" /> Hard
+          <span className="inline-flex items-center gap-1 text-[11px] font-mono text-error">
+            <span className="w-1.5 h-1.5 rounded-full bg-error" /> Hard
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-mono text-[#facc15]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#facc15]" /> Medium
+          <span className="inline-flex items-center gap-1 text-[11px] font-mono text-warning">
+            <span className="w-1.5 h-1.5 rounded-full bg-warning" /> Medium
           </span>
         );
     }
@@ -238,33 +238,33 @@ export const DSATrackerPage = () => {
   const getStatusBadge = (status) => {
     switch (status) {
       case 'solved':
-        return <span className="px-2 py-0.5 rounded-[2px] bg-[#4be277]/10 text-[#4be277] text-[10px] font-mono uppercase">Solved</span>;
+        return <span className="px-2 py-0.5 rounded-[2px] bg-primary/10 text-primary text-[10px] font-mono uppercase">Solved</span>;
       case 'in_progress':
-        return <span className="px-2 py-0.5 rounded-[2px] bg-[#facc15]/10 text-[#facc15] text-[10px] font-mono uppercase">In Progress</span>;
+        return <span className="px-2 py-0.5 rounded-[2px] bg-warning/10 text-warning text-[10px] font-mono uppercase">In Progress</span>;
       case 'failed':
-        return <span className="px-2 py-0.5 rounded-[2px] bg-[#ffb4ab]/10 text-[#ffb4ab] text-[10px] font-mono uppercase">Failed</span>;
+        return <span className="px-2 py-0.5 rounded-[2px] bg-error/10 text-error text-[10px] font-mono uppercase">Failed</span>;
       default:
-        return <span className="px-2 py-0.5 rounded-[2px] bg-[#2a2a2a] text-[#869585] text-[10px] font-mono uppercase">To-Do</span>;
+        return <span className="px-2 py-0.5 rounded-[2px] bg-surface-container-high text-outline text-[10px] font-mono uppercase">To-Do</span>;
     }
   };
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1f1f1f] pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-surface-container pb-5">
         <div>
-          <div className="label-mono text-xs text-[#4be277] mb-1">DSA PRACTICE TRACKER</div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#e2e2e2] tracking-tight">
+          <div className="label-mono text-xs text-primary mb-1">DSA PRACTICE TRACKER</div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-on-surface tracking-tight">
             Algorithmic Problem Tracker
           </h1>
-          <p className="text-xs text-[#869585] mt-0.5">
+          <p className="text-xs text-outline mt-0.5">
             Exponential decay modeling (τ=45d) with SM-2 spaced repetition schedules.
           </p>
         </div>
 
         <button
           onClick={() => openDrawerForNew()}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[4px] bg-[#4be277] text-[#003915] text-xs font-bold uppercase tracking-wider hover:bg-[#22c55e] transition-colors self-start sm:self-auto shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[4px] bg-primary text-on-primary text-xs font-bold uppercase tracking-wider hover:bg-primary-container transition-colors self-start sm:self-auto shadow-sm"
         >
           <Icon name="add" className="text-base" />
           <span>Log New Problem</span>
@@ -276,9 +276,9 @@ export const DSATrackerPage = () => {
         {/* Left Column: Attempts Table & Filters */}
         <div className="lg:col-span-2 space-y-4">
           {/* Tabs & Search Controls */}
-          <div className="p-4 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a] space-y-3">
+          <div className="p-4 rounded-[8px] bg-surface-container-low border border-surface-container-high space-y-3">
             {/* Tabs */}
-            <div className="flex flex-wrap items-center gap-1.5 border-b border-[#1f1f1f] pb-3">
+            <div className="flex flex-wrap items-center gap-1.5 border-b border-surface-container pb-3">
               {[
                 { id: 'all', label: 'All Problems' },
                 { id: 'solved', label: 'Solved' },
@@ -290,8 +290,8 @@ export const DSATrackerPage = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-3 py-1.5 text-xs font-semibold rounded-[4px] transition-all ${
                     activeTab === tab.id
-                      ? 'bg-[#4be277] text-[#003915]'
-                      : 'text-[#869585] hover:text-[#e2e2e2] hover:bg-[#1f1f1f]'
+                      ? 'bg-primary text-on-primary'
+                      : 'text-outline hover:text-on-surface hover:bg-surface-container'
                   }`}
                 >
                   {tab.label}
@@ -307,15 +307,15 @@ export const DSATrackerPage = () => {
                   placeholder="Search problem or topic..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-8 pr-3 py-1.5 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] placeholder-[#869585] focus:border-[#4be277] focus:outline-hidden"
+                  className="w-full pl-8 pr-3 py-1.5 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface placeholder-outline focus:border-primary focus:outline-hidden"
                 />
-                <Icon name="search" className="absolute left-2.5 top-2 text-sm text-[#869585]" />
+                <Icon name="search" className="absolute left-2.5 top-2 text-sm text-outline" />
               </div>
 
               <select
                 value={selectedTopic}
                 onChange={(e) => setSelectedTopic(e.target.value)}
-                className="w-full px-2.5 py-1.5 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277] focus:outline-hidden"
+                className="w-full px-2.5 py-1.5 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary focus:outline-hidden"
               >
                 <option value="all">All Topics</option>
                 {topics.map((t) => (
@@ -328,7 +328,7 @@ export const DSATrackerPage = () => {
               <select
                 value={selectedDifficulty}
                 onChange={(e) => setSelectedDifficulty(e.target.value)}
-                className="w-full px-2.5 py-1.5 rounded-[2px] bg-[#131313] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277] focus:outline-hidden"
+                className="w-full px-2.5 py-1.5 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary focus:outline-hidden"
               >
                 <option value="all">All Difficulties</option>
                 <option value="easy">Easy</option>
@@ -339,11 +339,11 @@ export const DSATrackerPage = () => {
           </div>
 
           {/* Table */}
-          <div className="rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a] overflow-hidden">
+          <div className="rounded-[8px] bg-surface-container-low border border-surface-container-high overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-[#2a2a2a] bg-[#1f1f1f]/60 text-[10px] label-mono text-[#869585]">
+                  <tr className="border-b border-surface-container-high bg-surface-container/60 text-[10px] label-mono text-outline">
                     <th className="py-3 px-4">PROBLEM TITLE</th>
                     <th className="py-3 px-3">TOPIC</th>
                     <th className="py-3 px-3">DIFFICULTY</th>
@@ -353,19 +353,19 @@ export const DSATrackerPage = () => {
                     <th className="py-3 px-4 text-right">ACTIONS</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#1f1f1f] text-xs">
+                <tbody className="divide-y divide-surface-container text-xs">
                   {attemptsLoading ? (
                     <tr>
-                      <td colSpan={7} className="py-8 text-center text-[#869585]">
-                        <div className="w-6 h-6 border-2 border-[#4be277] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                      <td colSpan={7} className="py-8 text-center text-outline">
+                        <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-2" />
                         Loading tracked attempts...
                       </td>
                     </tr>
                   ) : filteredAttempts.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="py-12 text-center text-[#869585] space-y-2">
-                        <Icon name="search_off" className="text-2xl text-[#869585]" />
-                        <div className="text-sm font-medium text-[#e2e2e2]">No problems match your filters</div>
+                      <td colSpan={7} className="py-12 text-center text-outline space-y-2">
+                        <Icon name="search_off" className="text-2xl text-outline" />
+                        <div className="text-sm font-medium text-on-surface">No problems match your filters</div>
                         <p className="text-xs">Log a new practice attempt to start building mastery.</p>
                       </td>
                     </tr>
@@ -377,15 +377,15 @@ export const DSATrackerPage = () => {
                         att.next_review_at && new Date(att.next_review_at).getTime() <= Date.now();
 
                       return (
-                        <tr key={att.id} className="hover:bg-[#1f1f1f]/50 transition-colors">
-                          <td className="py-3 px-4 font-medium text-[#e2e2e2]">
+                        <tr key={att.id} className="hover:bg-surface-container/50 transition-colors">
+                          <td className="py-3 px-4 font-medium text-on-surface">
                             <div className="flex items-center gap-1.5">
                               {att.problem?.url ? (
                                 <a
                                   href={att.problem.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="hover:text-[#4be277] transition-colors truncate max-w-[200px]"
+                                  className="hover:text-primary transition-colors truncate max-w-[200px]"
                                 >
                                   {title}
                                 </a>
@@ -393,19 +393,19 @@ export const DSATrackerPage = () => {
                                 <span className="truncate max-w-[200px]">{title}</span>
                               )}
                               {att.problem?.url && (
-                                <Icon name="open_in_new" className="text-[12px] text-[#869585]" />
+                                <Icon name="open_in_new" className="text-[12px] text-outline" />
                               )}
                             </div>
                           </td>
                           <td className="py-3 px-3">
-                            <span className="px-2 py-0.5 rounded-[2px] bg-[#131313] border border-[#2a2a2a] text-[10px] text-[#bccbb9]">
+                            <span className="px-2 py-0.5 rounded-[2px] bg-surface border border-surface-container-high text-[10px] text-on-surface-variant">
                               {topicName}
                             </span>
                           </td>
                           <td className="py-3 px-3">{getDifficultyBadge(att.difficulty)}</td>
                           <td className="py-3 px-3">{getStatusBadge(att.status)}</td>
                           <td className="py-3 px-3">
-                            <div className="flex items-center gap-0.5 text-xs text-[#facc15]">
+                            <div className="flex items-center gap-0.5 text-xs text-warning">
                               {Array.from({ length: 5 }).map((_, i) => (
                                 <span key={i} className={i < att.confidence ? 'opacity-100' : 'opacity-20'}>
                                   ★
@@ -415,7 +415,7 @@ export const DSATrackerPage = () => {
                           </td>
                           <td className="py-3 px-3 font-mono text-[11px]">
                             {att.next_review_at ? (
-                              <span className={isReviewOverdue ? 'text-[#ffb4ab] font-bold' : 'text-[#869585]'}>
+                              <span className={isReviewOverdue ? 'text-error font-bold' : 'text-outline'}>
                                 {new Date(att.next_review_at).toLocaleDateString(undefined, {
                                   month: 'short',
                                   day: 'numeric',
@@ -423,21 +423,21 @@ export const DSATrackerPage = () => {
                                 {isReviewOverdue && ' (due)'}
                               </span>
                             ) : (
-                              <span className="text-[#869585]">—</span>
+                              <span className="text-outline">—</span>
                             )}
                           </td>
                           <td className="py-3 px-4 text-right">
                             <div className="inline-flex items-center gap-1">
                               <button
                                 onClick={() => openDrawerForEdit(att)}
-                                className="p-1 text-[#869585] hover:text-[#4be277] transition-colors"
+                                className="p-1 text-outline hover:text-primary transition-colors"
                                 title="Edit attempt"
                               >
                                 <Icon name="edit" className="text-sm" />
                               </button>
                               <button
                                 onClick={() => deleteAttemptMutation.mutate(att.id)}
-                                className="p-1 text-[#869585] hover:text-[#ffb4ab] transition-colors"
+                                className="p-1 text-outline hover:text-error transition-colors"
                                 title="Delete attempt"
                               >
                                 <Icon name="delete" className="text-sm" />
@@ -457,26 +457,26 @@ export const DSATrackerPage = () => {
         {/* Right Column: Mastery, Recommendations, Reviews Due, 7d Chart */}
         <div className="space-y-6">
           {/* Weak Areas Mastery Bars */}
-          <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a]">
+          <div className="p-5 rounded-[8px] bg-surface-container-low border border-surface-container-high">
             <div className="flex items-center justify-between mb-3">
-              <span className="label-mono text-[10px] text-[#869585]">TOPIC MASTERY & WEAK SPOTS</span>
-              <Icon name="analytics" className="text-sm text-[#4be277]" />
+              <span className="label-mono text-[10px] text-outline">TOPIC MASTERY & WEAK SPOTS</span>
+              <Icon name="analytics" className="text-sm text-primary" />
             </div>
             <div className="space-y-3">
               {masteryList.slice(0, 6).map((m) => {
                 const masteryPct = Math.round(m.mastery * 100);
                 // Color codes: red < 40%, amber 40–70%, green > 70%
-                let barColor = 'bg-[#ffb4ab]';
-                if (masteryPct >= 70) barColor = 'bg-[#4be277]';
-                else if (masteryPct >= 40) barColor = 'bg-[#facc15]';
+                let barColor = 'bg-error';
+                if (masteryPct >= 70) barColor = 'bg-primary';
+                else if (masteryPct >= 40) barColor = 'bg-warning';
 
                 return (
                   <div key={m.topic_id} className="space-y-1">
                     <div className="flex justify-between text-xs">
-                      <span className="text-[#e2e2e2] font-medium">{m.topic_name}</span>
-                      <span className="font-mono text-[#869585]">{masteryPct}%</span>
+                      <span className="text-on-surface font-medium">{m.topic_name}</span>
+                      <span className="font-mono text-outline">{masteryPct}%</span>
                     </div>
-                    <div className="w-full h-1.5 bg-[#131313] rounded-full overflow-hidden">
+                    <div className="w-full h-1.5 bg-surface rounded-full overflow-hidden">
                       <div
                         className={`h-full ${barColor} transition-all duration-500`}
                         style={{ width: `${masteryPct}%` }}
@@ -489,30 +489,30 @@ export const DSATrackerPage = () => {
           </div>
 
           {/* 5 Recommended Practice Problems */}
-          <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#4be277]/30">
+          <div className="p-5 rounded-[8px] bg-surface-container-low border border-primary/30">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-1.5">
-                <Icon name="auto_awesome" className="text-sm text-[#4be277]" />
-                <span className="label-mono text-[10px] text-[#4be277] font-bold">ALGORITHMIC RECOMMENDATIONS</span>
+                <Icon name="auto_awesome" className="text-sm text-primary" />
+                <span className="label-mono text-[10px] text-primary font-bold">ALGORITHMIC RECOMMENDATIONS</span>
               </div>
-              <span className="text-[10px] text-[#869585] font-mono">5 TARGETS</span>
+              <span className="text-[10px] text-outline font-mono">5 TARGETS</span>
             </div>
             <div className="space-y-2.5">
               {recommendations.slice(0, 5).map((rec) => (
                 <div
                   key={rec.problem_id}
-                  className="p-3 rounded-[4px] bg-[#1f1f1f] border border-[#2a2a2a] flex items-start justify-between gap-2"
+                  className="p-3 rounded-[4px] bg-surface-container border border-surface-container-high flex items-start justify-between gap-2"
                 >
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-[#e2e2e2] truncate">{rec.title}</span>
+                      <span className="text-xs font-bold text-on-surface truncate">{rec.title}</span>
                       {getDifficultyBadge(rec.difficulty)}
                     </div>
-                    <div className="text-[11px] text-[#869585] mt-0.5 line-clamp-1">{rec.reason}</div>
+                    <div className="text-[11px] text-outline mt-0.5 line-clamp-1">{rec.reason}</div>
                   </div>
                   <button
                     onClick={() => openDrawerForNew(rec)}
-                    className="p-1 text-[#869585] hover:text-[#4be277] shrink-0"
+                    className="p-1 text-outline hover:text-primary shrink-0"
                     title="Log attempt"
                   >
                     <Icon name="add_circle" className="text-base" />
@@ -524,24 +524,24 @@ export const DSATrackerPage = () => {
 
           {/* Reviews Due (SM-2 Spaced Repetition) */}
           {reviewsDue && reviewsDue.length > 0 && (
-            <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#ffb4ab]/30">
+            <div className="p-5 rounded-[8px] bg-surface-container-low border border-error/30">
               <div className="flex items-center justify-between mb-3">
-                <span className="label-mono text-[10px] text-[#ffb4ab]">SM-2 REVIEWS DUE ({reviewsDue.length})</span>
-                <Icon name="schedule" className="text-sm text-[#ffb4ab]" />
+                <span className="label-mono text-[10px] text-error">SM-2 REVIEWS DUE ({reviewsDue.length})</span>
+                <Icon name="schedule" className="text-sm text-error" />
               </div>
               <div className="space-y-2">
                 {reviewsDue.slice(0, 3).map((r) => (
                   <div
                     key={r.attempt_id}
-                    className="p-2.5 rounded-[4px] bg-[#1f1f1f] border border-[#2a2a2a] flex items-center justify-between"
+                    className="p-2.5 rounded-[4px] bg-surface-container border border-surface-container-high flex items-center justify-between"
                   >
                     <div className="min-w-0 pr-2">
-                      <div className="text-xs font-semibold text-[#e2e2e2] truncate">{r.title}</div>
-                      <div className="text-[10px] text-[#869585]">{r.topic_name}</div>
+                      <div className="text-xs font-semibold text-on-surface truncate">{r.title}</div>
+                      <div className="text-[10px] text-outline">{r.topic_name}</div>
                     </div>
                     <button
                       onClick={() => openDrawerForNew({ problem_id: r.attempt_id, title: r.title })}
-                      className="px-2 py-1 rounded-[2px] bg-[#ffb4ab]/20 text-[#ffb4ab] text-[10px] font-mono font-bold uppercase hover:bg-[#ffb4ab]/30"
+                      className="px-2 py-1 rounded-[2px] bg-error/20 text-error text-[10px] font-mono font-bold uppercase hover:bg-error/30"
                     >
                       Review
                     </button>
@@ -553,10 +553,10 @@ export const DSATrackerPage = () => {
 
           {/* 7-Day Solved Bar Chart */}
           {stats && stats.daily_solved_7d && (
-            <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a]">
+            <div className="p-5 rounded-[8px] bg-surface-container-low border border-surface-container-high">
               <div className="flex items-center justify-between mb-2">
-                <span className="label-mono text-[10px] text-[#869585]">7-DAY SOLVED VELOCITY</span>
-                <span className="text-xs font-mono font-bold text-[#4be277]">
+                <span className="label-mono text-[10px] text-outline">7-DAY SOLVED VELOCITY</span>
+                <span className="text-xs font-mono font-bold text-primary">
                   {stats.solved_count} Total Solved
                 </span>
               </div>
@@ -586,15 +586,15 @@ export const DSATrackerPage = () => {
       {drawerOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
           <div className="fixed inset-0 bg-black/70 backdrop-blur-xs" onClick={closeDrawer} />
-          <div className="relative w-full max-w-md bg-[#131313] border-l border-[#3d4a3d] h-full overflow-y-auto p-6 z-50 animate-in slide-in-from-right duration-200">
-            <div className="flex items-center justify-between border-b border-[#1f1f1f] pb-4 mb-5">
+          <div className="relative w-full max-w-md bg-surface border-l border-outline-variant h-full overflow-y-auto p-6 z-50 animate-in slide-in-from-right duration-200">
+            <div className="flex items-center justify-between border-b border-surface-container pb-4 mb-5">
               <div>
-                <h3 className="text-lg font-bold text-[#e2e2e2]">
+                <h3 className="text-lg font-bold text-on-surface">
                   {editingAttempt ? 'Edit Practice Attempt' : 'Log New Practice Attempt'}
                 </h3>
-                <div className="label-mono text-[10px] text-[#4be277]">MATHEMATICAL MASTERY MODEL</div>
+                <div className="label-mono text-[10px] text-primary">MATHEMATICAL MASTERY MODEL</div>
               </div>
-              <button onClick={closeDrawer} className="text-[#869585] hover:text-[#e2e2e2]">
+              <button onClick={closeDrawer} className="text-outline hover:text-on-surface">
                 <Icon name="close" className="text-xl" />
               </button>
             </div>
@@ -602,12 +602,12 @@ export const DSATrackerPage = () => {
             <form onSubmit={handleDrawerSubmit} className="space-y-4">
               {/* Mode switch */}
               {!editingAttempt && (
-                <div className="p-1 rounded-[4px] bg-[#1b1b1b] border border-[#2a2a2a] flex">
+                <div className="p-1 rounded-[4px] bg-surface-container-low border border-surface-container-high flex">
                   <button
                     type="button"
                     onClick={() => setProblemMode('catalog')}
                     className={`flex-1 py-1 text-xs font-semibold rounded-[2px] ${
-                      problemMode === 'catalog' ? 'bg-[#4be277] text-[#003915]' : 'text-[#869585]'
+                      problemMode === 'catalog' ? 'bg-primary text-on-primary' : 'text-outline'
                     }`}
                   >
                     Curated Catalog
@@ -616,7 +616,7 @@ export const DSATrackerPage = () => {
                     type="button"
                     onClick={() => setProblemMode('custom')}
                     className={`flex-1 py-1 text-xs font-semibold rounded-[2px] ${
-                      problemMode === 'custom' ? 'bg-[#4be277] text-[#003915]' : 'text-[#869585]'
+                      problemMode === 'custom' ? 'bg-primary text-on-primary' : 'text-outline'
                     }`}
                   >
                     Custom Title
@@ -627,7 +627,7 @@ export const DSATrackerPage = () => {
               {/* Problem Selection */}
               {problemMode === 'catalog' ? (
                 <div>
-                  <label className="block label-mono text-[11px] text-[#bccbb9] mb-1">
+                  <label className="block label-mono text-[11px] text-on-surface-variant mb-1">
                     SEARCH CATALOG PROBLEMS
                   </label>
                   <input
@@ -638,10 +638,10 @@ export const DSATrackerPage = () => {
                       setCatalogSearch(e.target.value);
                       setSelectedProblemId('');
                     }}
-                    className="w-full px-3 py-2 rounded-[2px] bg-[#1b1b1b] border border-[#3d4a3d] text-xs text-[#e2e2e2] placeholder-[#869585] focus:border-[#4be277]"
+                    className="w-full px-3 py-2 rounded-[2px] bg-surface-container-low border border-outline-variant text-xs text-on-surface placeholder-outline focus:border-primary"
                   />
                   {catalogProblems.length > 0 && !selectedProblemId && (
-                    <div className="mt-1.5 max-h-48 overflow-y-auto rounded-[2px] bg-[#1b1b1b] border border-[#2a2a2a] divide-y divide-[#2a2a2a]">
+                    <div className="mt-1.5 max-h-48 overflow-y-auto rounded-[2px] bg-surface-container-low border border-surface-container-high divide-y divide-surface-container-high">
                       {catalogProblems.map((prob) => (
                         <button
                           key={prob.id}
@@ -654,10 +654,10 @@ export const DSATrackerPage = () => {
                               setFormTopicId(prob.topics[0].id);
                             }
                           }}
-                          className="w-full text-left p-2 hover:bg-[#2a2a2a] flex items-center justify-between text-xs"
+                          className="w-full text-left p-2 hover:bg-surface-container-high flex items-center justify-between text-xs"
                         >
-                          <span className="text-[#e2e2e2] font-medium">{prob.title}</span>
-                          <span className="text-[10px] font-mono text-[#869585] uppercase">{prob.difficulty}</span>
+                          <span className="text-on-surface font-medium">{prob.title}</span>
+                          <span className="text-[10px] font-mono text-outline uppercase">{prob.difficulty}</span>
                         </button>
                       ))}
                     </div>
@@ -665,24 +665,24 @@ export const DSATrackerPage = () => {
                 </div>
               ) : (
                 <div>
-                  <label className="block label-mono text-[11px] text-[#bccbb9] mb-1">CUSTOM PROBLEM TITLE</label>
+                  <label className="block label-mono text-[11px] text-on-surface-variant mb-1">CUSTOM PROBLEM TITLE</label>
                   <input
                     type="text"
                     placeholder="e.g., Minimum Window Substring with Duplicates"
                     value={customTitle}
                     onChange={(e) => setCustomTitle(e.target.value)}
-                    className="w-full px-3 py-2 rounded-[2px] bg-[#1b1b1b] border border-[#3d4a3d] text-xs text-[#e2e2e2] placeholder-[#869585] focus:border-[#4be277]"
+                    className="w-full px-3 py-2 rounded-[2px] bg-surface-container-low border border-outline-variant text-xs text-on-surface placeholder-outline focus:border-primary"
                   />
                 </div>
               )}
 
               {/* Topic Select */}
               <div>
-                <label className="block label-mono text-[11px] text-[#bccbb9] mb-1">DSA TOPIC CATEGORY</label>
+                <label className="block label-mono text-[11px] text-on-surface-variant mb-1">DSA TOPIC CATEGORY</label>
                 <select
                   value={formTopicId}
                   onChange={(e) => setFormTopicId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-[2px] bg-[#1b1b1b] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+                  className="w-full px-3 py-2 rounded-[2px] bg-surface-container-low border border-outline-variant text-xs text-on-surface focus:border-primary"
                 >
                   <option value="">Select Topic...</option>
                   {topics.map((t) => (
@@ -696,11 +696,11 @@ export const DSATrackerPage = () => {
               {/* Difficulty & Status */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block label-mono text-[11px] text-[#bccbb9] mb-1">DIFFICULTY</label>
+                  <label className="block label-mono text-[11px] text-on-surface-variant mb-1">DIFFICULTY</label>
                   <select
                     value={formDifficulty}
                     onChange={(e) => setFormDifficulty(e.target.value)}
-                    className="w-full px-3 py-2 rounded-[2px] bg-[#1b1b1b] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+                    className="w-full px-3 py-2 rounded-[2px] bg-surface-container-low border border-outline-variant text-xs text-on-surface focus:border-primary"
                   >
                     <option value="easy">Easy (1.0 wt)</option>
                     <option value="medium">Medium (2.0 wt)</option>
@@ -708,11 +708,11 @@ export const DSATrackerPage = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block label-mono text-[11px] text-[#bccbb9] mb-1">STATUS</label>
+                  <label className="block label-mono text-[11px] text-on-surface-variant mb-1">STATUS</label>
                   <select
                     value={formStatus}
                     onChange={(e) => setFormStatus(e.target.value)}
-                    className="w-full px-3 py-2 rounded-[2px] bg-[#1b1b1b] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+                    className="w-full px-3 py-2 rounded-[2px] bg-surface-container-low border border-outline-variant text-xs text-on-surface focus:border-primary"
                   >
                     <option value="solved">Solved</option>
                     <option value="in_progress">In Progress</option>
@@ -725,8 +725,8 @@ export const DSATrackerPage = () => {
               {/* Confidence Slider */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="label-mono text-[11px] text-[#bccbb9]">CONFIDENCE SCORE: {formConfidence}/5</label>
-                  <span className="text-[10px] text-[#869585]">
+                  <label className="label-mono text-[11px] text-on-surface-variant">CONFIDENCE SCORE: {formConfidence}/5</label>
+                  <span className="text-[10px] text-outline">
                     {formConfidence === 5
                       ? 'Mastered'
                       : formConfidence >= 4
@@ -742,13 +742,13 @@ export const DSATrackerPage = () => {
                   max={5}
                   value={formConfidence}
                   onChange={(e) => setFormConfidence(Number(e.target.value))}
-                  className="w-full accent-[#4be277]"
+                  className="w-full accent-primary"
                 />
               </div>
 
               {/* Time Spent */}
               <div>
-                <label className="block label-mono text-[11px] text-[#bccbb9] mb-1">
+                <label className="block label-mono text-[11px] text-on-surface-variant mb-1">
                   TIME SPENT (MINUTES)
                 </label>
                 <input
@@ -757,13 +757,13 @@ export const DSATrackerPage = () => {
                   max={300}
                   value={formTimeSpent}
                   onChange={(e) => setFormTimeSpent(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-[2px] bg-[#1b1b1b] border border-[#3d4a3d] text-xs text-[#e2e2e2] focus:border-[#4be277]"
+                  className="w-full px-3 py-2 rounded-[2px] bg-surface-container-low border border-outline-variant text-xs text-on-surface focus:border-primary"
                 />
               </div>
 
               {/* Notes */}
               <div>
-                <label className="block label-mono text-[11px] text-[#bccbb9] mb-1">
+                <label className="block label-mono text-[11px] text-on-surface-variant mb-1">
                   SOLUTION NOTES / TIME & SPACE COMPLEXITY
                 </label>
                 <textarea
@@ -771,7 +771,7 @@ export const DSATrackerPage = () => {
                   placeholder="e.g. Used two pointers with sliding window. O(N) time, O(1) space."
                   value={formNotes}
                   onChange={(e) => setFormNotes(e.target.value)}
-                  className="w-full px-3 py-2 rounded-[2px] bg-[#1b1b1b] border border-[#3d4a3d] text-xs text-[#e2e2e2] placeholder-[#869585] focus:border-[#4be277]"
+                  className="w-full px-3 py-2 rounded-[2px] bg-surface-container-low border border-outline-variant text-xs text-on-surface placeholder-outline focus:border-primary"
                 />
               </div>
 
@@ -780,17 +780,17 @@ export const DSATrackerPage = () => {
                 <button
                   type="button"
                   onClick={closeDrawer}
-                  className="px-4 py-2 rounded-[4px] bg-[#1b1b1b] border border-[#2a2a2a] text-xs text-[#869585] hover:text-[#e2e2e2]"
+                  className="px-4 py-2 rounded-[4px] bg-surface-container-low border border-surface-container-high text-xs text-outline hover:text-on-surface"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={logAttemptMutation.isPending}
-                  className="px-5 py-2 rounded-[4px] bg-[#4be277] text-[#003915] text-xs font-bold uppercase tracking-wider hover:bg-[#22c55e] transition-colors flex items-center gap-2 disabled:opacity-50"
+                  className="px-5 py-2 rounded-[4px] bg-primary text-on-primary text-xs font-bold uppercase tracking-wider hover:bg-primary-container transition-colors flex items-center gap-2 disabled:opacity-50"
                 >
                   {logAttemptMutation.isPending && (
-                    <div className="w-3.5 h-3.5 border-2 border-[#003915] border-t-transparent rounded-full animate-spin" />
+                    <div className="w-3.5 h-3.5 border-2 border-on-primary border-t-transparent rounded-full animate-spin" />
                   )}
                   <span>{editingAttempt ? 'Save Changes' : 'Log Attempt'}</span>
                 </button>

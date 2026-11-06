@@ -22,6 +22,8 @@ export const unwrapArray = (response) => {
   return [];
 };
 
+const fetchList = async (url) => unwrapArray(await api.get(url));
+
 // ==========================================
 // 1. Data Structures & Algorithms (DSA) API
 // ==========================================
@@ -30,10 +32,7 @@ export const unwrapArray = (response) => {
  * Fetches all available DSA topics and categories.
  * @returns {Promise<Array<{ id: string, name: string, category: string, slug: string, target_points: number }>>}
  */
-export const getDsaTopics = async () => {
-  const data = await api.get('/dsa/topics');
-  return unwrapArray(data);
-};
+export const getDsaTopics = () => fetchList('/dsa/topics');
 
 /**
  * Searches curated DSA problem catalog.
@@ -53,45 +52,32 @@ export const getDsaProblems = async ({ q = '', topic = '', difficulty = '', limi
   if (limit) params.set('limit', String(limit));
   if (offset) params.set('offset', String(offset));
   const queryStr = params.toString() ? `?${params.toString()}` : '';
-  const data = await api.get(`/dsa/problems${queryStr}`);
-  return unwrapArray(data);
+  return fetchList(`/dsa/problems${queryStr}`);
 };
 
 /**
  * Fetches all logged DSA problem attempts for current candidate.
  * @returns {Promise<Array<{ id: string, problem_id: string|null, custom_title: string|null, topic_id: string, difficulty: string, status: string, confidence: number, time_spent_min: number, notes: string|null, attempted_at: string, problem: any, topic: any }>>}
  */
-export const getDsaAttempts = async () => {
-  const data = await api.get('/dsa/attempts');
-  return unwrapArray(data);
-};
+export const getDsaAttempts = () => fetchList('/dsa/attempts');
 
 /**
  * Fetches real-time mastery scores (0–100%) and priorities across DSA topics.
  * @returns {Promise<Array<{ topic_id: string, topic_name: string, category: string, mastery_score: number, problems_solved: number, total_attempts: number, decay_factor: number, priority_level: string, last_attempted_at: string|null }>>}
  */
-export const getDsaMastery = async () => {
-  const data = await api.get('/dsa/mastery');
-  return unwrapArray(data);
-};
+export const getDsaMastery = () => fetchList('/dsa/mastery');
 
 /**
  * Fetches top recommended problems targeting candidate weak areas.
  * @returns {Promise<Array<{ id: string, title: string, difficulty: string, url: string, topic_name: string, recommendation_reason: string, priority_weight: number }>>}
  */
-export const getDsaRecommendations = async () => {
-  const data = await api.get('/dsa/recommendations');
-  return unwrapArray(data);
-};
+export const getDsaRecommendations = () => fetchList('/dsa/recommendations');
 
 /**
  * Fetches problems scheduled for SuperMemo SM-2 spaced repetition review.
  * @returns {Promise<Array<{ attempt_id: string, problem_title: string, topic_name: string, difficulty: string, scheduled_for: string, repetitions: number, ease_factor: number }>>}
  */
-export const getDsaReviewsDue = async () => {
-  const data = await api.get('/dsa/reviews/due');
-  return unwrapArray(data);
-};
+export const getDsaReviewsDue = () => fetchList('/dsa/reviews/due');
 
 /**
  * Fetches aggregated DSA summary statistics and 7-day velocity chart.
@@ -137,10 +123,7 @@ export const deleteDsaAttempt = async (id) => {
  * Fetches all resumes saved for the candidate.
  * @returns {Promise<Array<{ id: string, title: string, file_path: string|null, created_at: string, skills: string[] }>>}
  */
-export const getResumes = async () => {
-  const data = await api.get('/resumes');
-  return unwrapArray(data);
-};
+export const getResumes = () => fetchList('/resumes');
 
 /**
  * Uploads a candidate resume via multipart FormData or text content.
@@ -155,10 +138,7 @@ export const uploadResume = async (formData) => {
  * Fetches historical deterministic ATS analysis reports.
  * @returns {Promise<Array<{ id: string, resume_id: string, company: string, role: string, overall_match_score: number, semantic_score: number, keyword_score: number, missing_skills: string[], created_at: string }>>}
  */
-export const getAtsAnalyses = async () => {
-  const data = await api.get('/ats/analyses');
-  return unwrapArray(data);
-};
+export const getAtsAnalyses = () => fetchList('/ats/analyses');
 
 /**
  * Performs a deterministic ATS alignment analysis.
@@ -182,10 +162,7 @@ export const analyzeAts = async (payload) => {
  * Fetches candidate mock interview sessions.
  * @returns {Promise<Array<{ id: string, track: string, company: string, role: string, status: string, questions_completed: number, final_theta: number|null, overall_score: number|null, created_at: string }>>}
  */
-export const getInterviews = async () => {
-  const data = await api.get('/interviews');
-  return unwrapArray(data);
-};
+export const getInterviews = () => fetchList('/interviews');
 
 /**
  * Fetches full details for a mock interview session.

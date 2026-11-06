@@ -85,7 +85,7 @@ async def list_resumes(
     )
     resumes = (await db.execute(stmt)).scalars().all()
     items = [ResumeResponse.model_validate(r) for r in resumes]
-    return PaginatedResponse(items=items, total=len(items), limit=len(items), offset=0)
+    return PaginatedResponse.from_items(items)
 
 @router.get("/{resume_id}", response_model=ResumeResponse)
 async def get_resume(

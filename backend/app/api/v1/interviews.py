@@ -132,7 +132,7 @@ async def list_interviews(
                 ended_at=iv.ended_at,
             )
         )
-    return PaginatedResponse(items=results, total=len(results), limit=len(results), offset=0)
+    return PaginatedResponse.from_items(results)
 
 @router.get("/{interview_id}", response_model=InterviewResponse)
 async def get_interview(

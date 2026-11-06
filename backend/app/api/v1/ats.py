@@ -111,7 +111,7 @@ async def list_analyses(
     )
     analyses = (await db.execute(stmt)).scalars().all()
     items = [ATSAnalysisResponse.model_validate(a) for a in analyses]
-    return PaginatedResponse(items=items, total=len(items), limit=len(items), offset=0)
+    return PaginatedResponse.from_items(items)
 
 @router.get("/analyses/{analysis_id}", response_model=ATSAnalysisResponse)
 async def get_analysis(

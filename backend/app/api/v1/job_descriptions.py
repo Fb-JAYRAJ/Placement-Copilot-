@@ -51,7 +51,7 @@ async def list_job_descriptions(
     )
     jds = (await db.execute(stmt)).scalars().all()
     items = [JobDescriptionResponse.model_validate(j) for j in jds]
-    return PaginatedResponse(items=items, total=len(items), limit=len(items), offset=0)
+    return PaginatedResponse.from_items(items)
 
 @router.get("/{jd_id}", response_model=JobDescriptionResponse)
 async def get_job_description(

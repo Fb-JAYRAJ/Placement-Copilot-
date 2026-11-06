@@ -6,6 +6,107 @@ import { useAuthStore } from '@/features/auth/authStore';
 import Icon from '@/components/common/Icon';
 import { ResponsiveContainer, LineChart, Line } from 'recharts';
 
+const SparklineCard = ({
+  label,
+  icon,
+  iconColor = 'text-[#4be277]',
+  strokeColor = '#4be277',
+  mainValue,
+  subtitle,
+  badge,
+  data = [],
+}) => (
+  <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a]">
+    <div className="flex items-center justify-between mb-1">
+      <span className="label-mono text-[10px] text-[#869585]">{label}</span>
+      <Icon name={icon} className={`text-sm ${iconColor}`} />
+    </div>
+    <div className="flex items-baseline gap-2">
+      <span className="text-2xl font-black text-[#e2e2e2]">{mainValue}</span>
+      {subtitle && <span className="text-xs text-[#869585]">{subtitle}</span>}
+      {badge && <span className="ml-auto text-xs font-mono font-bold text-[#facc15]">{badge}</span>}
+    </div>
+    <div className="h-14 mt-2">
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={data.map((item, idx) => ({ idx, val: item.value }))}>
+          <Line type="monotone" dataKey="val" stroke={strokeColor} strokeWidth={2} dot={false} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+);
+
+const OnboardingChecklist = ({ checklist = {}, completedCount }) => (
+  <div className="p-6 rounded-[8px] bg-[#1b1b1b] border border-[#4be277]/40 relative overflow-hidden">
+    <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center gap-2.5">
+        <div className="w-7 h-7 rounded-[4px] bg-[#4be277]/20 flex items-center justify-center text-[#4be277]">
+          <Icon name="rocket_launch" className="text-lg" />
+        </div>
+        <h2 className="text-base font-bold text-[#e2e2e2]">
+          Placement Readiness Onboarding ({completedCount}/3 Completed)
+        </h2>
+      </div>
+      <span className="label-mono text-xs text-[#4be277]">GET STARTED</span>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <Link
+        to="/resume"
+        className={`p-4 rounded-[4px] border transition-all ${
+          checklist.has_uploaded_resume
+            ? 'bg-[#1f1f1f] border-[#4be277]/30 text-[#bccbb9]'
+            : 'bg-[#1f1f1f] border-[#3d4a3d] hover:border-[#4be277]'
+        }`}
+      >
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#e2e2e2]">1. ATS Resume</span>
+          <Icon
+            name={checklist.has_uploaded_resume ? 'check_circle' : 'pending'}
+            className={checklist.has_uploaded_resume ? 'text-[#4be277]' : 'text-[#869585]'}
+          />
+        </div>
+        <p className="text-xs text-[#869585]">Upload your PDF or DOCX resume to benchmark alignment.</p>
+      </Link>
+
+      <Link
+        to="/dsa"
+        className={`p-4 rounded-[4px] border transition-all ${
+          checklist.has_logged_3_problems
+            ? 'bg-[#1f1f1f] border-[#4be277]/30 text-[#bccbb9]'
+            : 'bg-[#1f1f1f] border-[#3d4a3d] hover:border-[#4be277]'
+        }`}
+      >
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#e2e2e2]">2. Log 3 DSA Problems</span>
+          <Icon
+            name={checklist.has_logged_3_problems ? 'check_circle' : 'pending'}
+            className={checklist.has_logged_3_problems ? 'text-[#4be277]' : 'text-[#869585]'}
+          />
+        </div>
+        <p className="text-xs text-[#869585]">Log at least 3 solved or attempted coding problems.</p>
+      </Link>
+
+      <Link
+        to="/interview"
+        className={`p-4 rounded-[4px] border transition-all ${
+          checklist.has_taken_mock
+            ? 'bg-[#1f1f1f] border-[#4be277]/30 text-[#bccbb9]'
+            : 'bg-[#1f1f1f] border-[#3d4a3d] hover:border-[#4be277]'
+        }`}
+      >
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#e2e2e2]">3. Mock Interview</span>
+          <Icon
+            name={checklist.has_taken_mock ? 'check_circle' : 'pending'}
+            className={checklist.has_taken_mock ? 'text-[#4be277]' : 'text-[#869585]'}
+          />
+        </div>
+        <p className="text-xs text-[#869585]">Complete an adaptive IRT mock session to calibrate live θ.</p>
+      </Link>
+    </div>
+  </div>
+);
+
 /**
  * Candidate intelligence overview dashboard.
  * Displays composite Placement Readiness Score, component breakdown,
@@ -125,74 +226,10 @@ export const DashboardPage = () => {
 
       {/* Onboarding Checklist for Users Completing Initial Setup */}
       {isOnboardingIncomplete && (
-        <div className="p-6 rounded-[8px] bg-[#1b1b1b] border border-[#4be277]/40 relative overflow-hidden">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-[4px] bg-[#4be277]/20 flex items-center justify-center text-[#4be277]">
-                <Icon name="rocket_launch" className="text-lg" />
-              </div>
-              <h2 className="text-base font-bold text-[#e2e2e2]">
-                Placement Readiness Onboarding ({completedStepsCount}/3 Completed)
-              </h2>
-            </div>
-            <span className="label-mono text-xs text-[#4be277]">GET STARTED</span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Link
-              to="/resume"
-              className={`p-4 rounded-[4px] border transition-all ${
-                onboarding_checklist.has_uploaded_resume
-                  ? 'bg-[#1f1f1f] border-[#4be277]/30 text-[#bccbb9]'
-                  : 'bg-[#1f1f1f] border-[#3d4a3d] hover:border-[#4be277]'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#e2e2e2]">1. ATS Resume</span>
-                <Icon
-                  name={onboarding_checklist.has_uploaded_resume ? 'check_circle' : 'pending'}
-                  className={onboarding_checklist.has_uploaded_resume ? 'text-[#4be277]' : 'text-[#869585]'}
-                />
-              </div>
-              <p className="text-xs text-[#869585]">Upload your PDF or DOCX resume to benchmark alignment.</p>
-            </Link>
-
-            <Link
-              to="/dsa"
-              className={`p-4 rounded-[4px] border transition-all ${
-                onboarding_checklist.has_logged_3_problems
-                  ? 'bg-[#1f1f1f] border-[#4be277]/30 text-[#bccbb9]'
-                  : 'bg-[#1f1f1f] border-[#3d4a3d] hover:border-[#4be277]'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#e2e2e2]">2. Log 3 DSA Problems</span>
-                <Icon
-                  name={onboarding_checklist.has_logged_3_problems ? 'check_circle' : 'pending'}
-                  className={onboarding_checklist.has_logged_3_problems ? 'text-[#4be277]' : 'text-[#869585]'}
-                />
-              </div>
-              <p className="text-xs text-[#869585]">Log at least 3 solved or attempted coding problems.</p>
-            </Link>
-
-            <Link
-              to="/interview"
-              className={`p-4 rounded-[4px] border transition-all ${
-                onboarding_checklist.has_taken_mock
-                  ? 'bg-[#1f1f1f] border-[#4be277]/30 text-[#bccbb9]'
-                  : 'bg-[#1f1f1f] border-[#3d4a3d] hover:border-[#4be277]'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#e2e2e2]">3. Mock Interview</span>
-                <Icon
-                  name={onboarding_checklist.has_taken_mock ? 'check_circle' : 'pending'}
-                  className={onboarding_checklist.has_taken_mock ? 'text-[#4be277]' : 'text-[#869585]'}
-                />
-              </div>
-              <p className="text-xs text-[#869585]">Complete an adaptive IRT mock session to calibrate live θ.</p>
-            </Link>
-          </div>
-        </div>
+        <OnboardingChecklist
+          checklist={onboarding_checklist}
+          completedCount={completedStepsCount}
+        />
       )}
 
       {/* Main Grid: Readiness Gauge & Daily Focus Task */}
@@ -437,66 +474,29 @@ export const DashboardPage = () => {
 
       {/* Three Stat Cards with Real Sparklines */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Card 1: ATS Trend */}
-        <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a]">
-          <div className="flex items-center justify-between mb-1">
-            <span className="label-mono text-[10px] text-[#869585]">ATS ALIGNMENT TREND</span>
-            <Icon name="description" className="text-sm text-[#4be277]" />
-          </div>
-          <div className="text-2xl font-black text-[#e2e2e2]">
-            {ats_average ? `${Math.round(ats_average)}%` : '—'}
-          </div>
-          <div className="h-14 mt-2">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={ats_sparkline.map((item, idx) => ({ idx, val: item.value }))}>
-                <Line type="monotone" dataKey="val" stroke="#4be277" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Card 2: DSA Topics & Streak */}
-        <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a]">
-          <div className="flex items-center justify-between mb-1">
-            <span className="label-mono text-[10px] text-[#869585]">DSA TOPICS & STREAK</span>
-            <Icon name="local_fire_department" className="text-sm text-[#facc15]" />
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-black text-[#e2e2e2]">{dsa_topics_covered}</span>
-            <span className="text-xs text-[#869585]">topics active</span>
-            <span className="ml-auto text-xs font-mono font-bold text-[#facc15]">
-              {current_streak}d streak
-            </span>
-          </div>
-          <div className="h-14 mt-2">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={dsa_sparkline.map((item, idx) => ({ idx, val: item.value }))}>
-                <Line type="monotone" dataKey="val" stroke="#facc15" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Card 3: Mock Interview Average */}
-        <div className="p-5 rounded-[8px] bg-[#1b1b1b] border border-[#2a2a2a]">
-          <div className="flex items-center justify-between mb-1">
-            <span className="label-mono text-[10px] text-[#869585]">MOCK INTERVIEW AVG</span>
-            <Icon name="psychology" className="text-sm text-[#4be277]" />
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-black text-[#e2e2e2]">
-              {mock_average ? `${mock_average.toFixed(1)}/10` : '—'}
-            </span>
-            <span className="text-xs text-[#869585]">average score</span>
-          </div>
-          <div className="h-14 mt-2">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={mock_sparkline.map((item, idx) => ({ idx, val: item.value }))}>
-                <Line type="monotone" dataKey="val" stroke="#4be277" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        <SparklineCard
+          label="ATS ALIGNMENT TREND"
+          icon="description"
+          mainValue={ats_average ? `${Math.round(ats_average)}%` : '—'}
+          data={ats_sparkline}
+        />
+        <SparklineCard
+          label="DSA TOPICS & STREAK"
+          icon="local_fire_department"
+          iconColor="text-[#facc15]"
+          strokeColor="#facc15"
+          mainValue={dsa_topics_covered}
+          subtitle="topics active"
+          badge={`${current_streak}d streak`}
+          data={dsa_sparkline}
+        />
+        <SparklineCard
+          label="MOCK INTERVIEW AVG"
+          icon="psychology"
+          mainValue={mock_average ? `${mock_average.toFixed(1)}/10` : '—'}
+          subtitle="average score"
+          data={mock_sparkline}
+        />
       </div>
 
       {/* Recent Activity Feed */}

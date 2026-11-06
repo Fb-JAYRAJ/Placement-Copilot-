@@ -5,11 +5,6 @@ from typing import Any
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class ResumeCreateRequest(BaseModel):
-    title: str | None = "My Resume"
-    content_text: str = Field(..., min_length=20)
-    is_primary: bool | None = False
-
 class ResumeResponse(BaseModel):
     id: uuid.UUID
     title: str

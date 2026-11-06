@@ -152,33 +152,6 @@ export const uploadResume = async (formData) => {
 };
 
 /**
- * Deletes a candidate resume.
- * @param {string} id
- * @returns {Promise<any>}
- */
-export const deleteResume = async (id) => {
-  return api.delete(`/resumes/${id}`);
-};
-
-/**
- * Fetches saved target job descriptions.
- * @returns {Promise<Array<{ id: string, company: string, role: string, created_at: string }>>}
- */
-export const getJobDescriptions = async () => {
-  const data = await api.get('/job-descriptions');
-  return unwrapArray(data);
-};
-
-/**
- * Creates a saved target job description.
- * @param {Object} payload
- * @returns {Promise<any>}
- */
-export const createJobDescription = async (payload) => {
-  return api.post('/job-descriptions', payload);
-};
-
-/**
  * Fetches historical deterministic ATS analysis reports.
  * @returns {Promise<Array<{ id: string, resume_id: string, company: string, role: string, overall_match_score: number, semantic_score: number, keyword_score: number, missing_skills: string[], created_at: string }>>}
  */
@@ -298,16 +271,6 @@ export const getDashboardSummary = async (range = '30d') => {
     recent_activity: unwrapArray(data.recent_activity),
     onboarding_checklist: data.onboarding_checklist || {},
   };
-};
-
-/**
- * Fetches readiness score trend history.
- * @param {number} [days=30]
- * @returns {Promise<Array<{ date: string, composite: number, ats_score: number, dsa_score: number, mock_score: number }>>}
- */
-export const getReadinessHistory = async (days = 30) => {
-  const data = await api.get(`/dashboard/readiness/history?days=${days}`);
-  return unwrapArray(data);
 };
 
 // ==========================================

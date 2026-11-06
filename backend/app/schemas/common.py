@@ -9,9 +9,6 @@ class ErrorDetail(BaseModel):
     message: str
     details: Any | None = None
 
-class ErrorEnvelope(BaseModel):
-    error: ErrorDetail
-
 class PaginatedResponse[T](BaseModel):
     items: list[T]
     total: int

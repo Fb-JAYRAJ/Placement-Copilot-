@@ -180,7 +180,7 @@ test.describe('Placement Copilot End-to-End Test Suite', () => {
     await page.goto('/signup');
 
     const uniqueEmail = `candidate_${Date.now()}@university.edu`;
-    await page.locator('input[placeholder="Jayraj Sawant"]').fill('New Candidate');
+    await page.locator('input[placeholder="Full Name"]').fill('New Candidate');
     await page.locator('input[placeholder="name@university.edu"]').fill(uniqueEmail);
     await page.locator('input[placeholder="Min. 10 characters"]').fill('ValidPassword123!');
     await page.locator('button[type="submit"]:has-text("Create Account")').click();

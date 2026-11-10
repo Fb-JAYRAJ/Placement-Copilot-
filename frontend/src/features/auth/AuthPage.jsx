@@ -100,8 +100,8 @@ export const AuthPage = () => {
       email: '',
       password: '',
       college: '',
-      grad_year: 2026,
-      target_role: 'Software Engineer',
+      grad_year: '',
+      target_role: '',
     },
   });
 
@@ -368,7 +368,7 @@ export const AuthPage = () => {
             <form onSubmit={signupForm.handleSubmit(onSignupSubmit)} className="space-y-4">
               <AuthField
                 label="FULL NAME"
-                placeholder="Jayraj Sawant"
+                placeholder="Full Name"
                 registration={signupForm.register('name')}
                 error={signupForm.formState.errors.name}
               />
@@ -398,7 +398,7 @@ export const AuthPage = () => {
                 />
                 <AuthField
                   label="TARGET ROLE"
-                  placeholder="SDE / SWE"
+                  placeholder="Software Engineer"
                   registration={signupForm.register('target_role')}
                   error={signupForm.formState.errors.target_role}
                 />

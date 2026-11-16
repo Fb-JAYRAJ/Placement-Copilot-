@@ -60,6 +60,11 @@ flowchart LR
 | `COOKIE_SAMESITE` | Optional | SameSite attribute for refresh cookie (`none`, `lax`, or `strict`). Defaults to `none` in prod, `lax` in dev. | `none` (or `lax` if reverse-proxied) |
 | `COOKIE_SECURE` | Optional | Secure flag for refresh cookie (`true` or `false`). Defaults to `true` in prod, `false` in dev. | `true` |
 | `LLM_DAILY_QUOTA` | Optional | Max daily LLM calls per candidate. Default: `40`. | `40` |
+| `LLM_GLOBAL_DAILY_LIMIT` | Optional | Max daily LLM calls across all users combined. Default: `300`. | `300` |
+| `REGISTER_RATE_LIMIT` | Optional | Per-IP rate limit on `POST /auth/register` in production. Default: `5/hour` (in dev: `1000/hour`). | `5/hour` |
+| `ALLOW_SIGNUP` | Optional | Global toggle for new candidate signups (`true` or `false`). Returns 403 when false. Default: `true`. | `true` |
+| `DEMO_EMAIL` | Optional | Demo account email guarded against modification, deletion, and export. Default: `demo@placementcopilot.com`. | `demo@placementcopilot.com` |
+| `DEMO_LLM_DAILY_QUOTA` | Optional | Max daily LLM calls for demo account. Default: `15`. | `15` |
 | `MAX_UPLOAD_MB` | Optional | Max file size for resume uploads. Default: `5`. | `5` |
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | Optional | Access token lifetime in minutes. Default: `30`. | `30` |
 | `REFRESH_TOKEN_EXPIRE_DAYS` | Optional | Refresh token lifetime in days. Default: `7`. | `7` |
@@ -199,7 +204,87 @@ All identified safety gaps have been hardened with strict startup validation gua
 
 ---
 
-## 7. Docker Build & Container Verification
+## 7. Docker Build & Container Operation
 
-- **Host Environment Check**: Docker is currently **not installed** on this local host (`which docker` returned non-zero).
-- **Image Specification**: `backend/Dockerfile` defines a multi-stage Python 3.12-slim build with non-root installation, system dependencies (`build-essential`, `libpq-dev`, `curl`), health check configuration (`curl -f http://localhost:8000/api/v1/health`), and parameter injection via runtime environment variables (`--env-file backend/.env`). Secrets are never copied or baked into the image.
+The backend uses a multi-stage Docker build based on `python:3.12-slim` designed for security, minimal size (~194MB content / ~880MB uncompressed), and multi-cloud compatibility.
+
+### 7.1 Key Image Characteristics
+- **Multi-stage build**: Builder stage resolves and installs production-only runtime wheels into `/opt/venv`; dev dependencies (`pytest`, `ruff`, etc.) and build tools are discarded.
+- **Non-root user**: The final image runs as `appuser` (UID `1000`, GID `1000`).
+- **Optimization flags**: `PYTHONDONTWRITEBYTECODE=1` and `PYTHONUNBUFFERED=1`.
+- **Exclusions**: `backend/.dockerignore` ensures `.env*`, `.venv`, `.git`, `tests/`, and cache directories never enter the image.
+- **Full Source Tree Preserved**: Static JSON data (`app/data/*.json`), migrations (`alembic/`, `alembic.ini`), and utility scripts (`scripts/`) are retained. This permits running migrations and seeding directly from the same image.
+- **Built-in Healthcheck**: Native Python `urllib` healthcheck checks `/api/v1/health` every 30s (10s timeout, 3 retries, 5s start period) without requiring external binaries like `curl`.
+- **Dynamic Port Binding**: Starts with `uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips="*"`.
+
+### 7.2 Building the Image
+From the repository root:
+```bash
+# Build natively (ARM64 on Apple Silicon, AMD64 on Linux x86_64)
+docker build -t placement-copilot-backend:latest backend/
+
+# Build for production target architecture (linux/amd64)
+docker build --platform linux/amd64 -t placement-copilot-backend:latest backend/
+```
+
+### 7.3 Running the Application Container
+```bash
+# Run with default port 8000
+docker run -d --name placement-backend \
+  --env-file backend/.env \
+  -p 8000:8000 \
+  placement-copilot-backend:latest
+
+# Run with custom PORT (e.g. 8001 or cloud-provided $PORT)
+docker run -d --name placement-backend \
+  --env-file backend/.env \
+  -e PORT=8001 \
+  -p 8001:8001 \
+  placement-copilot-backend:latest
+```
+
+### 7.4 One-Off Operational Commands with the Same Image
+The same production image runs database migrations and seed scripts without modifying container entrypoints:
+
+```bash
+# Run Alembic migrations to latest schema version
+docker run --rm --env-file backend/.env placement-copilot-backend:latest alembic upgrade head
+
+# Seed initial catalog data (DSA problems, skills taxonomy, question bank)
+docker run --rm --env-file backend/.env placement-copilot-backend:latest python scripts/seed.py
+
+# Optional: Seed demo candidate account
+docker run --rm --env-file backend/.env placement-copilot-backend:latest python scripts/seed_demo.py
+```
+
+### 7.5 Deploying to Cloud Container Platforms
+
+#### Hugging Face Spaces (Docker SDK)
+1. In your Hugging Face Space `README.md`, declare the Docker SDK and target port:
+   ```yaml
+   ---
+   title: Placement Copilot API
+   emoji: 🚀
+   colorFrom: green
+   colorTo: gray
+   sdk: docker
+   app_port: 7860
+   ---
+   ```
+2. Hugging Face automatically exposes `$PORT=7860`. The backend container automatically detects and binds to `0.0.0.0:7860`.
+3. Configure environment secrets in the Space's **Settings -> Variables and secrets**.
+
+#### Render (Web Service from Dockerfile)
+1. Create a **New + -> Web Service** and link the repository.
+2. Select **Language**: `Docker`.
+3. Configure the **Dockerfile Path**: `backend/Dockerfile` (or set Root Directory to `backend/`).
+4. Render injects the `$PORT` environment variable (typically `10000`) into the container. The startup command automatically binds to `${PORT:-8000}`.
+5. In **Environment Variables**, provide all required production keys (`DATABASE_URL`, `DATABASE_URL_DIRECT`, `SECRET_KEY`, `JWT_SECRET`, `GEMINI_API_KEY`, etc.).
+
+### 7.6 Reverse Proxy & Rate Limiting Security Note
+The backend uses `slowapi` for per-IP rate limiting (e.g., registration endpoint `POST /auth/register` throttled to `5/hour` in production).
+
+> [!WARNING]
+> **Client IP Resolution behind Proxies**:
+> Per-IP limits rely on the `X-Forwarded-For` header passed to `uvicorn --proxy-headers --forwarded-allow-ips="*"`. In production environments behind edge proxies (Cloudflare, AWS ALB, Render, Vercel), per-IP limits are **best-effort** unless the edge proxy is strictly configured to strip or overwrite untrusted incoming `X-Forwarded-For` headers. For high-security environments, restrict `--forwarded-allow-ips` to your specific edge proxy VPC CIDR blocks to prevent client-side IP spoofing.
+

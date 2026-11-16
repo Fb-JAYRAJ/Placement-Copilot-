@@ -65,3 +65,44 @@ jobs:
 
       - name: Run build
         run: npm run build
+
+  docker:
+    name: Docker Build & Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build backend Docker image
+        run: docker build -t placement-copilot-backend:ci backend/
+
+      - name: Assert image has no .env, pytest, or ruff
+        run: |
+          echo "Checking .env is absent..."
+          docker run --rm placement-copilot-backend:ci test ! -f .env
+          echo "Checking pytest is absent..."
+          docker run --rm placement-copilot-backend:ci sh -c "! command -v pytest"
+          echo "Checking ruff is absent..."
+          docker run --rm placement-copilot-backend:ci sh -c "! command -v ruff"
+
+      - name: Test container startup and healthcheck
+        run: |
+          docker run -d --name backend-ci-test \
+            -p 8000:8000 \
+            -e APP_ENV=development \
+            -e LLM_PROVIDER=fake \
+            -e SECRET_KEY="dummy-secret-key-at-least-32-chars-long" \
+            -e JWT_SECRET="dummy-jwt-secret-at-least-32-chars-long" \
+            -e DATABASE_URL="postgresql+psycopg://dummy:dummy@localhost:5432/dummy" \
+            -e DATABASE_URL_DIRECT="postgresql+psycopg://dummy:dummy@localhost:5432/dummy" \
+            placement-copilot-backend:ci
+
+          echo "Waiting up to 60s for /api/v1/health to return 200..."
+          timeout 60 bash -c 'until [ "$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8000/api/v1/health)" -eq 200 ]; do sleep 1; done'
+
+          echo "Container logs:"
+          docker logs backend-ci-test
+
+          echo "Stopping container..."
+          docker stop backend-ci-test
+          docker rm backend-ci-test

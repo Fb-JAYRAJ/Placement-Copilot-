@@ -6,9 +6,10 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
+from app.core.config import settings
 from app.core.db import get_db
 from app.core.dependencies import get_current_user
-from app.core.errors import UnauthorizedError
+from app.core.errors import ForbiddenError, UnauthorizedError
 from app.core.security import get_password_hash, validate_password_strength, verify_password
 from app.models.models import (
     ActivityEvent,
@@ -57,6 +58,9 @@ async def change_password(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
+    if current_user.email.lower() == settings.DEMO_EMAIL.lower():
+        raise ForbiddenError("Demo account password cannot be modified.")
+
     if not verify_password(payload.current_password, current_user.password_hash):
         raise UnauthorizedError("Current password is incorrect")
     
@@ -71,6 +75,9 @@ async def delete_me(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
+    if current_user.email.lower() == settings.DEMO_EMAIL.lower():
+        raise ForbiddenError("Demo account cannot be deleted.")
+
     # Hard delete - CASCADE will delete all related records
     await db.delete(current_user)
     await db.commit()
@@ -193,6 +200,9 @@ async def export_my_data(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
+    if current_user.email.lower() == settings.DEMO_EMAIL.lower():
+        raise ForbiddenError("Demo account data export is disabled for security and privacy.")
+
     resumes = (await db.execute(select(Resume).where(Resume.user_id == current_user.id))).scalars().all()
     jds = (await db.execute(select(JobDescription).where(JobDescription.user_id == current_user.id))).scalars().all()
     ats = (

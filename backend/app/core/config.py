@@ -30,6 +30,11 @@ class Settings(BaseSettings):
 
     CORS_ORIGINS: str | list[str] = "http://localhost:5173,http://localhost:3000"
     LLM_DAILY_QUOTA: int = 40
+    LLM_GLOBAL_DAILY_LIMIT: int = 300
+    DEMO_LLM_DAILY_QUOTA: int = 15
+    DEMO_EMAIL: str = "demo@placementcopilot.com"
+    ALLOW_SIGNUP: bool = True
+    REGISTER_RATE_LIMIT: str = "5/hour"
     MAX_UPLOAD_MB: int = 5
     ENABLE_API_DOCS: bool | None = None
     LLM_PROVIDER: str = "auto"

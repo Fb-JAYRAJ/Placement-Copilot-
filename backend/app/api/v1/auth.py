@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import settings
 from app.core.db import get_db
-from app.core.errors import ConflictError, UnauthorizedError
+from app.core.errors import ConflictError, ForbiddenError, UnauthorizedError
 from app.core.ratelimit import limiter
 from app.core.security import (
     create_access_token,
@@ -58,15 +58,19 @@ async def _issue_token_response(
     )
 
 AUTH_RATE_LIMIT = "10/minute" if settings.APP_ENV == "production" else "60/minute"
+REGISTER_RATE_LIMIT = settings.REGISTER_RATE_LIMIT if settings.APP_ENV == "production" else "1000/hour"
 
 @router.post("/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
-@limiter.limit(AUTH_RATE_LIMIT)
+@limiter.limit(REGISTER_RATE_LIMIT)
 async def register(
     request: Request,
     response: Response,
     payload: UserRegisterRequest,
     db: AsyncSession = Depends(get_db),
 ):
+    if not settings.ALLOW_SIGNUP:
+        raise ForbiddenError("Public registration is currently disabled.")
+
     validate_password_strength(payload.password)
     
     # Check email duplicate

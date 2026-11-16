@@ -54,8 +54,8 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error(f"Failed to connect to database: {e}. Starting backend in degraded mode (health checks and documentation available).")
 
-    # Verify Gemini API configuration if key provided
-    if settings.GEMINI_API_KEY:
+    # Verify Gemini API configuration if key provided (skipped if using fake provider)
+    if settings.LLM_PROVIDER.lower() != "fake" and settings.GEMINI_API_KEY:
         try:
             client = genai.Client(api_key=settings.GEMINI_API_KEY)
             models = list(client.models.list(config={"page_size": 20}))

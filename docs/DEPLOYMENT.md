@@ -289,3 +289,87 @@ The backend uses `slowapi` for per-IP rate limiting (e.g., registration endpoint
 > **Client IP Resolution behind Proxies**:
 > Per-IP limits rely on the `X-Forwarded-For` header passed to `uvicorn --proxy-headers --forwarded-allow-ips="*"`. In production environments behind edge proxies (Cloudflare, AWS ALB, Render, Vercel), per-IP limits are **best-effort** unless the edge proxy is strictly configured to strip or overwrite untrusted incoming `X-Forwarded-For` headers. For high-security environments, restrict `--forwarded-allow-ips` to your specific edge proxy VPC CIDR blocks to prevent client-side IP spoofing.
 
+---
+
+## 8. Security Posture & Pre-Deployment Audit Runbook
+
+A comprehensive pre-deployment hardening pass was conducted across dependencies, static analysis, secrets, container vulnerabilities, authorization boundaries, API response headers, rate limiting, and accessibility/SEO.
+
+### 8.1 Audit Scope & Summary
+
+| Audit Domain | Scope / Tools | Initial Result | Remediated Status |
+|---|---|---|---|
+| **Python Dependencies** | `pip-audit` against `backend/pyproject.toml` | 0 vulnerabilities | **PASS** (0 vulnerabilities) |
+| **Node.js Dependencies** | `npm audit` in `frontend/` (full & `--omit=dev`) | 2 vulnerabilities (`zod` GHSA-mrhx-c7xc-m3w5 High, `vite` GHSA-8g5g-mxqh-grgj Moderate) | **PASS** (Upgraded to `zod@4.6.7`, `vite@6.4.6`; 0 vulnerabilities) |
+| **Python Static Analysis** | `bandit -r backend/app -ll` + SQL inspection | 0 issues; 100% parameterized ORM queries | **PASS** (0 issues) |
+| **Secret Scanning** | Git history scan via `zricethezav/gitleaks:latest` | 4 false-positives (placeholder dummy keys in CI workflow) | **PASS** (0 production secrets leaked) |
+| **Container Vulnerabilities** | `aquasec/trivy:latest` on `pc-backend` | 2 HIGH (`zlib1g` in base image, `setuptools 70.3.0` inside pip vendor) | **PASS** (Base `apt-get upgrade` + pip/setuptools purged from runtime `/opt/venv`; 0 HIGH/CRITICAL) |
+| **Authorization Matrix** | 42 endpoints analyzed for IDOR & ownership guards | All user-scoped queries protected via `current_user.id` or `get_user_entity_or_404` | **PASS** (Automated cross-user IDOR test suite added) |
+| **API Response Headers** | `SecurityHeadersMiddleware` on FastAPI & Vercel | Missing standard security headers & cache controls on API | **PASS** (Added `nosniff`, `DENY`, `strict-origin-when-cross-origin`, HSTS, and `Cache-Control: no-store` on `/api/v1/*`) |
+| **Rate Limiting & Caps** | Pagination limits, upload sizes, registration throttle | Uncapped pagination limits on `/resumes`, `/job-descriptions`, `/ats`, `/interviews` | **PASS** (Capped at `ge=1, le=100`, upload size checked against `MAX_UPLOAD_MB`) |
+| **Accessibility & SEO** | Lighthouse, Axe-core, Open Graph, Twitter cards, robots.txt | Lighthouse A11y: 78, SEO: 91; missing input labels and contrast issues | **PASS** (Labels/aria added; OG/Twitter/robots.txt/og-image generated) |
+
+---
+
+### 8.2 Reproducible Audit Commands
+
+To re-run the exact security audit suite locally or in CI:
+
+#### 1. Python Dependencies (`pip-audit`)
+```bash
+# In an isolated temporary virtualenv:
+python3 -m venv /tmp/audit-venv
+/tmp/audit-venv/bin/pip install --upgrade pip pip-audit
+/tmp/audit-venv/bin/pip install "backend/"
+/tmp/audit-venv/bin/pip-audit
+rm -rf /tmp/audit-venv
+```
+
+#### 2. Frontend Dependencies (`npm audit`)
+```bash
+cd frontend
+npm audit
+npm audit --omit=dev
+```
+
+#### 3. Python Static Analysis & AST Security (`bandit`)
+```bash
+python3 -m venv /tmp/bandit-venv
+/tmp/bandit-venv/bin/pip install bandit
+/tmp/bandit-venv/bin/bandit -r backend/app -ll
+rm -rf /tmp/bandit-venv
+```
+
+#### 4. Git History Secret Scanning (`gitleaks`)
+```bash
+docker run --rm -v "$(pwd):/repo:ro" zricethezav/gitleaks:latest git --redact -v /repo
+```
+
+#### 5. Docker Container Image Vulnerability Scan (`trivy`)
+```bash
+# Build image first
+docker build -t pc-backend:audit backend/
+# Run Trivy vulnerability scanner
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --severity HIGH,CRITICAL pc-backend:audit
+```
+
+#### 6. Cross-User IDOR Integration Test Suite
+```bash
+cd backend
+.venv/bin/pytest tests/integration/test_idor_authorization.py -v
+```
+
+---
+
+### 8.3 Open Recommendations & Future Hardening
+
+The following items are deferred or recommended for production infrastructure rollout:
+
+1. **Content Security Policy (CSP)**:
+   A strict Content Security Policy (`default-src 'self'`) is currently disabled in favor of developer velocity and CDN loading (Google Fonts `fonts.googleapis.com` and `fonts.gstatic.com`). Prior to production launch, configure a staged CSP header in Vercel (`vercel.json`) with reporting mode (`Content-Security-Policy-Report-Only`) to monitor font and script dependencies before enforcing strict CSP.
+2. **Reverse Proxy IP Trust Boundary**:
+   In production setups behind Cloudflare or AWS ALB, replace `--forwarded-allow-ips="*"` in the container startup command with the exact reverse proxy CIDR block to prevent spoofed `X-Forwarded-For` client headers from circumventing rate limit counters.
+3. **Database Connection SSL**:
+   In production, verify that Neon connection strings always include `?sslmode=require`. Placement Copilot's startup configuration validates this in `production` mode.
+
+

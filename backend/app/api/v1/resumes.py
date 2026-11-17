@@ -1,10 +1,11 @@
 import uuid
 
-from fastapi import APIRouter, Depends, File, Form, UploadFile, status
+from fastapi import APIRouter, Depends, File, Form, Query, UploadFile, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
+from app.core.config import settings
 from app.core.db import get_db
 from app.core.dependencies import get_current_user, get_user_entity_or_404
 from app.core.errors import ValidationError
@@ -29,6 +30,9 @@ async def upload_resume(
 
     if file:
         raw_bytes = await file.read()
+        max_bytes = settings.MAX_UPLOAD_MB * 1024 * 1024
+        if len(raw_bytes) > max_bytes:
+            raise ValidationError(f"File size exceeds maximum allowed limit of {settings.MAX_UPLOAD_MB}MB")
         filename = file.filename or "uploaded_resume"
         file_type, normalized_text, parsed_sections = parse_resume_content(raw_bytes, filename)
         resume_title = title or filename
@@ -74,6 +78,8 @@ async def upload_resume(
 
 @router.get("", response_model=PaginatedResponse[ResumeResponse])
 async def list_resumes(
+    limit: int = Query(20, ge=1, le=100),
+    offset: int = Query(0, ge=0),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -82,6 +88,8 @@ async def list_resumes(
         .options(selectinload(Resume.ats_analyses))
         .where(Resume.user_id == current_user.id)
         .order_by(Resume.created_at.desc())
+        .limit(limit)
+        .offset(offset)
     )
     resumes = (await db.execute(stmt)).scalars().all()
     items = [ResumeResponse.model_validate(r) for r in resumes]

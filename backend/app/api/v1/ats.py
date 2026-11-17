@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Depends, Request, status
+from fastapi import APIRouter, Depends, Query, Request, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -102,6 +102,8 @@ async def analyze_resume_ats(
 
 @router.get("/analyses", response_model=PaginatedResponse[ATSAnalysisResponse])
 async def list_analyses(
+    limit: int = Query(20, ge=1, le=100),
+    offset: int = Query(0, ge=0),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -110,6 +112,8 @@ async def list_analyses(
         .options(selectinload(ATSAnalysis.resume), selectinload(ATSAnalysis.job_description))
         .where(ATSAnalysis.user_id == current_user.id)
         .order_by(ATSAnalysis.created_at.desc())
+        .limit(limit)
+        .offset(offset)
     )
     analyses = (await db.execute(stmt)).scalars().all()
     items = [ATSAnalysisResponse.model_validate(a) for a in analyses]

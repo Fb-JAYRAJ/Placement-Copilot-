@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Query, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -40,6 +40,8 @@ async def create_job_description(
 
 @router.get("", response_model=PaginatedResponse[JobDescriptionResponse])
 async def list_job_descriptions(
+    limit: int = Query(20, ge=1, le=100),
+    offset: int = Query(0, ge=0),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -48,6 +50,8 @@ async def list_job_descriptions(
         .options(selectinload(JobDescription.ats_analyses))
         .where(JobDescription.user_id == current_user.id)
         .order_by(JobDescription.created_at.desc())
+        .limit(limit)
+        .offset(offset)
     )
     jds = (await db.execute(stmt)).scalars().all()
     items = [JobDescriptionResponse.model_validate(j) for j in jds]

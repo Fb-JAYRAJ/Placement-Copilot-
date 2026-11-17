@@ -322,6 +322,8 @@ async def get_dashboard_summary(
 
 @router.get("/readiness/history", response_model=PaginatedResponse[ReadinessHistoryResponse])
 async def get_readiness_history(
+    limit: int = Query(60, ge=1, le=100),
+    offset: int = Query(0, ge=0),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -329,7 +331,8 @@ async def get_readiness_history(
         select(ReadinessSnapshot)
         .where(ReadinessSnapshot.user_id == current_user.id)
         .order_by(ReadinessSnapshot.created_at.asc())
-        .limit(60)
+        .limit(limit)
+        .offset(offset)
     )
     snaps = (await db.execute(stmt)).scalars().all()
     items = [ReadinessHistoryResponse.model_validate(s) for s in snaps]

@@ -1,7 +1,7 @@
 import uuid
 from datetime import UTC, datetime
 
-from fastapi import APIRouter, Depends, Request, status
+from fastapi import APIRouter, Depends, Query, Request, status
 from sqlalchemy import and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -61,7 +61,9 @@ def _build_interview_response(
     )
 
 @router.post("", response_model=InterviewResponse, status_code=status.HTTP_201_CREATED)
+@limiter.limit("20/minute")
 async def create_interview(
+    request: Request,
     payload: InterviewCreateRequest,
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
@@ -112,6 +114,8 @@ async def create_interview(
 
 @router.get("", response_model=PaginatedResponse[InterviewResponse])
 async def list_interviews(
+    limit: int = Query(20, ge=1, le=100),
+    offset: int = Query(0, ge=0),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -120,6 +124,8 @@ async def list_interviews(
         .options(selectinload(MockInterview.questions).selectinload(InterviewQuestion.answer))
         .where(MockInterview.user_id == current_user.id)
         .order_by(MockInterview.started_at.desc())
+        .limit(limit)
+        .offset(offset)
     )
     interviews = (await db.execute(stmt)).scalars().all()
     results = [_build_interview_response(iv) for iv in interviews]
@@ -299,7 +305,9 @@ async def submit_answer(
         )
 
 @router.post("/{interview_id}/follow-up", response_model=InterviewQuestionResponse)
+@limiter.limit("20/minute")
 async def create_follow_up(
+    request: Request,
     interview_id: uuid.UUID,
     question_id: uuid.UUID,
     current_user: User = Depends(get_current_user),

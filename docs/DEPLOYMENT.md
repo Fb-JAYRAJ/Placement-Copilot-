@@ -77,6 +77,7 @@ flowchart LR
 |---|---|---|---|
 | `VITE_API_BASE_URL` | **Required\*** | Backend API base URL (no trailing slash). \*Empty if using Vercel same-domain proxy. | `https://api.placementcopilot.com` |
 | `VITE_ENABLE_DEMO` | Optional | Controls visibility of 1-click Demo Account login button (`true` or `false`, default: `true`). | `true` |
+| `VITE_SITE_URL` | Optional | Canonical production URL used for Open Graph and Twitter preview metadata (no trailing slash). | `https://placement-copilot.vercel.app` |
 
 ---
 

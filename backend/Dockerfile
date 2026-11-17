@@ -20,7 +20,8 @@ ENV PATH="/opt/venv/bin:$PATH"
 COPY pyproject.toml ./
 RUN pip install --no-cache-dir --upgrade pip && \
     python3 -c "import tomllib; print('\n'.join(tomllib.load(open('pyproject.toml', 'rb'))['project']['dependencies']))" > requirements.txt && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt && \
+    pip uninstall -y pip setuptools
 
 
 # Final production stage
@@ -30,6 +31,11 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app \
     PATH="/opt/venv/bin:$PATH"
+
+# Apply OS security patches
+RUN apt-get update && apt-get upgrade -y --no-install-recommends \
+    zlib1g \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

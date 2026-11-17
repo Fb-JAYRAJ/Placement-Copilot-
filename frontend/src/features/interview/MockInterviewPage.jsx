@@ -255,7 +255,13 @@ export const MockInterviewPage = () => {
                     </div>
                     <div className="text-sm font-bold text-on-surface">{track.title}</div>
                   </div>
-                  <p className="text-xs text-outline leading-relaxed">{track.desc}</p>
+                  <p
+                    className={`text-xs leading-relaxed ${
+                      selectedTrack === track.id ? 'text-on-surface' : 'text-outline'
+                    }`}
+                  >
+                    {track.desc}
+                  </p>
                 </div>
               ))}
             </div>
@@ -264,8 +270,9 @@ export const MockInterviewPage = () => {
           {/* Company & Role inputs */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
             <div>
-              <label className="block label-mono text-[10px] text-outline mb-1">TARGET COMPANY</label>
+              <label htmlFor="interview-target-company" className="block label-mono text-[10px] text-outline mb-1">TARGET COMPANY</label>
               <input
+                id="interview-target-company"
                 type="text"
                 value={targetCompany}
                 onChange={(e) => setTargetCompany(e.target.value)}
@@ -274,8 +281,9 @@ export const MockInterviewPage = () => {
               />
             </div>
             <div>
-              <label className="block label-mono text-[10px] text-outline mb-1">TARGET ROLE</label>
+              <label htmlFor="interview-target-role" className="block label-mono text-[10px] text-outline mb-1">TARGET ROLE</label>
               <input
+                id="interview-target-role"
                 type="text"
                 value={targetRole}
                 onChange={(e) => setTargetRole(e.target.value)}

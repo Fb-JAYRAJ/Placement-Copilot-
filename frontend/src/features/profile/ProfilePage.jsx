@@ -155,8 +155,9 @@ export const ProfilePage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block label-mono text-[10px] text-outline mb-1">FULL NAME</label>
+            <label htmlFor="profile-full-name" className="block label-mono text-[10px] text-outline mb-1">FULL NAME</label>
             <input
+              id="profile-full-name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -165,8 +166,9 @@ export const ProfilePage = () => {
           </div>
 
           <div>
-            <label className="block label-mono text-[10px] text-outline mb-1">EMAIL ADDRESS (PRIMARY)</label>
+            <label htmlFor="profile-email-address" className="block label-mono text-[10px] text-outline mb-1">EMAIL ADDRESS (PRIMARY)</label>
             <input
+              id="profile-email-address"
               type="email"
               disabled
               value={user?.email || ''}
@@ -175,8 +177,9 @@ export const ProfilePage = () => {
           </div>
 
           <div>
-            <label className="block label-mono text-[10px] text-outline mb-1">COLLEGE / UNIVERSITY</label>
+            <label htmlFor="profile-college-university" className="block label-mono text-[10px] text-outline mb-1">COLLEGE / UNIVERSITY</label>
             <input
+              id="profile-college-university"
               type="text"
               value={college}
               onChange={(e) => setCollege(e.target.value)}
@@ -186,8 +189,9 @@ export const ProfilePage = () => {
           </div>
 
           <div>
-            <label className="block label-mono text-[10px] text-outline mb-1">GRADUATION YEAR</label>
+            <label htmlFor="profile-grad-year" className="block label-mono text-[10px] text-outline mb-1">GRADUATION YEAR</label>
             <input
+              id="profile-grad-year"
               type="number"
               value={gradYear}
               onChange={(e) => setGradYear(Number(e.target.value))}
@@ -196,8 +200,9 @@ export const ProfilePage = () => {
           </div>
 
           <div>
-            <label className="block label-mono text-[10px] text-outline mb-1">TARGET ROLE</label>
+            <label htmlFor="profile-target-role" className="block label-mono text-[10px] text-outline mb-1">TARGET ROLE</label>
             <input
+              id="profile-target-role"
               type="text"
               value={targetRole}
               onChange={(e) => setTargetRole(e.target.value)}
@@ -207,10 +212,11 @@ export const ProfilePage = () => {
           </div>
 
           <div>
-            <label className="block label-mono text-[10px] text-outline mb-1">
+            <label htmlFor="profile-target-companies" className="block label-mono text-[10px] text-outline mb-1">
               TARGET COMPANIES (COMMA SEPARATED)
             </label>
             <input
+              id="profile-target-companies"
               type="text"
               value={targetCompanies}
               onChange={(e) => setTargetCompanies(e.target.value)}
@@ -252,8 +258,9 @@ export const ProfilePage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div>
-            <label className="block label-mono text-[10px] text-outline mb-1">CURRENT PASSWORD</label>
+            <label htmlFor="profile-current-password" className="block label-mono text-[10px] text-outline mb-1">CURRENT PASSWORD</label>
             <input
+              id="profile-current-password"
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
@@ -261,8 +268,9 @@ export const ProfilePage = () => {
             />
           </div>
           <div>
-            <label className="block label-mono text-[10px] text-outline mb-1">NEW PASSWORD (MIN 10)</label>
+            <label htmlFor="profile-new-password" className="block label-mono text-[10px] text-outline mb-1">NEW PASSWORD (MIN 10)</label>
             <input
+              id="profile-new-password"
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
@@ -270,8 +278,9 @@ export const ProfilePage = () => {
             />
           </div>
           <div>
-            <label className="block label-mono text-[10px] text-outline mb-1">CONFIRM NEW PASSWORD</label>
+            <label htmlFor="profile-confirm-password" className="block label-mono text-[10px] text-outline mb-1">CONFIRM NEW PASSWORD</label>
             <input
+              id="profile-confirm-password"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}

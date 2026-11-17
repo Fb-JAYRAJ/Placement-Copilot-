@@ -4,6 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath, URL } from 'node:url';
 
 // https://vitejs.dev/config/
+process.env.VITE_SITE_URL = process.env.VITE_SITE_URL || '';
+
 export default defineConfig({
   plugins: [
     react(),

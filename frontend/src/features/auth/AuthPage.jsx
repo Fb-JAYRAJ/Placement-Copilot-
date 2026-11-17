@@ -22,6 +22,7 @@ const signupSchema = z.object({
 });
 
 const AuthField = ({
+  id,
   label,
   type = 'text',
   placeholder,
@@ -31,30 +32,35 @@ const AuthField = ({
   showToggle = false,
   isPasswordVisible = false,
   onTogglePassword,
-}) => (
-  <div>
-    <label className="block label-mono text-[11px] text-on-surface-variant mb-1.5">{label}</label>
-    <div className={showToggle ? 'relative' : undefined}>
-      <input
-        type={showToggle ? (isPasswordVisible ? 'text' : 'password') : type}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
-        {...registration}
-        className={`w-full px-3 py-2 ${showToggle ? 'pr-10' : ''} rounded-[2px] bg-surface-container-low border border-outline-variant text-sm text-on-surface placeholder-outline focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all`}
-      />
-      {showToggle && (
-        <button
-          type="button"
-          onClick={onTogglePassword}
-          className="absolute right-3 top-2.5 text-outline hover:text-on-surface transition-colors"
-        >
-          <Icon name={isPasswordVisible ? 'visibility_off' : 'visibility'} className="text-lg" />
-        </button>
-      )}
+}) => {
+  const inputId = id || registration?.name || (label ? label.toLowerCase().replace(/[^a-z0-9]/g, '-') : undefined);
+  return (
+    <div>
+      <label htmlFor={inputId} className="block label-mono text-[11px] text-on-surface-variant mb-1.5">{label}</label>
+      <div className={showToggle ? 'relative' : undefined}>
+        <input
+          id={inputId}
+          type={showToggle ? (isPasswordVisible ? 'text' : 'password') : type}
+          autoComplete={autoComplete}
+          placeholder={placeholder}
+          {...registration}
+          className={`w-full px-3 py-2 ${showToggle ? 'pr-10' : ''} rounded-[2px] bg-surface-container-low border border-outline-variant text-sm text-on-surface placeholder-outline focus:outline-hidden focus:border-primary focus:ring-1 focus:ring-primary transition-all`}
+        />
+        {showToggle && (
+          <button
+            type="button"
+            onClick={onTogglePassword}
+            aria-label={isPasswordVisible ? 'Hide password' : 'Show password'}
+            className="absolute right-3 top-2.5 text-outline hover:text-on-surface transition-colors"
+          >
+            <Icon name={isPasswordVisible ? 'visibility_off' : 'visibility'} className="text-lg" />
+          </button>
+        )}
+      </div>
+      {error && <p className="text-[11px] text-error mt-1">{error.message}</p>}
     </div>
-    {error && <p className="text-[11px] text-error mt-1">{error.message}</p>}
-  </div>
-);
+  );
+};
 
 const SubmitButton = ({ isSubmitting, loadingText, text, className = '' }) => (
   <button
@@ -182,7 +188,7 @@ export const AuthPage = () => {
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden flex flex-col md:flex-row bg-surface text-on-surface">
+    <main className="h-screen w-screen overflow-hidden flex flex-col md:flex-row bg-surface text-on-surface">
       {/* Left Branding Panel (Fixed, Never Shifts) */}
       <div className="hidden md:flex flex-1 flex-col justify-between p-10 lg:p-14 bg-surface-container-lowest border-r border-surface-container relative overflow-hidden">
         {/* Soft Green Glow Backdrop */}
@@ -476,7 +482,7 @@ export const AuthPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

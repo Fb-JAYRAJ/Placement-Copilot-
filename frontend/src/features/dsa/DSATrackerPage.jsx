@@ -304,6 +304,7 @@ export const DSATrackerPage = () => {
               <div className="relative">
                 <input
                   type="text"
+                  aria-label="Search problems by title or topic"
                   placeholder="Search problem or topic..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -313,6 +314,7 @@ export const DSATrackerPage = () => {
               </div>
 
               <select
+                aria-label="Filter problems by topic"
                 value={selectedTopic}
                 onChange={(e) => setSelectedTopic(e.target.value)}
                 className="w-full px-2.5 py-1.5 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary focus:outline-hidden"
@@ -326,6 +328,7 @@ export const DSATrackerPage = () => {
               </select>
 
               <select
+                aria-label="Filter problems by difficulty"
                 value={selectedDifficulty}
                 onChange={(e) => setSelectedDifficulty(e.target.value)}
                 className="w-full px-2.5 py-1.5 rounded-[2px] bg-surface border border-outline-variant text-xs text-on-surface focus:border-primary focus:outline-hidden"

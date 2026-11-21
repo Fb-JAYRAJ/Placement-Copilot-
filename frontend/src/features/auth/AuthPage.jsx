@@ -92,7 +92,6 @@ export const AuthPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [serverError, setServerError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const isDemoEnabled = import.meta.env.VITE_ENABLE_DEMO !== 'false';
 
   const loginForm = useForm({
     resolver: zodResolver(loginSchema),
@@ -149,39 +148,6 @@ export const AuthPage = () => {
     } catch (err) {
       const errorMsg = err?.message || 'Registration failed. Please check inputs.';
       setServerError(errorMsg);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleDemoLogin = async () => {
-    setIsSubmitting(true);
-    setServerError(null);
-    loginForm.setValue('email', 'demo@placementcopilot.com');
-    loginForm.setValue('password', 'DemoCandidate2026!');
-    handleToggleMode(false);
-    try {
-      await login('demo@placementcopilot.com', 'DemoCandidate2026!');
-      toast.success('Welcome back to Placement Copilot!');
-      navigate('/');
-    } catch (err) {
-      if (
-        err?.code === 'AUTHENTICATION_FAILED' ||
-        err?.message?.toLowerCase().includes('invalid email or password')
-      ) {
-        setServerError('Demo account does not exist. Please check database seeds.');
-      } else if (
-        err?.name === 'TypeError' ||
-        err?.code === 'NETWORK_ERROR' ||
-        err?.message?.toLowerCase().includes('fetch') ||
-        err?.message?.toLowerCase().includes('network') ||
-        err?.message?.toLowerCase().includes('failed to fetch')
-      ) {
-        setServerError('Backend server is unreachable. Please verify the backend is running at http://localhost:8000.');
-      } else {
-        const errorMsg = err?.message || 'Login failed. Please check your credentials.';
-        setServerError(errorMsg);
-      }
     } finally {
       setIsSubmitting(false);
     }
@@ -253,30 +219,18 @@ export const AuthPage = () => {
           </div>
         </div>
 
-        {/* Footer info & Demo Quick-Login */}
+        {/* Footer info */}
         <div className="relative z-10 pt-6 border-t border-surface-container flex items-center justify-between">
           <div className="text-xs text-outline">
             Built with React 19, FastAPI & Neon Serverless
           </div>
-          {isDemoEnabled && (
-            <button
-              id="demo-login-btn-desktop"
-              data-testid="demo-login-button"
-              onClick={handleDemoLogin}
-              disabled={isSubmitting}
-              type="button"
-              className="text-xs text-primary hover:underline font-mono disabled:opacity-50"
-            >
-              {isSubmitting ? 'Signing in...' : 'Demo Account →'}
-            </button>
-          )}
         </div>
       </div>
 
       {/* Right Form Panel (Scrollable Only Here) */}
       <div className="flex-1 h-screen overflow-y-auto p-6 sm:p-10 lg:p-14 flex flex-col justify-center items-center">
         <div className="w-full max-w-[420px] space-y-6 my-auto">
-          {/* Mobile Logo & Demo Login */}
+          {/* Mobile Logo */}
           <div className="md:hidden flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-[4px] bg-primary/10 border border-primary/50 flex items-center justify-center text-primary">
@@ -284,18 +238,6 @@ export const AuthPage = () => {
               </div>
               <span className="text-base font-bold text-on-surface">Placement Copilot</span>
             </div>
-            {isDemoEnabled && (
-              <button
-                id="demo-login-btn-mobile"
-                data-testid="demo-login-button-mobile"
-                onClick={handleDemoLogin}
-                disabled={isSubmitting}
-                type="button"
-                className="text-xs text-primary hover:underline font-mono disabled:opacity-50"
-              >
-                Demo Account →
-              </button>
-            )}
           </div>
 
           {/* Pill Toggle for Sign In / Create Account */}

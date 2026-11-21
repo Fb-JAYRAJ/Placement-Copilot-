@@ -51,7 +51,7 @@
     </td>
     <td width="50%" align="center">
       <b>🔐 Sign in</b><br />
-      <sub>Email login with a one-click demo account</sub><br />
+      <sub>Email sign-in and account creation</sub><br />
       <img src="https://github.com/user-attachments/assets/573d7f08-9599-42d7-9084-6a792180e142" alt="Sign in screen" />
     </td>
   </tr>
@@ -108,7 +108,7 @@ sequenceDiagram
 
 More diagrams (database ER, auth and token refresh) are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-## 🧠 How the AI works
+## �� How the AI works
 
 Design rule: **algorithms score, LLMs explain.** Scores are deterministic and reproducible. The LLM writes questions, feedback and rewrite suggestions, always as schema-validated JSON, and never changes a score.
 
@@ -120,6 +120,8 @@ Design rule: **algorithms score, LLMs explain.** Scores are deterministic and re
 | Answer judging | LLM rubric | Correctness 40%, depth 25%, structure 20%, communication 15%. The answer is isolated in delimiters and treated as untrusted data. Low temperature, schema-validated output, and a heuristic fallback flagged as degraded. |
 | Readiness score | Weighted composite | `0.25·ATS + 0.35·DSA + 0.30·interview + 0.10·consistency`. Components with no data are excluded and the weights renormalized, and a confidence figure is shown. “Levers” are found by simulating the next best action. |
 
+LLM calls are time-bounded: every Gemini request has a hard timeout, a second model is tried automatically if the first one fails, and if both fail the app returns the algorithmic score with a degraded flag instead of making the user wait.
+
 ## 🧰 Tech stack
 
 | Layer | Technology |
@@ -128,7 +130,7 @@ Design rule: **algorithms score, LLMs explain.** Scores are deterministic and re
 | Backend | Python, FastAPI, Pydantic v2, SQLAlchemy 2.0 (async), Alembic, PyJWT, Argon2 |
 | Database | Neon serverless PostgreSQL (pooled connection for the app, direct connection for migrations) |
 | AI / ML | Gemini API (generation and embeddings), scikit-learn (TF-IDF), rapidfuzz, NumPy |
-| Quality | pytest, ESLint, Ruff |
+| Quality | pytest, Playwright, ESLint, Ruff |
 
 ## 📁 Project structure
 
@@ -179,7 +181,7 @@ pip install -e ".[dev]"
 cp .env.example .env          # then fill in the values below
 alembic upgrade head          # uses DATABASE_URL_DIRECT
 python scripts/seed.py        # skills, topics, problems, question bank
-python scripts/seed_demo.py   # optional: demo account with sample data
+# python scripts/seed_demo.py # optional, local development only: sample data. Never run it on production.
 cd ..
 ```
 
@@ -189,11 +191,11 @@ cd ..
 | `DATABASE_URL_DIRECT` | Neon direct connection string for the `dev` branch (migrations) |
 | `TEST_DATABASE_URL` | Neon direct connection string for the `test` branch (integration tests) |
 | `GEMINI_API_KEY` | Google AI Studio key |
-| `GEMINI_MODEL`, `GEMINI_EMBEDDING_MODEL` | Model names, verified at startup |
+| `GEMINI_MODEL`, `GEMINI_FALLBACK_MODEL`, `GEMINI_EMBEDDING_MODEL` | Primary model, automatic fallback model and embedding model |
 | `SECRET_KEY`, `JWT_SECRET` | Random secrets for signing |
 | `CORS_ORIGINS` | Allowed frontend origins |
 
-See `backend/.env.example` for the full list.
+See `backend/.env.example` for the full list, including the LLM timeout settings.
 
 ### 3. Frontend
 
@@ -209,9 +211,8 @@ cd ..
 ./dev.sh
 ```
 
-- 🖥️ App: http://localhost:5173
+- 🖥️ App: http://localhost:5173 (create an account on the sign-up page)
 - 📖 API docs (Swagger): http://localhost:8000/docs
-- 🎯 Demo account, if you ran the demo seed: `demo@placementcopilot.com` / `DemoCandidate2026!`
 
 ## 🧪 Running the tests
 
@@ -219,11 +220,11 @@ cd ..
 # Backend: unit tests for every scoring formula and integration tests for each endpoint group
 cd backend && source .venv/bin/activate && pytest -q
 
-# Frontend: lint and production build
-cd ../frontend && npm run lint && npm run build
+# Frontend: lint, production build and end-to-end tests (Playwright, uses Google Chrome)
+cd ../frontend && npm run lint && npm run build && npx playwright test
 ```
 
-Integration tests run against the Neon `test` branch, so the first request after a pause can take a second or two while the database wakes up. GitHub Actions runs Ruff, the backend unit tests, and the frontend lint and build on every push.
+Integration tests run against the Neon `test` branch, so the first request after a pause can take a second or two while the database wakes up. The end-to-end suite signs up one new user per run and uses a fake LLM provider, so it needs no API key. GitHub Actions runs Ruff, the backend unit tests, and the frontend lint and build on every push.
 
 ## 🔌 API
 
@@ -233,7 +234,7 @@ Interactive documentation is served at `/docs` while the backend runs. Request a
 
 - Passwords are hashed with Argon2.
 - Access tokens are short-lived. Refresh tokens rotate on every use, are stored hashed, and are tracked in families so reuse can be detected and revoked.
-- Rate limits protect login and LLM endpoints, and each user has a daily LLM quota.
+- Rate limits protect login, signup and LLM endpoints, and each user has a daily LLM quota.
 - Uploads are validated by file signature and size, and only the extracted text is kept.
 - Interview answers are isolated from instructions before they reach the LLM, and model output is schema-validated.
 - Secrets live in environment variables and are never committed.
@@ -251,6 +252,7 @@ Interactive documentation is served at `/docs` while the backend runs. Request a
 - **Log lines with long IPv6 addresses and `No route to host`.** These are harmless. Your network has no IPv6 route to Neon, so the driver falls back to IPv4.
 - **Database errors at startup.** Check that each connection string starts with `postgresql+psycopg://`.
 - **A slow first request.** Neon wakes from idle on the first query, which takes a second or two.
+- **Gemini errors or a degraded flag on results.** Check that the model names in `.env` are still available to your key. Google retires models over time, and the app falls back to the second model and then to algorithm-only scores.
 
 ## 🚧 Limitations and roadmap
 

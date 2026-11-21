@@ -1,3 +1,4 @@
+import asyncio
 import json
 import re
 from typing import Any
@@ -185,7 +186,7 @@ async def compute_semantic_score(resume_chunks: list[str], jd_sentences: list[st
         # Normalize rows to unit vectors
         jd_norms = np.linalg.norm(jd_embs, axis=1, keepdims=True)
         resume_norms = np.linalg.norm(resume_embs, axis=1, keepdims=True)
-        
+
         jd_norms[jd_norms == 0] = 1e-9
         resume_norms[resume_norms == 0] = 1e-9
 
@@ -194,7 +195,7 @@ async def compute_semantic_score(resume_chunks: list[str], jd_sentences: list[st
 
         # Cosine similarity matrix: (num_jd, num_resume)
         sim_matrix = np.dot(jd_unit, resume_unit.T)
-        
+
         # Max cosine for each JD sentence over all resume chunks
         max_cosines = np.max(sim_matrix, axis=1)
         avg_cos = float(np.mean(max_cosines))
@@ -317,12 +318,18 @@ async def score_resume_against_jd(
     # Sub-score: quality
     quality_score, quality_findings = compute_quality_score(parsed_resume)
 
-    # Sub-score: semantic
+    # Inputs for the two network-bound steps (semantic scoring and LLM suggestions)
     jd_sentences = [s.strip() for s in re.split(r"[\.\n]+", jd_text) if len(s.strip()) > 20][:15]
     bullets = parsed_resume.get("bullets", [])
     resume_chunks = bullets if bullets else [p.strip() for p in resume_text.splitlines() if len(p.strip()) > 30][:20]
 
-    semantic_score, degraded = await compute_semantic_score(resume_chunks, jd_sentences)
+    # The semantic score (embeddings) and the suggestions (LLM) do not depend on each other,
+    # so run them concurrently. Each one handles its own failures and degrades gracefully.
+    semantic_result, suggestions = await asyncio.gather(
+        compute_semantic_score(resume_chunks, jd_sentences),
+        generate_bullet_suggestions(bullets, missing_skills, jd_role),
+    )
+    semantic_score, degraded = semantic_result
 
     # Overall score formula:
     # 0.40·keyword + 0.25·semantic + 0.15·tfidf + 0.20·quality
@@ -344,9 +351,6 @@ async def score_resume_against_jd(
         )
 
     overall = round(max(0.0, min(100.0, overall)), 2)
-
-    # Suggestions from LLM
-    suggestions = await generate_bullet_suggestions(bullets, missing_skills, jd_role)
 
     return {
         "overall": overall,

@@ -25,8 +25,15 @@ class Settings(BaseSettings):
     TEST_DATABASE_URL: str = ""
 
     GEMINI_API_KEY: str = ""
-    GEMINI_MODEL: str = "gemini-2.5-flash"
-    GEMINI_EMBEDDING_MODEL: str = "text-embedding-004"
+    GEMINI_MODEL: str = "gemini-3.1-flash-lite"
+    GEMINI_FALLBACK_MODEL: str = "gemini-3.5-flash"
+    GEMINI_EMBEDDING_MODEL: str = "gemini-embedding-001"
+    # Total time budget for one generate_json call across all attempts and models.
+    LLM_TIMEOUT_SECONDS: int = 25
+    # Time limit for a single Gemini request (generation attempt or embedding batch).
+    LLM_ATTEMPT_TIMEOUT_SECONDS: int = 8
+    # 0 turns Gemini "thinking" off (fast, enough for schema-bound JSON). -1 keeps the model default.
+    LLM_THINKING_BUDGET: int = 0
 
     CORS_ORIGINS: str | list[str] = "http://localhost:5173,http://localhost:3000"
     LLM_DAILY_QUOTA: int = 40

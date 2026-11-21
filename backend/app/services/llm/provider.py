@@ -71,7 +71,7 @@ class GeminiProvider:
             for attempt in range(2):
                 remaining = deadline - time.monotonic()
                 if remaining <= 0:
-                    raise last_error or asyncio.TimeoutError("LLM time budget exhausted")
+                    raise last_error or TimeoutError("LLM time budget exhausted")
                 contents = prompt if attempt == 0 else prompt + "\n\nCRITICAL: Respond STRICTLY with schema-valid JSON."
                 try:
                     raw_text = await self._call(model, contents, config, min(self.attempt_timeout, remaining))

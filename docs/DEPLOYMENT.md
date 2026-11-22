@@ -1,25 +1,26 @@
 # Production Deployment Guide
 
-> [!IMPORTANT]
-> **Deployment Status**: The project is **not deployed yet**. The configurations, deployment sequence, and verification steps in this guide serve as the validated release runbook for the upcoming production rollout.
+> [!NOTE]
+> **Deployment status: live (November 2026).**
+> Frontend: https://placement-copilot-nine.vercel.app · Backend API: https://placement-copilot-morn.onrender.com · Database: Neon `production` branch.
 
-This document details the production architecture, configuration, deployment sequence, post-deployment smoke tests, and production safety audit for Placement Copilot.
+This document details the production architecture, configuration, deployment sequence, post-deployment smoke tests, measured results, operations notes and the production safety audit for Placement Copilot.
 
 ---
 
 ## 1. Target Architecture & Infrastructure Layout
 
 - **Frontend**: Hosted on [Vercel](https://vercel.com) (static SPA build of `frontend/`, client-side routing via React Router). A Vercel rewrite forwards `/api/*` to the backend so the browser only ever talks to the Vercel domain.
-- **Backend**: Containerized FastAPI service on a **Render free web service** (Docker runtime), in the **Singapore** region (confirm the region in the Render dashboard) to keep latency to the Neon database low. See section 7.5 for the free-tier caveats.
-- **Database**: [Neon](https://neon.tech) Serverless PostgreSQL in `ap-southeast-1` (Singapore, AWS). The `production` branch starts empty: no users and no demo account.
+- **Backend**: Containerized FastAPI service on a **Render free web service** (Docker runtime). Choose the region closest to the Neon database (Singapore) and confirm it in the Render dashboard. See section 7.5 for the settings and free-tier caveats.
+- **Database**: [Neon](https://neon.tech) Serverless PostgreSQL in `ap-southeast-1` (Singapore, AWS). The `production` branch holds reference data only: no demo user, and no users until real people sign up.
 - **AI / LLM Services**: Google AI Studio Gemini API: `gemini-3.1-flash-lite` (primary), `gemini-3.5-flash` (automatic fallback) and `gemini-embedding-001` (embeddings).
   - Google retires models over time. `gemini-3.1-flash-lite` had a published shutdown date of 7 May 2027 when this guide was written, so plan to move to a newer model before then. It is only an environment variable change (`GEMINI_MODEL`).
-  - Not suitable as hosts: Vercel serverless functions (dependency size) and Hugging Face Spaces (outbound traffic is restricted to ports 80, 443 and 8080, so Neon on port 5432 is unreachable).
+  - Not suitable as backend hosts: Vercel serverless functions (dependency size) and Hugging Face Spaces (outbound traffic is restricted to ports 80, 443 and 8080, so Neon on port 5432 is unreachable).
 
 ```mermaid
 flowchart LR
     User["Candidate Browser"] -->|HTTPS| Vercel["Vercel (SPA + /api rewrite)"]
-    Vercel -->|"/api/* rewrite"| Backend["FastAPI container on Render (Singapore)"]
+    Vercel -->|"/api/* rewrite"| Backend["FastAPI container on Render"]
     Backend -->|"Pooled (pgbouncer)"| NeonPool["Neon Postgres Production"]
     Alembic["Alembic + seed scripts (run from a laptop)"] -->|"Direct session"| NeonDirect["Neon Postgres Direct"]
     Backend -.->|"HTTPS REST"| Gemini["Google Gemini API"]
@@ -34,9 +35,9 @@ flowchart LR
    - **CRITICAL**: When creating any branch in the Neon console, untick the pre-ticked "Automatically delete branch after" option. Production branches must **never** have auto-delete enabled.
 2. **Dual Connection Endpoints**:
    - `DATABASE_URL`: Must use the **pooled** connection string (containing `-pooler.`) with the SQLAlchemy psycopg driver format: `postgresql+psycopg://<user>:<password>@<endpoint>-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require`. Used by application transactions to scale concurrent connections via PgBouncer.
-   - `DATABASE_URL_DIRECT`: Must use the **direct** connection string (without `-pooler.`) with driver format: `postgresql+psycopg://<user>:<password>@<endpoint>.ap-southeast-1.aws.neon.tech/neondb?sslmode=require`. Required by Alembic migrations because DDL statements, locks, and schema migrations require native session state.
+   - `DATABASE_URL_DIRECT`: Must use the **direct** connection string (without `-pooler.`) with driver format: `postgresql+psycopg://<user>:<password>@<endpoint>.ap-southeast-1.aws.neon.tech/neondb?sslmode=require`. Required by Alembic migrations because DDL statements, locks, and schema migrations require native session state. In the Neon console, turn **Connection pooling off** to copy it.
 3. **Data Seeding in Production**:
-   - `python scripts/seed.py`: Run once on initial deployment to populate static reference data (skills taxonomy, 140+ DSA catalog problems, interview question bank). It creates no users.
+   - `python scripts/seed.py`: Run once on initial deployment to populate static reference data (20 DSA topics, 142 catalog problems, 150 interview questions). It creates no users. The skills taxonomy is a JSON file inside the app, not a table.
    - `python scripts/seed_demo.py`: **Never run on production.** It is a local-development helper only. The production database must contain no users until real people sign up.
 
 ---
@@ -61,12 +62,12 @@ flowchart LR
 | `LLM_TIMEOUT_SECONDS` | Optional | Total time budget for one generation call across all attempts and models. Default: `25`. | `25` |
 | `LLM_THINKING_BUDGET` | Optional | `0` turns Gemini "thinking" off (much faster for short schema-bound JSON). `-1` keeps the model default. Default: `0`. | `0` |
 | `LLM_PROVIDER` | Optional | Provider implementation (`auto`, `gemini`, or `fake`). Blocked if `fake` in production. | `gemini` |
-| `CORS_ORIGINS` | **Required** | Comma-separated list of origins. Blocked if containing `*` or insecure `http://` in production. | `https://placement-copilot.vercel.app` |
+| `CORS_ORIGINS` | **Required** | Comma-separated list of origins. Blocked if containing `*` or insecure `http://` in production. | `https://placement-copilot-nine.vercel.app` |
 | `ENABLE_API_DOCS` | Optional | Toggle for `/docs`, `/redoc`, and `/openapi.json`. Defaults to `false` in production, `true` in dev. | `false` |
 | `COOKIE_SAMESITE` | Optional | SameSite attribute for the refresh cookie (`none`, `lax`, or `strict`). Defaults to `none` in prod, `lax` in dev. Use `lax` with the Vercel rewrite. | `lax` |
 | `COOKIE_SECURE` | Optional | Secure flag for the refresh cookie (`true` or `false`). Defaults to `true` in prod, `false` in dev. | `true` |
 | `LLM_DAILY_QUOTA` | Optional | Max daily LLM calls per candidate. Default: `40`. | `40` |
-| `LLM_GLOBAL_DAILY_LIMIT` | Optional | Max daily LLM calls across all users combined. Default: `300`. Keep it below your Gemini key's own quota. | `300` |
+| `LLM_GLOBAL_DAILY_LIMIT` | Optional | Max daily LLM calls across all users combined. Default: `300`. Keep it below your Gemini project's own daily request limit (see section 9). | `300` |
 | `REGISTER_RATE_LIMIT` | Optional | Per-IP rate limit on `POST /auth/register` in production. Default: `5/hour` (in dev: `1000/hour`). | `5/hour` |
 | `ALLOW_SIGNUP` | Optional | Global toggle for new candidate signups (`true` or `false`). Returns 403 when false. Keep it `true`: there is no demo account, so signup is the only way in. | `true` |
 | `MAX_UPLOAD_MB` | Optional | Max file size for resume uploads. Default: `5`. | `5` |
@@ -78,12 +79,15 @@ flowchart LR
 
 ---
 
-### Frontend Environment Variables (`frontend/.env`, or Vercel project settings)
+### Frontend Environment Variables (`frontend/.env` locally, Vercel project settings in production)
 
-| Variable | Required? | Purpose | Safe Production Placeholder |
+| Variable | Required? | Purpose | Production value |
 |---|---|---|---|
-| `VITE_API_BASE_URL` | **Required\*** | Backend API base URL (no trailing slash). \*Leave empty when using the Vercel same-domain proxy. | (empty) |
-| `VITE_SITE_URL` | Optional | Canonical production URL used for Open Graph and Twitter preview metadata (no trailing slash). | `https://placement-copilot.vercel.app` |
+| `VITE_API_BASE_URL` | Leave **unset** | Backend API base URL. Leave it unset or empty when using the Vercel same-domain proxy, so the app calls relative `/api/v1/...` paths. | (unset) |
+| `VITE_SITE_URL` | Optional | Canonical production URL used for Open Graph and Twitter preview metadata (no trailing slash). | `https://placement-copilot-nine.vercel.app` |
+
+> [!IMPORTANT]
+> `VITE_SITE_URL` is baked into the page at **build time**. After changing it you must **redeploy** (Vercel: Deployments, then the menu on the newest deployment, then Redeploy). In Vercel, create it with Type **Config**, not Secret: `VITE_` variables are public by design, and Vercel warns about public-prefixed Secrets. A saved Secret cannot be converted, so delete it and add it again.
 
 ---
 
@@ -92,25 +96,25 @@ flowchart LR
 Placement Copilot supports two distinct cookie topologies:
 
 #### Option A: Cross-Domain Architecture (Separate API Domain)
-- **Frontend**: `https://placement-copilot.vercel.app`
-- **Backend API**: a separate HTTPS domain
+- **Frontend**: a Vercel domain.
+- **Backend API**: a separate HTTPS domain.
 - **Configuration**:
-  - Backend: `COOKIE_SAMESITE=none`, `COOKIE_SECURE=true`, `CORS_ORIGINS=https://placement-copilot.vercel.app`
+  - Backend: `COOKIE_SAMESITE=none`, `COOKIE_SECURE=true`, `CORS_ORIGINS=<frontend https origin>`
   - Frontend: `VITE_API_BASE_URL=<backend https URL>`
 - **Requirements**:
   - Both domains must have valid SSL/TLS certificates (HTTPS). Modern browsers strictly reject `SameSite=None` over insecure HTTP.
   - Startup check: the backend logs a startup warning if `SameSite=None` is configured without an `https://` origin in `CORS_ORIGINS`.
   - Safari blocks cross-site cookies, so sessions may not persist there. This is why Option B is preferred.
 
-#### Option B: Same-Domain Proxy via Vercel Rewrites (Chosen)
-- **Frontend & API**: Served together under `https://placement-copilot.vercel.app`
-- **Vercel Rewrite (`frontend/vercel.json`)**: the `/api` rule must come **before** the single-page-app fallback:
+#### Option B: Same-Domain Proxy via Vercel Rewrites (In use)
+- **Frontend & API**: Served together under `https://placement-copilot-nine.vercel.app`
+- **Vercel Rewrite (`frontend/vercel.json`)**: the `/api` rule comes **before** the single-page-app fallback:
   ```json
   {
     "rewrites": [
       {
         "source": "/api/:path*",
-        "destination": "https://<your-render-service>.onrender.com/api/:path*"
+        "destination": "https://placement-copilot-morn.onrender.com/api/:path*"
       },
       {
         "source": "/(.*)",
@@ -120,54 +124,42 @@ Placement Copilot supports two distinct cookie topologies:
   }
   ```
 - **Configuration**:
-  - Backend: `COOKIE_SAMESITE=lax`, `COOKIE_SECURE=true`, `CORS_ORIGINS=https://placement-copilot.vercel.app`
-  - Frontend: `VITE_API_BASE_URL` empty (so requests use relative paths `/api/v1/...`)
+  - Backend: `COOKIE_SAMESITE=lax`, `COOKIE_SECURE=true`, `CORS_ORIGINS=https://placement-copilot-nine.vercel.app`
+  - Frontend: `VITE_API_BASE_URL` unset (so requests use relative paths `/api/v1/...`)
 - **Benefits**:
-  - First-party cookie semantics (`SameSite=Lax`), avoiding Safari Intelligent Tracking Prevention (ITP) issues and third-party cookie blocking.
-- **To verify in the smoke test**: that slow LLM calls (the worst case is about 25 seconds) get through the Vercel proxy without a timeout.
+  - First-party cookie semantics (`SameSite=Lax`), avoiding Safari Intelligent Tracking Prevention (ITP) issues and third-party cookie blocking. The refresh cookie is set with `path=/` and no domain, so it becomes a first-party cookie on the Vercel domain.
+- **Proxy time limit**: Vercel's documentation was not consistent about the proxy timeout when this was written (some pages said 30 seconds, newer ones 120). A cold backend start through the proxy took 38.8 seconds and succeeded (see section 5), which fits the 120-second figure.
 
 ---
 
 ## 4. Release Order & Execution Procedure
 
-Execute the first production release in this order:
+The first production release was executed in this order:
 
 1. **Create the empty Neon `production` branch** (see section 2) and copy its pooled and direct connection strings.
-2. **Migrate and seed reference data from your laptop**, entering the production direct string with a silent prompt so it never lands in shell history. The second export makes sure the scripts cannot fall back to a development database from a local `backend/.env`:
-   ```bash
-   cd backend && source .venv/bin/activate
-   read -s "DATABASE_URL_DIRECT?Production direct connection string: "; echo
-   export DATABASE_URL_DIRECT
-   export DATABASE_URL="$DATABASE_URL_DIRECT"
-   alembic upgrade head
-   python scripts/seed.py
-   unset DATABASE_URL_DIRECT DATABASE_URL
-   ```
-   Do **not** run `scripts/seed_demo.py`.
-3. **Deploy Backend Service** on Render (section 7.5):
-   - Docker runtime, Root Directory `backend`, instance type Free, Singapore region.
-   - Inject environment variables through the Render dashboard (never bake secrets into Docker images or commit them).
+2. **Migrate and seed reference data from your laptop.** Enter the production direct string without it touching shell history or the terminal screen. The safest way is a small script file that reads it with a hidden prompt, refuses to continue if the host is pooled or equals the dev database host, refuses if the target database already has tables, runs `alembic upgrade head`, then `python scripts/seed.py`, and finally prints row counts. The result must show `users` = 0. Do **not** run `scripts/seed_demo.py`. Use the same approach for any later migration.
+3. **Deploy Backend Service** on Render (section 7.5).
 4. **Verify Health Endpoints**:
    - General API health:
      ```bash
-     curl -i https://<backend-host>/api/v1/health
+     curl -i https://placement-copilot-morn.onrender.com/api/v1/health
      # Expected HTTP 200: {"status":"ok", ...}
      ```
    - Database connectivity through the pooler:
      ```bash
-     curl -i https://<backend-host>/api/v1/health/db
+     curl -i https://placement-copilot-morn.onrender.com/api/v1/health/db
      # Expected HTTP 200: {"status":"ok","db":"connected"}
      ```
-5. **Deploy Frontend** on Vercel:
-   - Root directory `frontend`. Add the `/api` rewrite in `frontend/vercel.json` pointing at the Render URL, set `VITE_SITE_URL`, then redeploy.
-6. **Execute Smoke Tests**:
-   - Perform the end-to-end verification checklist below.
+5. **Deploy Frontend** on Vercel (section 7.6), then set `CORS_ORIGINS` on Render to the real Vercel URL.
+6. **Execute Smoke Tests**: perform the checklist below.
+
+For later releases: push to `main`. Render and Vercel both redeploy automatically. Run `alembic upgrade head` from your laptop first if the change includes a migration (Render's pre-deploy command is not available on the free plan).
 
 ---
 
 ## 5. Post-Deployment Smoke-Test Checklist
 
-Verify the following primary user journeys against the production environment. Production limits signups to 5 per hour per IP, so register one test user and reuse it.
+Verify the following primary user journeys against the production environment. Production limits signups to 5 per hour per IP, so register one test user and reuse it. Delete test accounts from **Profile** afterwards.
 
 - [ ] **1. Authentication & Session Persistence**:
   - Register a new user at `/signup` (there is no demo account).
@@ -192,7 +184,23 @@ Verify the following primary user journeys against the production environment. P
   - Click logout in the navigation sidebar.
   - Verify cookies/tokens are cleared and the client is redirected to `/login`.
 - [ ] **8. Cold Start**:
-  - After 15+ minutes idle, load the site and note how long the first API response takes on the free Render plan (see section 7.5).
+  - After 15+ minutes idle, call `curl -s -o /dev/null -w "%{http_code} in %{time_total}s\n" https://placement-copilot-nine.vercel.app/api/v1/health` and note the time. The browser should show the "Waking up the server" notice meanwhile.
+
+### Measured results (November 2026)
+
+| Check | Result |
+|---|---|
+| Backend `/api/v1/health` and `/api/v1/health/db` (direct, warm) | 200, about 0.2 s, `{"status":"ok","db":"connected"}` |
+| API through the Vercel proxy, warm | 200 in about 0.17 s |
+| **Cold start through the Vercel proxy** (after 15+ minutes idle) | **200 in 38.8 s** (one measurement) |
+| Response security headers | HSTS, `nosniff`, `X-Frame-Options: DENY` and `Referrer-Policy` present on the API and the site |
+| `/docs` and `/openapi.json` in production | 404 (disabled) |
+| Protected endpoint without a login | 401 |
+| CORS | Render allows the exact Vercel origin |
+| Link-preview tags | `og:url` and `og:image` point at the real Vercel URL |
+| Production database after migration and seeding | 20 DSA topics, 142 problems, 150 interview questions, `users` = 0 |
+| Local container test, 512 MB limit (same limit as Render free) | about 290 MiB peak process memory (including a PDF upload and an ATS analysis), no out-of-memory kill |
+| Local container test, full ATS analysis | about 6 to 8 seconds |
 
 ---
 
@@ -254,7 +262,7 @@ docker run -d --name placement-backend \
 ```
 
 > [!NOTE]
-> Docker's `--env-file` does not accept spaces around `=`. If `backend/.env` is written as `KEY = value`, make a cleaned temporary copy (create it with `umask 077` and delete it right after the container starts).
+> Docker's `--env-file` does not accept spaces around `=`. If `backend/.env` is written as `KEY = value`, make a cleaned temporary copy (create it with `umask 077` and delete it right after the container starts). To test with the same memory limit as Render's free tier, add `--memory=512m`.
 
 ### 7.4 One-Off Operational Commands with the Same Image
 The same production image can run database migrations and the reference-data seed without modifying container entrypoints:
@@ -263,26 +271,38 @@ The same production image can run database migrations and the reference-data see
 # Run Alembic migrations to latest schema version
 docker run --rm --env-file backend/.env placement-copilot-backend:latest alembic upgrade head
 
-# Seed initial catalog data (DSA problems, skills taxonomy, question bank)
+# Seed initial catalog data (DSA problems, question bank)
 docker run --rm --env-file backend/.env placement-copilot-backend:latest python scripts/seed.py
 ```
 
 ### 7.5 Deploying to Render (Free Web Service from the Dockerfile)
 
-1. Create a **New + -> Web Service** and link the GitHub repository.
-2. Language: `Docker`. Set **Root Directory** to `backend` so the Docker build context contains `app/`, `alembic/` and `scripts/` (the Dockerfile copies those relative paths).
-3. Instance type: **Free**. Region: **Singapore** (confirm it is offered in the dashboard).
-4. Set the health check path to `/api/v1/health`.
-5. Render injects a `PORT` variable. The startup command already binds to `${PORT:-8000}`.
-6. In **Environment**, add every required production variable from section 3, typing secrets directly into the dashboard.
+1. Create **New +**, then **Web Service**, and connect the GitHub repository (or use the Public Git Repository option for a public repo).
+2. **Language**: `Docker`. **Branch**: `main`. **Region**: the one closest to the Neon database (Singapore). **Instance Type**: Free.
+3. Open **Advanced** and set:
+   - **Dockerfile Path**: `backend/Dockerfile`
+   - **Docker Build Context Directory**: `backend`
+   - **Health Check Path**: `/api/v1/health`
+   - Leave Root Directory, Build Command and Start Command empty. (Render's documentation says the Dockerfile path and the Docker context are both relative to the repository root.)
+4. Render injects a `PORT` variable. The startup command already binds to `${PORT:-8000}`.
+5. In **Environment**, add every required production variable from section 3. Type secrets directly into the dashboard. To avoid printing them, copy them to the clipboard from the terminal (for example `openssl rand -hex 32 | tr -d '\n' | pbcopy`) and paste.
+6. Render redeploys automatically on every push to `main`.
 
-**Free-tier caveats** (taken from Render's free-tier documentation in November 2026; re-check before relying on them):
+**Free-tier caveats** (from Render's free-tier documentation in November 2026; re-check before relying on them):
 
-- **Memory is 512 MB.** Measured locally with a 512 MB limit: about 210 MiB resident memory idle and about 300 MiB peak while uploading a PDF resume and running an ATS analysis, so there is headroom, but not a lot.
-- **The service spins down after 15 minutes without traffic and takes up to about a minute to wake.** Planned mitigation: the frontend sends a health request as soon as the page loads and shows a "waking up the server" message. This is not implemented yet. A free uptime pinger is possible, but check Render's terms first.
-- **Outbound traffic on ports 25, 465 and 587 is blocked.** Neon on port 5432 is not affected, but confirm with `/api/v1/health/db` on the live URL.
+- **Memory is 512 MB.** Measured locally with a 512 MB limit: about 290 MiB peak process memory including a PDF upload and an ATS analysis, so there is headroom, but not a lot.
+- **The service spins down after 15 minutes without traffic and takes about a minute to wake.** Measured through the Vercel proxy: 38.8 seconds once. The frontend sends a health request when the page loads and shows a "Waking up the server" notice if the API is slow to answer. A free uptime pinger could keep it awake, but check Render's terms first.
+- **Outbound traffic on ports 25, 465 and 587 is blocked.** Neon on port 5432 is not affected (confirmed by `/api/v1/health/db` returning 200).
+- **Shared free-plan usage.** If you run other free services in the same Render workspace, check Billing for usage warnings.
 
-### 7.6 Reverse Proxy & Rate Limiting Security Note
+### 7.6 Deploying the Frontend to Vercel
+
+1. **Add New**, then **Project**, and import the repository.
+2. **Root Directory**: `frontend`. **Framework Preset**: Vite. Keep the default build command (`npm run build`) and output directory (`dist`).
+3. **Environment Variables**: add `VITE_SITE_URL` (Type **Config**) with the final Vercel URL. Do **not** set `VITE_API_BASE_URL`.
+4. Deploy. If the final URL differs from what you entered, fix `VITE_SITE_URL`, set `CORS_ORIGINS` on Render to the real URL, and redeploy both.
+
+### 7.7 Reverse Proxy & Rate Limiting Security Note
 The backend uses `slowapi` for per-IP rate limiting (e.g., registration endpoint `POST /auth/register` throttled to `5/hour` in production).
 
 > [!WARNING]
@@ -366,8 +386,19 @@ cd backend
 The following items are deferred or recommended for production infrastructure rollout:
 
 1. **Content Security Policy (CSP)**:
-   A strict Content Security Policy (`default-src 'self'`) is currently disabled in favor of developer velocity and CDN loading (Google Fonts `fonts.googleapis.com` and `fonts.gstatic.com`). Prior to production launch, configure a staged CSP header in Vercel (`vercel.json`) with reporting mode (`Content-Security-Policy-Report-Only`) to monitor font and script dependencies before enforcing strict CSP.
+   A strict Content Security Policy (`default-src 'self'`) is currently disabled in favor of developer velocity and CDN loading (Google Fonts `fonts.googleapis.com` and `fonts.gstatic.com`). Configure a staged CSP header in Vercel (`vercel.json`) with reporting mode (`Content-Security-Policy-Report-Only`) to monitor font and script dependencies before enforcing strict CSP.
 2. **Reverse Proxy IP Trust Boundary**:
    In production setups behind Cloudflare or AWS ALB, replace `--forwarded-allow-ips="*"` in the container startup command with the exact reverse proxy CIDR block to prevent spoofed `X-Forwarded-For` client headers from circumventing rate limit counters.
 3. **Database Connection SSL**:
    In production, verify that Neon connection strings always include `?sslmode=require`. Placement Copilot's startup configuration validates this in `production` mode.
+
+---
+
+## 9. Operations Notes
+
+- **Redeploying**: push to `main`. Render and Vercel redeploy automatically. A Vercel redeploy is also required whenever a `VITE_` variable changes.
+- **Rotating a secret**: change it in the Render dashboard (the service restarts). Changing `JWT_SECRET` signs everyone out. If a connection string or API key was ever exposed, reset the Neon role password and create a new Gemini key, then update Render.
+- **Model retirement**: Google retires Gemini models. If results come back marked `degraded` or the logs show repeated 404s from Gemini, check the model names against the current model list and update `GEMINI_MODEL` / `GEMINI_FALLBACK_MODEL` in Render. `gemini-3.1-flash-lite` had a shutdown date of 7 May 2027.
+- **Gemini free-tier limits**: the daily request limit is per project and visible in Google AI Studio's rate-limit page (it was not published per model in the public documentation when this was written). Each ATS analysis makes at least two Gemini calls (one embedding, one generation). Keep `LLM_GLOBAL_DAILY_LIMIT` below your project's daily limit.
+- **Starting fresh**: to reset production, create a new empty Neon branch, repeat release step 2 against it, and point `DATABASE_URL` and `DATABASE_URL_DIRECT` at it.
+- **Cold starts**: see the caveats in section 7.5. Open the site yourself shortly before sharing the link with anyone.

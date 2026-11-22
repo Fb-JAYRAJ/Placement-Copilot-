@@ -6,6 +6,7 @@ import ProtectedRoute from '@/components/common/ProtectedRoute';
 import ToastContainer from '@/components/common/ToastContainer';
 import NotFound from '@/components/common/NotFound';
 import ErrorBoundary from '@/components/common/ErrorBoundary';
+import ServerWakeNotice from '@/components/common/ServerWakeNotice';
 
 // Lazy-loaded route components for optimized chunk size and code-splitting
 const AuthPage = lazy(() => import('@/features/auth/AuthPage'));
@@ -72,10 +73,9 @@ export const App = () => {
             <Route path="*" element={<Navigate to="/404" replace />} />
           </Routes>
           <ToastContainer />
+          <ServerWakeNotice />
         </BrowserRouter>
       </QueryClientProvider>
     </ErrorBoundary>
   );
 };
-
-export default App;
